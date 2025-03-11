@@ -23,7 +23,10 @@ const Radio = () => {
               <div className="bg-white shadow-md rounded-lg p-6 mb-8 animate-slide-in">
                 <h2 className="section-title mb-4">Transmissão Ao Vivo</h2>
                 <div className="mb-6">
-                  <RadioPlayer />
+                  <RadioPlayer 
+                    streamUrl="https://stream.zeno.fm/5eu09zwpwtzuv" 
+                    stationName="Rádio Académica de Moçambique"
+                  />
                 </div>
                 <div className="prose max-w-none">
                   <p className="text-gray-700">
