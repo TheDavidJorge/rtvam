@@ -4,7 +4,7 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import LiveStream from '@/components/tv/LiveStream';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { RadioCircle, Tv, TvFix } from 'lucide-react';
+import { Radio, Tv, MonitorPlay } from 'lucide-react';
 
 const TvDireto = () => {
   const [activeTab, setActiveTab] = useState<string>("tva1");
@@ -29,39 +29,27 @@ const TvDireto = () => {
                     Televisão Académica
                   </TabsTrigger>
                   <TabsTrigger value="tva2" className="flex items-center justify-center">
-                    <TvFix className="w-4 h-4 mr-2" />
+                    <MonitorPlay className="w-4 h-4 mr-2" />
                     TVA 2
                   </TabsTrigger>
                 </TabsList>
                 
                 <TabsContent value="tva1" className="mt-2">
                   <LiveStream 
-                    streamUrl="https://www.youtube.com/embed/live_stream?channel=EXAMPLE_CHANNEL_ID_1"
-                    channelName="Televisão Académica"
+                    videoUrl="https://www.youtube.com/embed/live_stream?channel=EXAMPLE_CHANNEL_ID_1"
+                    title="Televisão Académica"
                     isLive={true}
+                    description="Canal principal da TVA com programas noticiosos, debates acadêmicos e conteúdos educativos transmitidos diretamente das universidades de Moçambique."
                   />
-                  <div className="mt-4 p-4 bg-rtam-blue/5 rounded-lg border border-rtam-blue/20">
-                    <h3 className="font-semibold text-rtam-blue mb-2">Televisão Académica</h3>
-                    <p className="text-gray-700">
-                      Canal principal da TVA com programas noticiosos, debates acadêmicos e 
-                      conteúdos educativos transmitidos diretamente das universidades de Moçambique.
-                    </p>
-                  </div>
                 </TabsContent>
                 
                 <TabsContent value="tva2" className="mt-2">
                   <LiveStream 
-                    streamUrl="https://www.youtube.com/embed/live_stream?channel=EXAMPLE_CHANNEL_ID_2"
-                    channelName="TVA 2"
+                    videoUrl="https://www.youtube.com/embed/live_stream?channel=EXAMPLE_CHANNEL_ID_2"
+                    title="TVA 2"
                     isLive={true}
+                    description="Canal alternativo da TVA focado em entretenimento, cultura e programas especiais produzidos pelos estudantes universitários."
                   />
-                  <div className="mt-4 p-4 bg-rtam-blue/5 rounded-lg border border-rtam-blue/20">
-                    <h3 className="font-semibold text-rtam-blue mb-2">TVA 2</h3>
-                    <p className="text-gray-700">
-                      Canal alternativo da TVA focado em entretenimento, cultura e programas especiais
-                      produzidos pelos estudantes universitários.
-                    </p>
-                  </div>
                 </TabsContent>
               </Tabs>
             </div>
