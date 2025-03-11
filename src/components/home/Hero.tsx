@@ -54,73 +54,74 @@ const Hero = () => {
   };
 
   return (
-    <div className="relative h-[60vh] sm:h-[70vh] md:h-[80vh] overflow-hidden">
-      {/* Slides */}
-      <div className="relative h-full">
-        {carouselItems.map((item, index) => (
-          <div
-            key={item.id}
-            className={`absolute inset-0 transition-opacity duration-1000 ${
-              index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
-            }`}
-          >
-            {/* Image with overlay */}
-            <div 
-              className="absolute inset-0 bg-cover bg-center"
-              style={{ backgroundImage: `url(${item.image})` }}
+    <div className="flex justify-center py-8 bg-gray-50">
+      <div className="relative w-full max-w-5xl h-[500px] rounded-lg overflow-hidden shadow-xl">
+        {/* Slides */}
+        <div className="relative h-full">
+          {carouselItems.map((item, index) => (
+            <div
+              key={item.id}
+              className={`absolute inset-0 transition-opacity duration-1000 ${
+                index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
+              }`}
             >
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-70"></div>
-            </div>
+              {/* Image */}
+              <div 
+                className="absolute inset-0 bg-cover bg-center"
+                style={{ backgroundImage: `url(${item.image})` }}
+              >
+              </div>
 
-            {/* Content */}
-            <div className="absolute inset-0 flex items-center justify-center text-center px-4 sm:px-6 lg:px-8 z-20">
-              <div className="max-w-3xl animate-slide-up">
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg">
-                  {item.title}
-                </h1>
-                <p className="text-lg sm:text-xl text-white mb-8 max-w-2xl mx-auto drop-shadow-md">
-                  {item.description}
-                </p>
-                <Link
-                  to={item.link}
-                  className="inline-block px-6 py-3 bg-rtam-blue text-white font-medium rounded-md hover:bg-rtam-blue-dark transition-colors duration-300 shadow-lg"
-                >
-                  Saber Mais
-                </Link>
+              {/* Content - positioned at the bottom instead of overlay */}
+              <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-6">
+                <div className="max-w-3xl">
+                  <h1 className="text-2xl sm:text-3xl font-bold text-rtam-blue mb-2">
+                    {item.title}
+                  </h1>
+                  <p className="text-base sm:text-lg text-gray-700 mb-4">
+                    {item.description}
+                  </p>
+                  <Link
+                    to={item.link}
+                    className="inline-block px-5 py-2 bg-rtam-blue text-white font-medium rounded-md hover:bg-rtam-blue-dark transition-colors duration-300 shadow-md"
+                  >
+                    Saber Mais
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
 
-      {/* Navigation buttons */}
-      <button
-        onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-white/20 text-white hover:bg-white/30 transition-colors"
-        aria-label="Previous slide"
-      >
-        <ChevronLeft size={24} />
-      </button>
-      <button
-        onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-white/20 text-white hover:bg-white/30 transition-colors"
-        aria-label="Next slide"
-      >
-        <ChevronRight size={24} />
-      </button>
+        {/* Navigation buttons */}
+        <button
+          onClick={prevSlide}
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-white text-rtam-blue hover:bg-rtam-blue hover:text-white transition-colors shadow-md"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft size={24} />
+        </button>
+        <button
+          onClick={nextSlide}
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-white text-rtam-blue hover:bg-rtam-blue hover:text-white transition-colors shadow-md"
+          aria-label="Next slide"
+        >
+          <ChevronRight size={24} />
+        </button>
 
-      {/* Indicators */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex space-x-2">
-        {carouselItems.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`w-3 h-3 rounded-full transition-colors ${
-              index === currentSlide ? 'bg-white' : 'bg-white/50 hover:bg-white/70'
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          ></button>
-        ))}
+        {/* Indicators */}
+        <div className="absolute bottom-28 left-1/2 -translate-x-1/2 z-20 flex space-x-2">
+          {carouselItems.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`w-3 h-3 rounded-full transition-colors ${
+                index === currentSlide ? 'bg-rtam-blue' : 'bg-gray-300 hover:bg-rtam-blue/70'
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            ></button>
+          ))}
+        </div>
       </div>
     </div>
   );

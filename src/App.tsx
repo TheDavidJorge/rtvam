@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Radio from "./pages/Radio";
 import TvDireto from "./pages/TvDireto";
 import NotFound from "./pages/NotFound";
+import NewsDetail from "./pages/NewsDetail";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/radio" element={<Radio />} />
           <Route path="/tv" element={<TvDireto />} />
+          <Route path="/noticias/:categoryId/:newsId" element={<NewsDetail />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
