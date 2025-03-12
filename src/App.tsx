@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Radio from "./pages/Radio";
 import TvDireto from "./pages/TvDireto";
+import News from "./pages/News";
 import NotFound from "./pages/NotFound";
 import NewsDetail from "./pages/NewsDetail";
 import NewsCategory from "./pages/NewsCategory";
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/radio" element={<Radio />} />
           <Route path="/tv" element={<TvDireto />} />
+          <Route path="/noticias" element={<News />} />
           <Route path="/noticias/:categoryId/:newsId" element={<NewsDetail />} />
           <Route path="/noticias/:categoryId" element={<NewsCategory />} />
           <Route path="/programacao" element={<Programming />} />
