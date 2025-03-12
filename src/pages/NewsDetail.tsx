@@ -41,21 +41,29 @@ const NewsDetail = () => {
     return new Date(dateString).toLocaleDateString('pt-PT', options);
   };
   
-  if (!newsItem) {
-    return (
-      <div className="min-h-screen bg-white">
-        <Navbar />
-        <main className="pt-16 page-container">
-          <div className="py-12 text-center">
-            <h1 className="text-2xl font-bold text-gray-800 mb-4">Notícia não encontrada</h1>
-            <p className="mb-6">A notícia que procura não foi encontrada.</p>
-            <Link to="/" className="btn-primary">Voltar à página inicial</Link>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    );
-  }
+  // Generate fictional content for any news item, even if not found
+  const generateFictionalContent = () => {
+    // If we have the actual news item, use its information
+    const title = newsItem?.title || "Notícia de exemplo";
+    const image = newsItem?.image || "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3";
+    const date = newsItem?.date || new Date().toISOString().split('T')[0];
+    const categoryTitle = category?.title || "Categoria";
+    
+    return {
+      title,
+      image,
+      date,
+      categoryTitle,
+      content: [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor.",
+        "Suspendisse potenti. Nulla facilisi. Sed feugiat varius nisi, at euismod nunc tincidunt at. Maecenas fermentum, metus in auctor dignissim, quam tellus sollicitudin nunc, at dapibus eros tellus at neque. Etiam eu scelerisque ante, vel commodo magna.",
+        "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam ullamcorper, ipsum vel condimentum rhoncus, nulla augue ultrices augue, vel commodo magna nulla non enim. Donec rutrum condimentum nunc, vel commodo magna."
+      ],
+      subTitle: "Subtítulo da notícia"
+    };
+  };
+  
+  const articleContent = generateFictionalContent();
   
   return (
     <div className="min-h-screen bg-white">
@@ -72,34 +80,27 @@ const NewsDetail = () => {
               </div>
               
               <span className="inline-block bg-rtam-blue text-white text-xs px-2 py-1 rounded mb-3 uppercase">
-                {category?.title}
+                {articleContent.categoryTitle}
               </span>
               
-              <h1 className="text-3xl font-bold text-gray-800 mb-4">{newsItem.title}</h1>
+              <h1 className="text-3xl font-bold text-gray-800 mb-4">{articleContent.title}</h1>
               
               <div className="flex items-center text-gray-500 mb-6">
-                <span>{formatDate(newsItem.date)}</span>
+                <span>{formatDate(articleContent.date)}</span>
               </div>
               
               <img 
-                src={newsItem.image} 
-                alt={newsItem.title} 
+                src={articleContent.image} 
+                alt={articleContent.title} 
                 className="w-full h-auto rounded-lg mb-6 object-cover"
                 style={{ maxHeight: "500px" }}
               />
               
               <div className="prose max-w-none mb-8">
-                <p className="text-gray-700 mb-4">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat 
-                  molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus 
-                  molestie magna non est bibendum non venenatis nisl tempor.
-                </p>
-                <p className="text-gray-700 mb-4">
-                  Suspendisse potenti. Nulla facilisi. Sed feugiat varius nisi, at euismod nunc tincidunt at. Maecenas fermentum, 
-                  metus in auctor dignissim, quam tellus sollicitudin nunc, at dapibus eros tellus at neque. Etiam eu scelerisque 
-                  ante, vel commodo magna. 
-                </p>
-                <h2 className="text-xl font-bold mb-3 mt-6">Subtítulo da notícia</h2>
+                {articleContent.content.map((paragraph, index) => (
+                  <p key={index} className="text-gray-700 mb-4">{paragraph}</p>
+                ))}
+                <h2 className="text-xl font-bold mb-3 mt-6">{articleContent.subTitle}</h2>
                 <p className="text-gray-700 mb-4">
                   Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam ullamcorper, 
                   ipsum vel condimentum rhoncus, nulla augue ultrices augue, vel commodo magna nulla non enim. Donec rutrum 

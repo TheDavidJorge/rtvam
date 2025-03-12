@@ -12,7 +12,7 @@ const navigation = [
   { name: 'Home', href: '/', icon: Home },
   { 
     name: 'Programação', 
-    href: '#',
+    href: '/programacao',
     icon: Calendar,
     children: [
       { 
