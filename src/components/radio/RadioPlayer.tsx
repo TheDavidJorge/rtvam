@@ -49,11 +49,11 @@ const RadioPlayer: React.FC<RadioPlayerProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 max-w-3xl mx-auto animate-fade-in">
+    <div className="bg-white rounded-lg max-w-3xl mx-auto animate-fade-in">
       <div className="flex flex-col md:flex-row items-center">
         {/* Station Logo/Animation */}
         <div className="relative mb-6 md:mb-0 md:mr-8">
-          <div className={`relative w-48 h-48 rounded-full overflow-hidden border-4 ${isPlaying ? 'border-rtam-blue animate-pulse' : 'border-gray-200'}`}>
+          <div className={`relative w-40 h-40 rounded-full overflow-hidden border-4 ${isPlaying ? 'border-rtam-blue animate-pulse' : 'border-gray-200'}`}>
             {stationLogo ? (
               <img 
                 src={stationLogo} 
@@ -62,7 +62,7 @@ const RadioPlayer: React.FC<RadioPlayerProps> = ({
               />
             ) : (
               <div className="w-full h-full bg-gray-100 flex items-center justify-center">
-                <Disc className={`w-24 h-24 text-rtam-blue ${isPlaying ? 'animate-spin' : ''}`} style={{ animationDuration: '3s' }} />
+                <Disc className={`w-20 h-20 text-rtam-blue ${isPlaying ? 'animate-spin' : ''}`} style={{ animationDuration: '3s' }} />
               </div>
             )}
             <div className={`absolute inset-0 rounded-full ${isPlaying ? 'bg-black bg-opacity-20' : ''}`}></div>
@@ -77,15 +77,15 @@ const RadioPlayer: React.FC<RadioPlayerProps> = ({
         {/* Player Controls */}
         <div className="flex-1 w-full">
           <div className="mb-4 text-center md:text-left">
-            <h3 className="text-2xl font-bold text-rtam-blue-dark">{stationName}</h3>
-            <p className="text-gray-500">Rádio Académica de Moçambique</p>
+            <h3 className="text-xl font-bold text-rtam-blue-dark">{stationName}</h3>
+            <p className="text-gray-500">Universidade Alberto Chipande</p>
           </div>
 
           <div className="space-y-4">
             {/* Play/Pause Button */}
             <button
               onClick={togglePlayPause}
-              className={`w-full py-3 px-6 rounded-lg flex items-center justify-center font-medium transition-colors ${
+              className={`w-full py-2 px-4 rounded-lg flex items-center justify-center font-medium transition-colors ${
                 isPlaying 
                   ? 'bg-rtam-red text-white hover:bg-rtam-red-dark' 
                   : 'bg-rtam-blue text-white hover:bg-rtam-blue-dark'
