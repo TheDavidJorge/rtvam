@@ -1,9 +1,11 @@
 
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import { ArrowLeft, ArrowRight, Facebook, Twitter, Linkedin, Share2 } from 'lucide-react';
+import ArticleContent from '@/components/news/ArticleContent';
+import ArticleNavigation from '@/components/news/ArticleNavigation';
+import NewsSidebar from '@/components/news/NewsSidebar';
 import { categories } from '@/data/newsData';
 
 const NewsDetail = () => {
@@ -72,143 +74,27 @@ const NewsDetail = () => {
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Main content */}
-            <div className="lg:w-2/3 animate-fade-in">
-              <div className="mb-4">
-                <Link to="/" className="text-rtam-blue hover:underline inline-flex items-center">
-                  <ArrowLeft className="w-4 h-4 mr-1" /> Voltar
-                </Link>
-              </div>
-              
-              <span className="inline-block bg-rtam-blue text-white text-xs px-2 py-1 rounded mb-3 uppercase">
-                {articleContent.categoryTitle}
-              </span>
-              
-              <h1 className="text-3xl font-bold text-gray-800 mb-4">{articleContent.title}</h1>
-              
-              <div className="flex items-center text-gray-500 mb-6">
-                <span>{formatDate(articleContent.date)}</span>
-              </div>
-              
-              <img 
-                src={articleContent.image} 
-                alt={articleContent.title} 
-                className="w-full h-auto rounded-lg mb-6 object-cover"
-                style={{ maxHeight: "500px" }}
-              />
-              
-              <div className="prose max-w-none mb-8">
-                {articleContent.content.map((paragraph, index) => (
-                  <p key={index} className="text-gray-700 mb-4">{paragraph}</p>
-                ))}
-                <h2 className="text-xl font-bold mb-3 mt-6">{articleContent.subTitle}</h2>
-                <p className="text-gray-700 mb-4">
-                  Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam ullamcorper, 
-                  ipsum vel condimentum rhoncus, nulla augue ultrices augue, vel commodo magna nulla non enim. Donec rutrum 
-                  condimentum nunc, vel commodo magna.
-                </p>
-              </div>
-              
-              {/* Social Share */}
-              <div className="flex items-center justify-between border-t border-b py-4 my-8">
-                <div className="text-gray-700 font-medium">Partilhar:</div>
-                <div className="flex space-x-3">
-                  <button className="p-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors">
-                    <Facebook size={18} />
-                  </button>
-                  <button className="p-2 rounded-full bg-sky-500 text-white hover:bg-sky-600 transition-colors">
-                    <Twitter size={18} />
-                  </button>
-                  <button className="p-2 rounded-full bg-blue-800 text-white hover:bg-blue-900 transition-colors">
-                    <Linkedin size={18} />
-                  </button>
-                  <button className="p-2 rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors">
-                    <Share2 size={18} />
-                  </button>
-                </div>
-              </div>
-              
-              {/* Navigation between news */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10 mb-8">
-                {prevNews && (
-                  <Link 
-                    to={`/noticias/${prevNews.category}/${prevNews.id}`}
-                    className="group flex flex-col p-4 border rounded-lg hover:border-rtam-blue transition-colors"
-                  >
-                    <span className="text-gray-500 flex items-center mb-2">
-                      <ArrowLeft className="w-4 h-4 mr-1" /> Anterior
-                    </span>
-                    <span className="font-medium group-hover:text-rtam-blue transition-colors line-clamp-2">
-                      {prevNews.title}
-                    </span>
-                  </Link>
-                )}
-                
-                {nextNews && (
-                  <Link 
-                    to={`/noticias/${nextNews.category}/${nextNews.id}`}
-                    className="group flex flex-col p-4 border rounded-lg hover:border-rtam-blue transition-colors text-right md:ml-auto"
-                  >
-                    <span className="text-gray-500 flex items-center justify-end mb-2">
-                      Próxima <ArrowRight className="w-4 h-4 ml-1" />
-                    </span>
-                    <span className="font-medium group-hover:text-rtam-blue transition-colors line-clamp-2">
-                      {nextNews.title}
-                    </span>
-                  </Link>
-                )}
-              </div>
-            </div>
+            <ArticleContent 
+              title={articleContent.title}
+              image={articleContent.image}
+              date={articleContent.date}
+              categoryTitle={articleContent.categoryTitle}
+              content={articleContent.content}
+              subTitle={articleContent.subTitle}
+              categoryId={categoryId || ''}
+              formatDate={formatDate}
+            />
             
             {/* Sidebar */}
-            <div className="lg:w-1/3">
-              {/* Featured News */}
-              <div className="bg-gray-50 rounded-lg p-6 mb-8">
-                <h3 className="text-xl font-bold text-rtam-blue mb-4 pb-2 border-b">Destaques</h3>
-                <div className="space-y-4">
-                  {relatedNews.map(item => (
-                    <Link 
-                      key={item.id} 
-                      to={`/noticias/${item.category}/${item.id}`}
-                      className="group flex gap-3 pb-3 border-b border-gray-200 last:border-0"
-                    >
-                      <img 
-                        src={item.image} 
-                        alt={item.title}
-                        className="w-20 h-16 object-cover rounded flex-shrink-0"
-                      />
-                      <div>
-                        <h4 className="font-medium text-gray-800 group-hover:text-rtam-blue transition-colors line-clamp-2">
-                          {item.title}
-                        </h4>
-                        <span className="text-xs text-gray-500">{formatDate(item.date)}</span>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-              
-              {/* Popular News */}
-              <div className="bg-gray-50 rounded-lg p-6">
-                <h3 className="text-xl font-bold text-rtam-blue mb-4 pb-2 border-b">Mais Lidas</h3>
-                <div className="space-y-4">
-                  {popularNews.map((item, index) => (
-                    <Link 
-                      key={item.id} 
-                      to={`/noticias/${item.category}/${item.id}`}
-                      className="group flex gap-3 pb-3 border-b border-gray-200 last:border-0"
-                    >
-                      <span className="w-6 h-6 bg-rtam-blue text-white rounded-full flex items-center justify-center flex-shrink-0">
-                        {index + 1}
-                      </span>
-                      <h4 className="font-medium text-gray-800 group-hover:text-rtam-blue transition-colors line-clamp-2">
-                        {item.title}
-                      </h4>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </div>
+            <NewsSidebar 
+              relatedNews={relatedNews}
+              popularNews={popularNews}
+              formatDate={formatDate}
+            />
           </div>
+          
+          {/* Navigation between news */}
+          <ArticleNavigation prevNews={prevNews} nextNews={nextNews} />
         </div>
       </main>
       <Footer />
