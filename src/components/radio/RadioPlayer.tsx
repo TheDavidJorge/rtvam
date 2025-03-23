@@ -1,6 +1,7 @@
 
-import React, { useState, useRef } from 'react';
-import { Play, Pause, Volume2, VolumeX, Disc } from 'lucide-react';
+import React from 'react';
+import { Disc, Volume2, VolumeX } from 'lucide-react';
+import { useRadioPlayer } from '@/contexts/RadioPlayerContext';
 
 interface RadioPlayerProps {
   streamUrl: string;
@@ -13,39 +14,30 @@ const RadioPlayer: React.FC<RadioPlayerProps> = ({
   stationName,
   stationLogo,
 }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
-  const [volume, setVolume] = useState(80);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  // Toggle play/pause
-  const togglePlayPause = () => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-      } else {
-        audioRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
+  const { 
+    isPlaying, 
+    volume, 
+    togglePlayPause, 
+    setVolumeLevel
+  } = useRadioPlayer();
+  
+  const [isMuted, setIsMuted] = React.useState(false);
 
   // Toggle mute
   const toggleMute = () => {
-    if (audioRef.current) {
-      audioRef.current.muted = !isMuted;
-      setIsMuted(!isMuted);
+    if (isMuted) {
+      setVolumeLevel(volume > 0 ? volume : 80);
+    } else {
+      setVolumeLevel(0);
     }
+    setIsMuted(!isMuted);
   };
 
   // Handle volume change
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newVolume = parseInt(e.target.value);
-    setVolume(newVolume);
-    if (audioRef.current) {
-      audioRef.current.volume = newVolume / 100;
-      setIsMuted(newVolume === 0);
-    }
+    setVolumeLevel(newVolume);
+    setIsMuted(newVolume === 0);
   };
 
   return (
@@ -78,7 +70,7 @@ const RadioPlayer: React.FC<RadioPlayerProps> = ({
         <div className="flex-1 w-full">
           <div className="mb-4 text-center md:text-left">
             <h3 className="text-xl font-bold text-rtam-blue-dark">{stationName}</h3>
-            <p className="text-gray-500">Universidade Alberto Chipande</p>
+            <p className="text-gray-500">Universidade Alberto Chipande UNIAC</p>
           </div>
 
           <div className="space-y-4">
@@ -93,12 +85,17 @@ const RadioPlayer: React.FC<RadioPlayerProps> = ({
             >
               {isPlaying ? (
                 <>
-                  <Pause className="w-5 h-5 mr-2" />
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="6" y="4" width="4" height="16"></rect>
+                    <rect x="14" y="4" width="4" height="16"></rect>
+                  </svg>
                   Pausar
                 </>
               ) : (
                 <>
-                  <Play className="w-5 h-5 mr-2" />
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                  </svg>
                   Iniciar
                 </>
               )}
@@ -133,14 +130,6 @@ const RadioPlayer: React.FC<RadioPlayerProps> = ({
           </div>
         </div>
       </div>
-
-      {/* Hidden audio element */}
-      <audio 
-        ref={audioRef} 
-        src={streamUrl} 
-        preload="auto"
-        onEnded={() => setIsPlaying(false)}
-      />
     </div>
   );
 };

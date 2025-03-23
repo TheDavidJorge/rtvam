@@ -8,6 +8,9 @@ import { Radio, Tv, MonitorPlay } from 'lucide-react';
 
 const TvDireto = () => {
   const [activeTab, setActiveTab] = useState<string>("tva1");
+  
+  // The iframe HTML for the TV streaming
+  const tvStreamIframe = `<div style="position:relative;padding-bottom:56.25%;overflow:hidden;height:0;max-width:100%;"><iframe id="4d1fc158-ccd2-2cca-6563-bfe298a1f27e-live-33896387-ce03-3658-c32b-a1faf3729ca6" src="https://iframe.dacast.com/live/4d1fc158-ccd2-2cca-6563-bfe298a1f27e/33896387-ce03-3658-c32b-a1faf3729ca6" width="100%" height="100%" frameborder="0" scrolling="no" allow="autoplay;encrypted-media" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen style="position:absolute;top:0;left:0;"></iframe></div>`;
 
   return (
     <div className="min-h-screen bg-white">
@@ -36,7 +39,7 @@ const TvDireto = () => {
                 
                 <TabsContent value="tva1" className="mt-2">
                   <LiveStream 
-                    videoUrl="https://www.youtube.com/embed/live_stream?channel=EXAMPLE_CHANNEL_ID_1"
+                    iframeHtml={tvStreamIframe}
                     title="Televisão Académica"
                     isLive={true}
                     description="Canal principal da TVA com programas noticiosos, debates acadêmicos e conteúdos educativos transmitidos diretamente das universidades de Moçambique."
@@ -45,9 +48,8 @@ const TvDireto = () => {
                 
                 <TabsContent value="tva2" className="mt-2">
                   <LiveStream 
-                    videoUrl="https://www.youtube.com/embed/live_stream?channel=EXAMPLE_CHANNEL_ID_2"
                     title="TVA 2"
-                    isLive={true}
+                    isLive={false}
                     description="Canal alternativo da TVA focado em entretenimento, cultura e programas especiais produzidos pelos estudantes universitários."
                   />
                 </TabsContent>

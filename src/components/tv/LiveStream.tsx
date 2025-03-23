@@ -2,10 +2,11 @@
 import React, { useState } from 'react';
 
 interface LiveStreamProps {
-  videoUrl: string;
+  videoUrl?: string;
   title?: string;
   description?: string;
   isLive?: boolean;
+  iframeHtml?: string;
 }
 
 const LiveStream: React.FC<LiveStreamProps> = ({
@@ -13,48 +14,59 @@ const LiveStream: React.FC<LiveStreamProps> = ({
   title = 'TV Académica de Moçambique',
   description = 'Transmissão ao vivo da programação da TV Académica de Moçambique',
   isLive = true,
+  iframeHtml,
 }) => {
   const [isLoading, setIsLoading] = useState(true);
 
+  // Function to safely render the iframe HTML
+  const renderIframe = () => {
+    if (iframeHtml) {
+      return <div className="aspect-w-16 aspect-h-9" dangerouslySetInnerHTML={{ __html: iframeHtml }} />;
+    }
+    
+    return (
+      <div className="w-full h-full flex items-center justify-center bg-black">
+        <img 
+          src="https://images.unsplash.com/photo-1578022761797-b8636ac1773c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" 
+          alt="TV Live Stream" 
+          className="w-full h-full object-cover opacity-60"
+          onLoad={() => setIsLoading(false)}
+        />
+
+        {/* Play button overlay */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <button 
+            className="w-20 h-20 rounded-full bg-rtam-red/90 flex items-center justify-center hover:bg-rtam-red transition-colors"
+            aria-label="Play video"
+          >
+            <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden animate-fade-in">
-      <div className="aspect-w-16 aspect-h-9 bg-gray-900 relative">
-        {/* Video Player - in a real implementation, this would be an iframe or video element */}
-        <div className="w-full h-full flex items-center justify-center bg-black">
-          <img 
-            src="https://images.unsplash.com/photo-1578022761797-b8636ac1773c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" 
-            alt="TV Live Stream" 
-            className="w-full h-full object-cover opacity-60"
-            onLoad={() => setIsLoading(false)}
-          />
+      <div className="aspect-w-16 aspect-h-9 bg-gray-900 relative max-w-4xl mx-auto">
+        {renderIframe()}
 
-          {/* Play button overlay */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <button 
-              className="w-20 h-20 rounded-full bg-rtam-red/90 flex items-center justify-center hover:bg-rtam-red transition-colors"
-              aria-label="Play video"
-            >
-              <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </button>
+        {/* Loading indicator */}
+        {isLoading && !iframeHtml && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-white"></div>
           </div>
+        )}
 
-          {/* Loading indicator */}
-          {isLoading && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
-              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-white"></div>
-            </div>
-          )}
-
-          {/* Live indicator */}
-          {isLive && (
-            <div className="absolute top-4 left-4 bg-rtam-red text-white px-3 py-1 rounded-full text-sm font-medium flex items-center">
-              <span className="w-2 h-2 bg-white rounded-full mr-2 animate-pulse"></span>
-              AO VIVO
-            </div>
-          )}
-        </div>
+        {/* Live indicator */}
+        {isLive && (
+          <div className="absolute top-4 left-4 bg-rtam-red text-white px-3 py-1 rounded-full text-sm font-medium flex items-center">
+            <span className="w-2 h-2 bg-white rounded-full mr-2 animate-pulse"></span>
+            AO VIVO
+          </div>
+        )}
       </div>
 
       <div className="p-6">
