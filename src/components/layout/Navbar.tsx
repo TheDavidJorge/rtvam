@@ -8,6 +8,13 @@ import MobileMenuButton from './MobileMenuButton';
 import DesktopNavigation from './DesktopNavigation';
 import MobileNavigation from './MobileNavigation';
 
+interface NavItem {
+  name: string;
+  href: string;
+  icon: React.ComponentType<any>;
+  children?: NavItem[];
+}
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);

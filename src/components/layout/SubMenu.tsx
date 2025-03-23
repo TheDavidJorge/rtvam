@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 interface NavItem {
   name: string;
   href: string;
-  icon?: LucideIcon;
+  icon: LucideIcon;
   children?: NavItem[];
 }
 
