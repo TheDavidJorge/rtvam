@@ -91,7 +91,11 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <span className="font-bold text-2xl text-rtam-blue">RTAM</span>
+            <img 
+              src="https://rtvam.co.mz/wp-content/uploads/2023/11/cropped-cropped-cropped-logo-1.png" 
+              alt="RTAM Logo" 
+              className="h-8 w-auto"
+            />
           </Link>
 
           {/* Desktop Navigation */}
