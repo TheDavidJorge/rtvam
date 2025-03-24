@@ -12,6 +12,7 @@ import NotFound from "./pages/NotFound";
 import NewsDetail from "./pages/NewsDetail";
 import NewsCategory from "./pages/NewsCategory";
 import Programming from "./pages/Programming";
+import Tva from "./pages/Tva";
 import { RadioPlayerProvider } from "./contexts/RadioPlayerContext";
 import FloatingRadioPlayer from "./components/radio/FloatingRadioPlayer";
 
@@ -28,6 +29,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/radio" element={<Radio />} />
             <Route path="/tv" element={<TvDireto />} />
+            <Route path="/tva" element={<Tva />} />
             <Route path="/noticias" element={<News />} />
             <Route path="/noticias/:categoryId/:newsId" element={<NewsDetail />} />
             <Route path="/noticias/:categoryId" element={<NewsCategory />} />

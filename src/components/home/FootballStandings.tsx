@@ -1,8 +1,10 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { ExternalLink } from 'lucide-react';
 
 // Mock data for Moçambola standings
 const mocambolaTeams = [
@@ -19,50 +21,88 @@ const mocambolaTeams = [
 ];
 
 const FootballStandings = () => {
+  const [open, setOpen] = useState(false);
+
   return (
-    <section className="py-8 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <Card className="shadow-md">
-          <CardHeader className="bg-rtam-blue text-white rounded-t-lg">
-            <CardTitle className="text-xl md:text-2xl">Classificação Moçambola</CardTitle>
-          </CardHeader>
-          <CardContent className="p-0">
-            <div className="overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow className="bg-gray-100">
-                    <TableHead className="w-14 text-center">Pos</TableHead>
-                    <TableHead>Equipa</TableHead>
-                    <TableHead className="w-14 text-center">J</TableHead>
-                    <TableHead className="w-14 text-center">V</TableHead>
-                    <TableHead className="w-14 text-center">E</TableHead>
-                    <TableHead className="w-14 text-center">D</TableHead>
-                    <TableHead className="w-14 text-center">GM</TableHead>
-                    <TableHead className="w-14 text-center">GS</TableHead>
-                    <TableHead className="w-14 text-center">Pts</TableHead>
+    <>
+      <Card className="shadow-md">
+        <CardHeader className="bg-rtam-blue text-white rounded-t-lg py-3">
+          <CardTitle className="text-lg md:text-xl">Classificação Moçambola</CardTitle>
+        </CardHeader>
+        <CardContent className="p-0">
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow className="bg-gray-100">
+                  <TableHead className="w-12 text-center">Pos</TableHead>
+                  <TableHead>Equipa</TableHead>
+                  <TableHead className="w-12 text-center">Pts</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {mocambolaTeams.slice(0, 5).map((team) => (
+                  <TableRow key={team.name} className="hover:bg-gray-50">
+                    <TableCell className="text-center font-medium p-2">{team.position}</TableCell>
+                    <TableCell className="font-medium p-2">{team.name}</TableCell>
+                    <TableCell className="text-center font-bold p-2">{team.points}</TableCell>
                   </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {mocambolaTeams.map((team) => (
-                    <TableRow key={team.name} className="hover:bg-gray-50">
-                      <TableCell className="text-center font-medium">{team.position}</TableCell>
-                      <TableCell className="font-medium">{team.name}</TableCell>
-                      <TableCell className="text-center">{team.played}</TableCell>
-                      <TableCell className="text-center">{team.won}</TableCell>
-                      <TableCell className="text-center">{team.drawn}</TableCell>
-                      <TableCell className="text-center">{team.lost}</TableCell>
-                      <TableCell className="text-center">{team.goalsFor}</TableCell>
-                      <TableCell className="text-center">{team.goalsAgainst}</TableCell>
-                      <TableCell className="text-center font-bold">{team.points}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </section>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </CardContent>
+        <CardFooter className="p-3">
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="text-rtam-blue hover:text-rtam-blue-dark flex items-center gap-1"
+            onClick={() => setOpen(true)}
+          >
+            Ver classificação completa <ExternalLink size={16} />
+          </Button>
+        </CardFooter>
+      </Card>
+
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="sm:max-w-xl">
+          <DialogHeader>
+            <DialogTitle>Classificação Completa Moçambola</DialogTitle>
+          </DialogHeader>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow className="bg-gray-100">
+                  <TableHead className="w-14 text-center">Pos</TableHead>
+                  <TableHead>Equipa</TableHead>
+                  <TableHead className="w-14 text-center">J</TableHead>
+                  <TableHead className="w-14 text-center">V</TableHead>
+                  <TableHead className="w-14 text-center">E</TableHead>
+                  <TableHead className="w-14 text-center">D</TableHead>
+                  <TableHead className="w-14 text-center">GM</TableHead>
+                  <TableHead className="w-14 text-center">GS</TableHead>
+                  <TableHead className="w-14 text-center">Pts</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {mocambolaTeams.map((team) => (
+                  <TableRow key={team.name} className="hover:bg-gray-50">
+                    <TableCell className="text-center font-medium">{team.position}</TableCell>
+                    <TableCell className="font-medium">{team.name}</TableCell>
+                    <TableCell className="text-center">{team.played}</TableCell>
+                    <TableCell className="text-center">{team.won}</TableCell>
+                    <TableCell className="text-center">{team.drawn}</TableCell>
+                    <TableCell className="text-center">{team.lost}</TableCell>
+                    <TableCell className="text-center">{team.goalsFor}</TableCell>
+                    <TableCell className="text-center">{team.goalsAgainst}</TableCell>
+                    <TableCell className="text-center font-bold">{team.points}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
 

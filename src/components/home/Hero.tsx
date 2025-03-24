@@ -1,30 +1,26 @@
 
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
 
-// Sample carousel data - this would come from your CMS or API
+// Updated carousel data
 const carouselItems = [
   {
     id: 1,
-    title: 'Jornal Académico',
+    title: 'Diário Informativo',
     description: 'O seu principal programa noticioso, com todas as novidades da academia.',
-    image: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3',
-    link: '/programacao/noticias/jornal-academico',
+    image: 'https://rtvam.co.mz/wp-content/uploads/2025/03/noticiasaomeiodiafff-768x432.jpg',
   },
   {
     id: 2,
-    title: 'Manhã Académica',
-    description: 'Comece o seu dia com as melhores músicas e informações.',
-    image: 'https://images.unsplash.com/photo-1589903308904-1010c2294adc?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3',
-    link: '/programacao/entretenimento/manha-academica',
+    title: 'Olhar Político',
+    description: 'Análises profundas e debates sobre os principais temas políticos da atualidade.',
+    image: 'https://rtvam.co.mz/wp-content/uploads/2025/03/olharpolitico1-scaled.jpg',
   },
   {
     id: 3,
-    title: 'Debate Académico',
-    description: 'Discussões aprofundadas sobre os temas mais relevantes para a comunidade académica.',
-    image: 'https://images.unsplash.com/photo-1560439514-4e9645039924?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3',
-    link: '/programacao/entretenimento/debate-academico',
+    title: 'Impacto Semanal',
+    description: 'Resumo semanal dos acontecimentos mais importantes em Moçambique e no mundo.',
+    image: 'https://rtvam.co.mz/wp-content/uploads/2024/11/impacosemanalcover2-1.png',
   },
 ];
 
@@ -78,15 +74,9 @@ const Hero = () => {
                   <h1 className="text-2xl sm:text-3xl font-bold text-rtam-blue mb-2">
                     {item.title}
                   </h1>
-                  <p className="text-base sm:text-lg text-gray-700 mb-4">
+                  <p className="text-base sm:text-lg text-gray-700">
                     {item.description}
                   </p>
-                  <Link
-                    to={item.link}
-                    className="inline-block px-5 py-2 bg-rtam-blue text-white font-medium rounded-md hover:bg-rtam-blue-dark transition-colors duration-300 shadow-md"
-                  >
-                    Saber Mais
-                  </Link>
                 </div>
               </div>
             </div>
