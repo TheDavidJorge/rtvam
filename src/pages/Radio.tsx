@@ -26,16 +26,16 @@ const Radio = () => {
                 <div className="mb-6">
                   <RadioPlayer 
                     streamUrl="https://stream.zeno.fm/f32qntg3srhvv" 
-                    stationName="Rádio Académica UNIAC"
+                    stationName="Rádio Académica de Moçambique"
                   />
                 </div>
                 <div className="prose max-w-none">
                   <p className="text-gray-700">
                     Ouça a Rádio Académica de Moçambique 24 horas por dia, com a melhor seleção de música e programas 
-                    informativos produzidos pelos estudantes da Universidade Alberto Chipande (UNIAC).
+                    informativos.
                   </p>
                   <p className="text-gray-700 mt-4">
-                    Frequência: 88.0 FM (Maputo)
+                    Frequência: 88.0 FM (Beira)
                   </p>
                 </div>
               </div>

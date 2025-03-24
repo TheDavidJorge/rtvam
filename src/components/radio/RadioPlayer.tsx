@@ -42,9 +42,9 @@ const RadioPlayer: React.FC<RadioPlayerProps> = ({
 
   return (
     <div className="bg-white rounded-lg max-w-3xl mx-auto animate-fade-in">
-      <div className="flex flex-col md:flex-row items-center">
+      <div className="flex flex-col items-center">
         {/* Station Logo/Animation */}
-        <div className="relative mb-6 md:mb-0 md:mr-8">
+        <div className="relative mb-4">
           <div className={`relative w-40 h-40 rounded-full overflow-hidden border-4 ${isPlaying ? 'border-rtam-blue animate-pulse' : 'border-gray-200'}`}>
             {stationLogo ? (
               <img 
@@ -66,69 +66,58 @@ const RadioPlayer: React.FC<RadioPlayerProps> = ({
           )}
         </div>
 
-        {/* Player Controls */}
-        <div className="flex-1 w-full">
-          <div className="mb-4 text-center md:text-left">
-            <h3 className="text-xl font-bold text-rtam-blue-dark">{stationName}</h3>
-            <p className="text-gray-500">Universidade Alberto Chipande UNIAC</p>
-          </div>
+        {/* Play/Pause Button */}
+        <button
+          onClick={togglePlayPause}
+          className={`w-full max-w-xs py-2 px-4 rounded-lg mb-4 flex items-center justify-center font-medium transition-colors ${
+            isPlaying 
+              ? 'bg-rtam-red text-white hover:bg-rtam-red-dark' 
+              : 'bg-rtam-blue text-white hover:bg-rtam-blue-dark'
+          }`}
+        >
+          {isPlaying ? (
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="6" y="4" width="4" height="16"></rect>
+              <rect x="14" y="4" width="4" height="16"></rect>
+            </svg>
+          ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+          )}
+        </button>
 
-          <div className="space-y-4">
-            {/* Play/Pause Button */}
-            <button
-              onClick={togglePlayPause}
-              className={`w-full py-2 px-4 rounded-lg flex items-center justify-center font-medium transition-colors ${
-                isPlaying 
-                  ? 'bg-rtam-red text-white hover:bg-rtam-red-dark' 
-                  : 'bg-rtam-blue text-white hover:bg-rtam-blue-dark'
-              }`}
-            >
-              {isPlaying ? (
-                <>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="6" y="4" width="4" height="16"></rect>
-                    <rect x="14" y="4" width="4" height="16"></rect>
-                  </svg>
-                  Pausar
-                </>
-              ) : (
-                <>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                  </svg>
-                  Iniciar
-                </>
-              )}
-            </button>
-            
-            {/* Volume Controls */}
-            <div className="flex items-center space-x-3">
-              <button 
-                onClick={toggleMute}
-                className="p-2 text-gray-600 hover:text-rtam-blue transition-colors"
-              >
-                {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
-              </button>
-              <input
-                type="range"
-                min="0"
-                max="100"
-                value={volume}
-                onChange={handleVolumeChange}
-                className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-rtam-blue"
-              />
-              <span className="text-sm text-gray-600 w-8">{volume}%</span>
-            </div>
-
-            {/* Currently Playing (placeholder) */}
-            {isPlaying && (
-              <div className="mt-4 p-3 bg-gray-50 rounded-lg border border-gray-100">
-                <p className="text-sm text-gray-600">A tocar agora:</p>
-                <p className="font-medium">Programa da Manhã Académica</p>
-              </div>
-            )}
-          </div>
+        {/* Station Name */}
+        <div className="mb-4 text-center">
+          <h3 className="text-xl font-bold text-rtam-blue-dark">{stationName}</h3>
         </div>
+
+        {/* Volume Controls */}
+        <div className="flex items-center space-x-3 w-full max-w-xs mb-2">
+          <button 
+            onClick={toggleMute}
+            className="p-2 text-gray-600 hover:text-rtam-blue transition-colors"
+          >
+            {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+          </button>
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value={volume}
+            onChange={handleVolumeChange}
+            className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-rtam-blue"
+          />
+          <span className="text-sm text-gray-600 w-8">{volume}%</span>
+        </div>
+
+        {/* Currently Playing (placeholder) */}
+        {isPlaying && (
+          <div className="mt-4 p-3 bg-gray-50 rounded-lg border border-gray-100 w-full max-w-xs">
+            <p className="text-sm text-gray-600">A tocar agora:</p>
+            <p className="font-medium">Programa da Manhã Académica</p>
+          </div>
+        )}
       </div>
     </div>
   );

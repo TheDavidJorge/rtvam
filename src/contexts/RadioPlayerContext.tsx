@@ -16,7 +16,7 @@ export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(80);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [stationName, setStationName] = useState("Rádio Académica UNIAC");
+  const [stationName, setStationName] = useState("Rádio Académica de Moçambique");
   const [stationLogo, setStationLogo] = useState<string | undefined>(undefined);
 
   useEffect(() => {
