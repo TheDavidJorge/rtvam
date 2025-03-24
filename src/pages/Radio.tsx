@@ -25,7 +25,7 @@ const Radio = () => {
                 <h2 className="section-title mb-4">Transmissão Ao Vivo</h2>
                 <div className="mb-6">
                   <RadioPlayer 
-                    streamUrl="https://stream.zeno.fm/5eu09zwpwtzuv" 
+                    streamUrl="https://stream.zeno.fm/f32qntg3srhvv" 
                     stationName="Rádio Académica UNIAC"
                   />
                 </div>

@@ -21,7 +21,7 @@ export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
   useEffect(() => {
     // Create audio element once on mount
-    audioRef.current = new Audio("https://stream.zeno.fm/5eu09zwpwtzuv");
+    audioRef.current = new Audio("https://stream.zeno.fm/f32qntg3srhvv");
     audioRef.current.volume = volume / 100;
     
     // Cleanup on unmount
