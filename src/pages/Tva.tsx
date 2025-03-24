@@ -74,145 +74,152 @@ const Tva = () => {
         <div className="container mx-auto px-4 py-8">
           <h1 className="text-3xl font-bold mb-6 text-rtam-blue">TVA 2 - Zona Desportiva</h1>
           
-          <Tabs defaultValue="mocambola" className="w-full mb-8">
-            <TabsList className="grid w-full grid-cols-3 mb-6">
-              <TabsTrigger value="mocambola">Moçambola</TabsTrigger>
-              <TabsTrigger value="premier">Premier League</TabsTrigger>
-              <TabsTrigger value="mundial">Qualificação Mundial</TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="mocambola" className="animate-fade-in">
-              <Card>
-                <CardHeader className="bg-rtam-blue text-white">
-                  <CardTitle>Classificação Moçambola 2024</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="overflow-x-auto">
-                    <Table>
-                      <TableHeader>
-                        <TableRow className="bg-gray-100">
-                          <TableHead className="w-14 text-center">Pos</TableHead>
-                          <TableHead>Equipa</TableHead>
-                          <TableHead className="w-14 text-center">J</TableHead>
-                          <TableHead className="w-14 text-center">V</TableHead>
-                          <TableHead className="w-14 text-center">E</TableHead>
-                          <TableHead className="w-14 text-center">D</TableHead>
-                          <TableHead className="w-14 text-center">GM</TableHead>
-                          <TableHead className="w-14 text-center">GS</TableHead>
-                          <TableHead className="w-14 text-center">Pts</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {/* We'll use our existing FootballStandings component's data */}
-                        <FootballStandings />
-                      </TableBody>
-                    </Table>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-            
-            <TabsContent value="premier" className="animate-fade-in">
-              <Card>
-                <CardHeader className="bg-rtam-blue text-white">
-                  <CardTitle>Classificação Premier League 2023/24</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="overflow-x-auto">
-                    <Table>
-                      <TableHeader>
-                        <TableRow className="bg-gray-100">
-                          <TableHead className="w-14 text-center">Pos</TableHead>
-                          <TableHead>Equipa</TableHead>
-                          <TableHead className="w-14 text-center">J</TableHead>
-                          <TableHead className="w-14 text-center">V</TableHead>
-                          <TableHead className="w-14 text-center">E</TableHead>
-                          <TableHead className="w-14 text-center">D</TableHead>
-                          <TableHead className="w-14 text-center">GM</TableHead>
-                          <TableHead className="w-14 text-center">GS</TableHead>
-                          <TableHead className="w-14 text-center">Pts</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {premierLeagueTeams.map((team) => (
-                          <TableRow key={team.name} className="hover:bg-gray-50">
-                            <TableCell className="text-center font-medium">{team.position}</TableCell>
-                            <TableCell className="font-medium">{team.name}</TableCell>
-                            <TableCell className="text-center">{team.played}</TableCell>
-                            <TableCell className="text-center">{team.won}</TableCell>
-                            <TableCell className="text-center">{team.drawn}</TableCell>
-                            <TableCell className="text-center">{team.lost}</TableCell>
-                            <TableCell className="text-center">{team.goalsFor}</TableCell>
-                            <TableCell className="text-center">{team.goalsAgainst}</TableCell>
-                            <TableCell className="text-center font-bold">{team.points}</TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-            
-            <TabsContent value="mundial" className="animate-fade-in">
-              <Card>
-                <CardHeader className="bg-rtam-blue text-white">
-                  <CardTitle>Jogos de Qualificação para o Mundial 2026 - África</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="overflow-x-auto">
-                    <Table>
-                      <TableHeader>
-                        <TableRow className="bg-gray-100">
-                          <TableHead>Data</TableHead>
-                          <TableHead>Casa</TableHead>
-                          <TableHead>Fora</TableHead>
-                          <TableHead>Competição</TableHead>
-                          <TableHead>Local</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {wcQualificationMatches.map((match, index) => {
-                          const isMozambique = match.homeTeam === 'Moçambique' || match.awayTeam === 'Moçambique';
-                          return (
-                            <TableRow 
-                              key={index} 
-                              className={isMozambique ? "bg-yellow-50 hover:bg-yellow-100" : "hover:bg-gray-50"}
-                            >
-                              <TableCell>{match.date}</TableCell>
-                              <TableCell className={match.homeTeam === 'Moçambique' ? "font-bold text-rtam-red" : ""}>
-                                {match.homeTeam}
-                              </TableCell>
-                              <TableCell className={match.awayTeam === 'Moçambique' ? "font-bold text-rtam-red" : ""}>
-                                {match.awayTeam}
-                              </TableCell>
-                              <TableCell>{match.competition}</TableCell>
-                              <TableCell>{match.venue}</TableCell>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Left column - League tables */}
+            <div className="lg:col-span-2">
+              <Tabs defaultValue="mocambola" className="w-full mb-8">
+                <TabsList className="grid w-full grid-cols-3 mb-6">
+                  <TabsTrigger value="mocambola">Moçambola</TabsTrigger>
+                  <TabsTrigger value="premier">Premier League</TabsTrigger>
+                  <TabsTrigger value="mundial">Qualificação Mundial</TabsTrigger>
+                </TabsList>
+                
+                <TabsContent value="mocambola" className="animate-fade-in">
+                  <Card>
+                    <CardHeader className="bg-rtam-blue text-white">
+                      <CardTitle>Classificação Moçambola 2024</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="overflow-x-auto">
+                        <Table>
+                          <TableHeader>
+                            <TableRow className="bg-gray-100">
+                              <TableHead className="w-14 text-center">Pos</TableHead>
+                              <TableHead>Equipa</TableHead>
+                              <TableHead className="w-14 text-center">J</TableHead>
+                              <TableHead className="w-14 text-center">V</TableHead>
+                              <TableHead className="w-14 text-center">E</TableHead>
+                              <TableHead className="w-14 text-center">D</TableHead>
+                              <TableHead className="w-14 text-center">GM</TableHead>
+                              <TableHead className="w-14 text-center">GS</TableHead>
+                              <TableHead className="w-14 text-center">Pts</TableHead>
                             </TableRow>
-                          );
-                        })}
-                      </TableBody>
-                    </Table>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
-          
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold text-rtam-blue-dark mb-4">Últimas Notícias de Futebol</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {footballNews.map((news, index) => (
-                <Card key={index} className="hover:shadow-md transition-shadow">
-                  <CardHeader className="bg-gray-50 p-4">
-                    <CardTitle className="text-lg text-gray-800">{news.title}</CardTitle>
-                    <p className="text-sm text-gray-500 mt-1">{new Date(news.date).toLocaleDateString('pt-PT')} • {news.source}</p>
-                  </CardHeader>
-                  <CardContent className="p-4">
-                    <p className="text-gray-600">{news.summary}</p>
-                  </CardContent>
-                </Card>
-              ))}
+                          </TableHeader>
+                          <TableBody>
+                            <FootballStandings />
+                          </TableBody>
+                        </Table>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+                
+                <TabsContent value="premier" className="animate-fade-in">
+                  <Card>
+                    <CardHeader className="bg-rtam-blue text-white">
+                      <CardTitle>Classificação Premier League 2023/24</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="overflow-x-auto">
+                        <Table>
+                          <TableHeader>
+                            <TableRow className="bg-gray-100">
+                              <TableHead className="w-14 text-center">Pos</TableHead>
+                              <TableHead>Equipa</TableHead>
+                              <TableHead className="w-14 text-center">J</TableHead>
+                              <TableHead className="w-14 text-center">V</TableHead>
+                              <TableHead className="w-14 text-center">E</TableHead>
+                              <TableHead className="w-14 text-center">D</TableHead>
+                              <TableHead className="w-14 text-center">GM</TableHead>
+                              <TableHead className="w-14 text-center">GS</TableHead>
+                              <TableHead className="w-14 text-center">Pts</TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            {premierLeagueTeams.map((team) => (
+                              <TableRow key={team.name} className="hover:bg-gray-50">
+                                <TableCell className="text-center font-medium">{team.position}</TableCell>
+                                <TableCell className="font-medium">{team.name}</TableCell>
+                                <TableCell className="text-center">{team.played}</TableCell>
+                                <TableCell className="text-center">{team.won}</TableCell>
+                                <TableCell className="text-center">{team.drawn}</TableCell>
+                                <TableCell className="text-center">{team.lost}</TableCell>
+                                <TableCell className="text-center">{team.goalsFor}</TableCell>
+                                <TableCell className="text-center">{team.goalsAgainst}</TableCell>
+                                <TableCell className="text-center font-bold">{team.points}</TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+                
+                <TabsContent value="mundial" className="animate-fade-in">
+                  <Card>
+                    <CardHeader className="bg-rtam-blue text-white">
+                      <CardTitle>Jogos de Qualificação para o Mundial 2026 - África</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="overflow-x-auto">
+                        <Table>
+                          <TableHeader>
+                            <TableRow className="bg-gray-100">
+                              <TableHead>Data</TableHead>
+                              <TableHead>Casa</TableHead>
+                              <TableHead>Fora</TableHead>
+                              <TableHead className="hidden md:table-cell">Competição</TableHead>
+                              <TableHead className="hidden md:table-cell">Local</TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            {wcQualificationMatches.map((match, index) => {
+                              const isMozambique = match.homeTeam === 'Moçambique' || match.awayTeam === 'Moçambique';
+                              return (
+                                <TableRow 
+                                  key={index} 
+                                  className={isMozambique ? "bg-yellow-50 hover:bg-yellow-100" : "hover:bg-gray-50"}
+                                >
+                                  <TableCell>{match.date}</TableCell>
+                                  <TableCell className={match.homeTeam === 'Moçambique' ? "font-bold text-rtam-red" : ""}>
+                                    {match.homeTeam}
+                                  </TableCell>
+                                  <TableCell className={match.awayTeam === 'Moçambique' ? "font-bold text-rtam-red" : ""}>
+                                    {match.awayTeam}
+                                  </TableCell>
+                                  <TableCell className="hidden md:table-cell">{match.competition}</TableCell>
+                                  <TableCell className="hidden md:table-cell">{match.venue}</TableCell>
+                                </TableRow>
+                              );
+                            })}
+                          </TableBody>
+                        </Table>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+              </Tabs>
+            </div>
+            
+            {/* Right column - News */}
+            <div className="lg:col-span-1">
+              <div className="mb-8">
+                <h2 className="text-2xl font-bold text-rtam-blue-dark mb-4">Últimas Notícias</h2>
+                <div className="space-y-4">
+                  {footballNews.map((news, index) => (
+                    <Card key={index} className="hover:shadow-md transition-shadow">
+                      <CardHeader className="bg-gray-50 p-4">
+                        <CardTitle className="text-base text-gray-800">{news.title}</CardTitle>
+                        <p className="text-xs text-gray-500 mt-1">{new Date(news.date).toLocaleDateString('pt-PT')} • {news.source}</p>
+                      </CardHeader>
+                      <CardContent className="p-4">
+                        <p className="text-sm text-gray-600">{news.summary}</p>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>

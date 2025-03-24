@@ -23,8 +23,8 @@ const SubMenu = ({ item, openMenus, toggleSubmenu, isActive }: SubMenuProps) => 
     <div className="relative group">
       <button
         className={cn(
-          "nav-link flex items-center",
-          openMenus[item.name] && "active"
+          "flex items-center px-3 py-2 text-gray-700 hover:text-rtam-blue hover:bg-gray-100 rounded-md transition-colors",
+          openMenus[item.name] && "bg-gray-100 text-rtam-blue"
         )}
         onClick={() => toggleSubmenu(item.name)}
       >
@@ -32,7 +32,7 @@ const SubMenu = ({ item, openMenus, toggleSubmenu, isActive }: SubMenuProps) => 
         {item.name}
         <ChevronDown className="ml-1 w-4 h-4" />
       </button>
-      <div className="absolute left-0 mt-2 w-56 origin-top-left rounded-md shadow-lg hidden group-hover:block animate-fade-in">
+      <div className="absolute left-0 mt-2 w-56 origin-top-left rounded-md shadow-lg z-50 hidden group-hover:block animate-fade-in">
         <div className="rounded-md bg-white ring-1 ring-black ring-opacity-5 py-1">
           {item.children?.map((child) => (
             <div key={child.name} className="group/submenu relative">
@@ -52,7 +52,7 @@ const SubMenu = ({ item, openMenus, toggleSubmenu, isActive }: SubMenuProps) => 
                     <span>{child.name}</span>
                     <ChevronRight className="w-4 h-4" />
                   </div>
-                  <div className="absolute left-full top-0 ml-1 w-56 origin-top-left rounded-md shadow-lg hidden group-hover/submenu:block">
+                  <div className="absolute left-full top-0 ml-1 w-56 origin-top-left rounded-md shadow-lg z-50 hidden group-hover/submenu:block">
                     <div className="rounded-md bg-white ring-1 ring-black ring-opacity-5 py-1">
                       {child.children.map((subChild) => (
                         <Link
