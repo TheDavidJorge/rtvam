@@ -14,91 +14,109 @@ import { List, Grid, Calendar } from 'lucide-react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
-// Dados de exemplo para a grelha de programação
+// Dados atualizados para a grelha de programação
 const weekDays = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"];
 
 const weeklySchedule = {
   "Segunda": [
-    { time: "04:00 - 06:00", program: "Madrugada Académica", host: "João Silva", image: "/placeholder.svg" },
-    { time: "06:00 - 09:00", program: "Manhã Académica", host: "Ana Silva", image: "/placeholder.svg" },
-    { time: "09:00 - 12:00", program: "Aula Aberta", host: "Carlos Menezes", image: "/placeholder.svg" },
-    { time: "12:00 - 13:00", program: "Jornal Académico", host: "Equipa de Jornalismo", image: "/placeholder.svg" },
-    { time: "13:00 - 15:00", program: "Tarde Académica", host: "Paulo Santos", image: "/placeholder.svg" },
-    { time: "15:00 - 17:00", program: "Ciência e Cultura", host: "Marta Luís", image: "/placeholder.svg" },
-    { time: "17:00 - 19:00", program: "Desporto Universitário", host: "João Mutondo", image: "/placeholder.svg" },
-    { time: "19:00 - 20:30", program: "Debate Académico", host: "Filipe Costa", image: "/placeholder.svg" },
-    { time: "20:30 - 22:00", program: "Noite Académica", host: "Joana Tembe", image: "/placeholder.svg" },
-    { time: "22:00 - 00:00", program: "Jazz e Blues", host: "André Matola", image: "/placeholder.svg" }
+    { time: "04:00", program: "Abertura de Emissão", host: "" },
+    { time: "07:00 - 10:00", program: "Bom Dia Beira", host: "Ana Silva" },
+    { time: "10:00 - 12:00", program: "Explosão Matinal", host: "Carlos Menezes" },
+    { time: "12:00 - 13:00", program: "Espaço Empresarial", host: "Teresa Machava" },
+    { time: "13:00 - 15:00", program: "Música ao Seu Gosto", host: "Paulo Santos" },
+    { time: "15:00 - 16:00", program: "A Voz do Povo", host: "Helena Buque" },
+    { time: "16:00 - 17:00", program: "Personalidade Académica", host: "Alexandre Maputo" },
+    { time: "17:00 - 19:00", program: "Trânsito Seguro", host: "João Mutondo" },
+    { time: "19:40 - 20:30", program: "Jornal TVA", host: "Equipa de Jornalismo" },
+    { time: "20:30 - 22:00", program: "Músicas Variadas", host: "DJ Académico" },
+    { time: "22:00 - 23:00", program: "Jornal TVA (Repetição)", host: "Equipa de Jornalismo" },
+    { time: "23:00 - 00:00", program: "Músicas Variadas", host: "DJ Académico" },
+    { time: "00:00 - 04:00", program: "Fecho de Emissão", host: "" }
   ],
   "Terça": [
-    { time: "04:00 - 06:00", program: "Madrugada Académica", host: "João Silva", image: "/placeholder.svg" },
-    { time: "06:00 - 09:00", program: "Manhã Académica", host: "Ana Silva", image: "/placeholder.svg" },
-    { time: "09:00 - 12:00", program: "Pesquisa em Foco", host: "Rosa Mateus", image: "/placeholder.svg" },
-    { time: "12:00 - 13:00", program: "Jornal Académico", host: "Equipa de Jornalismo", image: "/placeholder.svg" },
-    { time: "13:00 - 15:00", program: "Tarde Académica", host: "Paulo Santos", image: "/placeholder.svg" },
-    { time: "15:00 - 17:00", program: "Tecnologia e Inovação", host: "Hélio Chaves", image: "/placeholder.svg" },
-    { time: "17:00 - 19:00", program: "Economia e Sociedade", host: "Teresa Machava", image: "/placeholder.svg" },
-    { time: "19:00 - 20:30", program: "Debate Académico", host: "Filipe Costa", image: "/placeholder.svg" },
-    { time: "20:30 - 22:00", program: "Noite Académica", host: "Joana Tembe", image: "/placeholder.svg" },
-    { time: "22:00 - 00:00", program: "Rock Alternativo", host: "Carlos Menezes", image: "/placeholder.svg" }
+    { time: "04:00", program: "Abertura de Emissão", host: "" },
+    { time: "07:00 - 10:00", program: "Bom Dia Beira", host: "Ana Silva" },
+    { time: "10:00 - 12:00", program: "Explosão Matinal", host: "Carlos Menezes" },
+    { time: "12:00 - 13:00", program: "Espaço Empresarial", host: "Teresa Machava" },
+    { time: "13:00 - 15:00", program: "Música ao Seu Gosto", host: "Paulo Santos" },
+    { time: "15:00 - 16:00", program: "A Voz do Povo", host: "Helena Buque" },
+    { time: "16:00 - 17:00", program: "Desporto Total", host: "João Mutondo" },
+    { time: "17:00 - 19:00", program: "Trânsito Seguro", host: "Maria José" },
+    { time: "19:40 - 20:30", program: "Jornal TVA", host: "Equipa de Jornalismo" },
+    { time: "20:30 - 22:00", program: "Amor Além da Palavra", host: "Joana Tembe" },
+    { time: "22:00 - 23:00", program: "Jornal TVA (Repetição)", host: "Equipa de Jornalismo" },
+    { time: "23:00 - 00:00", program: "Músicas Variadas", host: "DJ Académico" },
+    { time: "00:00 - 04:00", program: "Fecho de Emissão", host: "" }
   ],
   "Quarta": [
-    { time: "04:00 - 06:00", program: "Madrugada Académica", host: "João Silva", image: "/placeholder.svg" },
-    { time: "06:00 - 09:00", program: "Manhã Académica", host: "Ana Silva", image: "/placeholder.svg" },
-    { time: "09:00 - 12:00", program: "Saúde e Bem-estar", host: "Laura Ngonga", image: "/placeholder.svg" },
-    { time: "12:00 - 13:00", program: "Jornal Académico", host: "Equipa de Jornalismo", image: "/placeholder.svg" },
-    { time: "13:00 - 15:00", program: "Tarde Académica", host: "Paulo Santos", image: "/placeholder.svg" },
-    { time: "15:00 - 17:00", program: "Ambiente e Sustentabilidade", host: "Marta Luís", image: "/placeholder.svg" },
-    { time: "17:00 - 19:00", program: "Artes e Letras", host: "Alexandre Maputo", image: "/placeholder.svg" },
-    { time: "19:00 - 20:30", program: "Entrevista da Semana", host: "Helena Buque", image: "/placeholder.svg" },
-    { time: "20:30 - 22:00", program: "Noite Académica", host: "Joana Tembe", image: "/placeholder.svg" },
-    { time: "22:00 - 00:00", program: "Música Africana", host: "André Matola", image: "/placeholder.svg" }
+    { time: "04:00", program: "Abertura de Emissão", host: "" },
+    { time: "07:00 - 10:00", program: "Bom Dia Beira", host: "Ana Silva" },
+    { time: "10:00 - 12:00", program: "Explosão Matinal", host: "Carlos Menezes" },
+    { time: "12:00 - 13:00", program: "Espaço Empresarial", host: "Teresa Machava" },
+    { time: "13:00 - 15:00", program: "Música ao Seu Gosto", host: "Paulo Santos" },
+    { time: "15:00 - 16:00", program: "A Voz do Povo", host: "Helena Buque" },
+    { time: "16:00 - 17:00", program: "Personalidades Académicas", host: "Alexandre Maputo" },
+    { time: "17:00 - 19:00", program: "Trânsito Seguro", host: "Maria José" },
+    { time: "19:40 - 20:30", program: "Jornal TVA", host: "Equipa de Jornalismo" },
+    { time: "20:30 - 22:00", program: "Amor Além da Palavra", host: "Joana Tembe" },
+    { time: "22:00 - 23:00", program: "Jornal TVA (Repetição)", host: "Equipa de Jornalismo" },
+    { time: "23:00 - 00:00", program: "Músicas Variadas", host: "DJ Académico" },
+    { time: "00:00 - 04:00", program: "Fecho de Emissão", host: "" }
   ],
   "Quinta": [
-    { time: "04:00 - 06:00", program: "Madrugada Académica", host: "João Silva", image: "/placeholder.svg" },
-    { time: "06:00 - 09:00", program: "Manhã Académica", host: "Ana Silva", image: "/placeholder.svg" },
-    { time: "09:00 - 12:00", program: "Direito e Cidadania", host: "Alberto Simango", image: "/placeholder.svg" },
-    { time: "12:00 - 13:00", program: "Jornal Académico", host: "Equipa de Jornalismo", image: "/placeholder.svg" },
-    { time: "13:00 - 15:00", program: "Tarde Académica", host: "Paulo Santos", image: "/placeholder.svg" },
-    { time: "15:00 - 17:00", program: "Tecnologia e Inovação", host: "Hélio Chaves", image: "/placeholder.svg" },
-    { time: "17:00 - 19:00", program: "Desporto Universitário", host: "João Mutondo", image: "/placeholder.svg" },
-    { time: "19:00 - 20:30", program: "Debate Académico", host: "Filipe Costa", image: "/placeholder.svg" },
-    { time: "20:30 - 22:00", program: "Noite Académica", host: "Joana Tembe", image: "/placeholder.svg" },
-    { time: "22:00 - 00:00", program: "Hip Hop e R&B", host: "Fábio Murima", image: "/placeholder.svg" }
+    { time: "04:00", program: "Abertura de Emissão", host: "" },
+    { time: "07:00 - 10:00", program: "Bom Dia Beira", host: "Ana Silva" },
+    { time: "10:00 - 12:00", program: "Explosão Matinal", host: "Carlos Menezes" },
+    { time: "12:00 - 13:00", program: "Espaço Empresarial", host: "Teresa Machava" },
+    { time: "13:00 - 15:00", program: "Música ao Seu Gosto", host: "Paulo Santos" },
+    { time: "15:00 - 16:00", program: "A Voz do Povo", host: "Helena Buque" },
+    { time: "16:00 - 17:00", program: "Consultório Psicológico", host: "Marta Luís" },
+    { time: "17:00 - 19:00", program: "Trânsito Seguro", host: "Maria José" },
+    { time: "19:40 - 20:30", program: "Jornal TVA", host: "Equipa de Jornalismo" },
+    { time: "20:30 - 22:00", program: "Debate Acadêmico", host: "Filipe Costa" },
+    { time: "22:00 - 23:00", program: "Jornal TVA (Repetição)", host: "Equipa de Jornalismo" },
+    { time: "23:00 - 00:00", program: "Músicas Variadas", host: "DJ Académico" },
+    { time: "00:00 - 04:00", program: "Fecho de Emissão", host: "" }
   ],
   "Sexta": [
-    { time: "04:00 - 06:00", program: "Madrugada Académica", host: "João Silva", image: "/placeholder.svg" },
-    { time: "06:00 - 09:00", program: "Manhã Académica", host: "Ana Silva", image: "/placeholder.svg" },
-    { time: "09:00 - 12:00", program: "Aula Aberta", host: "Carlos Menezes", image: "/placeholder.svg" },
-    { time: "12:00 - 13:00", program: "Jornal Académico", host: "Equipa de Jornalismo", image: "/placeholder.svg" },
-    { time: "13:00 - 15:00", program: "Tarde Académica", host: "Paulo Santos", image: "/placeholder.svg" },
-    { time: "15:00 - 17:00", program: "Mundo Universitário", host: "Teresa Machava", image: "/placeholder.svg" },
-    { time: "17:00 - 19:00", program: "Economia e Sociedade", host: "Teresa Machava", image: "/placeholder.svg" },
-    { time: "19:00 - 20:30", program: "Top 10 Semanal", host: "Maria José", image: "/placeholder.svg" },
-    { time: "20:30 - 23:00", program: "Sexta Dançante", host: "DJ Académico", image: "/placeholder.svg" },
-    { time: "23:00 - 00:00", program: "Madrugada Académica", host: "Fábio Murima", image: "/placeholder.svg" }
+    { time: "04:00", program: "Abertura de Emissão", host: "" },
+    { time: "07:00 - 10:00", program: "Bom Dia Beira", host: "Ana Silva" },
+    { time: "10:00 - 12:00", program: "Explosão Matinal", host: "Carlos Menezes" },
+    { time: "12:00 - 13:00", program: "Espaço Empresarial", host: "Teresa Machava" },
+    { time: "13:00 - 15:00", program: "Música ao Seu Gosto", host: "Paulo Santos" },
+    { time: "15:00 - 16:00", program: "A Voz do Povo", host: "Helena Buque" },
+    { time: "16:00 - 17:00", program: "Figuras Acadêmicas que Marcam", host: "Alexandre Maputo" },
+    { time: "17:00 - 19:00", program: "Trânsito Seguro", host: "Maria José" },
+    { time: "19:40 - 20:30", program: "Jornal TVA", host: "Equipa de Jornalismo" },
+    { time: "20:30 - 22:00", program: "Noitada Acadêmica", host: "Joana Tembe" },
+    { time: "22:00 - 23:00", program: "Jornal TVA (Repetição)", host: "Equipa de Jornalismo" },
+    { time: "23:00 - 00:00", program: "Músicas Variadas", host: "DJ Académico" },
+    { time: "00:00 - 04:00", program: "Fecho de Emissão", host: "" }
   ],
   "Sábado": [
-    { time: "04:00 - 07:00", program: "Madrugada Académica", host: "Paulo Santos", image: "/placeholder.svg" },
-    { time: "07:00 - 10:00", program: "Bom Dia Fim-de-Semana", host: "Joana Tembe", image: "/placeholder.svg" },
-    { time: "10:00 - 12:00", program: "Revista de Imprensa", host: "Helena Buque", image: "/placeholder.svg" },
-    { time: "12:00 - 14:00", program: "Almoço Musical", host: "André Matola", image: "/placeholder.svg" },
-    { time: "14:00 - 16:00", program: "Mundo dos Livros", host: "Alexandre Maputo", image: "/placeholder.svg" },
-    { time: "16:00 - 18:00", program: "Desporto ao Vivo", host: "João Mutondo", image: "/placeholder.svg" },
-    { time: "18:00 - 20:00", program: "Entrevista Especial", host: "Filipe Costa", image: "/placeholder.svg" },
-    { time: "20:00 - 23:00", program: "Top Hits", host: "Ana Silva", image: "/placeholder.svg" },
-    { time: "23:00 - 00:00", program: "Noite de Sábado", host: "DJ Académico", image: "/placeholder.svg" }
+    { time: "04:00", program: "Abertura de Emissão", host: "" },
+    { time: "07:00 - 10:00", program: "Giro 88", host: "Paulo Santos" },
+    { time: "10:00 - 12:00", program: "Emissão", host: "DJ Académico" },
+    { time: "12:00 - 13:30", program: "Artista da Semana", host: "André Matola" },
+    { time: "13:30 - 15:00", program: "Andhu Athu (Nossa Gente)", host: "Rosa Mateus" },
+    { time: "15:00 - 17:30", program: "Sábado à Tarde", host: "Joana Tembe" },
+    { time: "18:00 - 19:30", program: "As Mais Ouvidas da Semana", host: "Maria José" },
+    { time: "19:40 - 20:30", program: "Jornal TVA", host: "Equipa de Jornalismo" },
+    { time: "20:30 - 23:00", program: "Acadêmica In The Mix", host: "DJ Académico" },
+    { time: "23:00 - 00:00", program: "Músicas Variadas", host: "Fábio Murima" },
+    { time: "00:00 - 04:00", program: "Fecho de Emissão", host: "" }
   ],
   "Domingo": [
-    { time: "04:00 - 08:00", program: "Madrugada Domingueira", host: "Fábio Murima", image: "/placeholder.svg" },
-    { time: "08:00 - 10:00", program: "Despertar Domingueiro", host: "Paulo Santos", image: "/placeholder.svg" },
-    { time: "10:00 - 12:00", program: "Momento Espiritual", host: "Maria José", image: "/placeholder.svg" },
-    { time: "12:00 - 14:00", program: "Domingo Musical", host: "André Matola", image: "/placeholder.svg" },
-    { time: "14:00 - 16:00", program: "Cinema e Séries", host: "Fábio Murima", image: "/placeholder.svg" },
-    { time: "16:00 - 18:00", program: "Resumo Desportivo", host: "João Mutondo", image: "/placeholder.svg" },
-    { time: "18:00 - 20:00", program: "Ciência em Destaque", host: "Hélio Chaves", image: "/placeholder.svg" },
-    { time: "20:00 - 22:00", program: "Jazz ao Domingo", host: "Alexandre Maputo", image: "/placeholder.svg" },
-    { time: "22:00 - 00:00", program: "Preparando a Semana", host: "Marta Luís", image: "/placeholder.svg" }
+    { time: "04:00", program: "Abertura de Emissão", host: "" },
+    { time: "07:00 - 09:30", program: "Intensidade Acadêmica", host: "Fábio Murima" },
+    { time: "09:30 - 12:00", program: "Alô Amiguinho", host: "Maria José" },
+    { time: "12:00 - 14:00", program: "Impacto Semanal", host: "Filipe Costa" },
+    { time: "14:00 - 16:00", program: "Conexão Jovem", host: "Joana Tembe" },
+    { time: "16:00 - 18:00", program: "Emissão", host: "DJ Académico" },
+    { time: "18:00 - 19:30", program: "Figuras que Marcam", host: "Alexandre Maputo" },
+    { time: "19:30 - 21:00", program: "Amor Além da Palavra", host: "Helena Buque" },
+    { time: "21:00 - 00:00", program: "Músicas Variadas", host: "DJ Académico" },
+    { time: "00:00 - 04:00", program: "Fecho de Emissão", host: "" }
   ]
 };
 
@@ -217,13 +235,10 @@ const RadioSchedule = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {selectedDay && weeklySchedule[selectedDay as keyof typeof weeklySchedule]?.map((slot, index) => (
             <div key={index} className="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-              <div className="h-40 bg-gray-100">
-                <img src={slot.image} alt={slot.program} className="w-full h-full object-cover" />
-              </div>
               <div className="p-4">
                 <p className="text-sm font-medium text-rtam-blue">{slot.time}</p>
                 <h3 className="font-bold text-lg mt-1">{slot.program}</h3>
-                <p className="text-gray-600 text-sm mt-1">{slot.host}</p>
+                {slot.host && <p className="text-gray-600 text-sm mt-1">{slot.host}</p>}
               </div>
             </div>
           ))}
