@@ -1,5 +1,7 @@
 
 import React from 'react';
+import { Button } from '@/components/ui/button';
+import { Facebook, Instagram, Youtube } from 'lucide-react';
 
 // Sample Twitter feed data
 const twitterPosts = [
@@ -127,6 +129,36 @@ const SocialFeed = () => {
                 </a>
               </div>
             </div>
+          </div>
+        </div>
+        
+        {/* Social Media Follow Widgets */}
+        <div className="mt-12">
+          <h2 className="text-2xl font-bold text-rtam-blue mb-6 text-center">Siga-nos nas Redes Sociais</h2>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Button 
+              className="bg-[#1877F2] hover:bg-[#1661c7] text-white flex items-center gap-2 px-6 py-5"
+              onClick={() => window.open('https://facebook.com/RTAMMocambique', '_blank')}
+            >
+              <Facebook size={24} />
+              <span className="font-bold">Facebook</span>
+            </Button>
+            
+            <Button 
+              className="bg-gradient-to-r from-[#fd5949] to-[#d6249f] hover:from-[#e0503f] hover:to-[#c2228c] text-white flex items-center gap-2 px-6 py-5"
+              onClick={() => window.open('https://instagram.com/rtammocambique', '_blank')}
+            >
+              <Instagram size={24} />
+              <span className="font-bold">Instagram</span>
+            </Button>
+            
+            <Button 
+              className="bg-[#FF0000] hover:bg-[#d60000] text-white flex items-center gap-2 px-6 py-5"
+              onClick={() => window.open('https://youtube.com/@RadioAcademicadeMocambique', '_blank')}
+            >
+              <Youtube size={24} />
+              <span className="font-bold">YouTube</span>
+            </Button>
           </div>
         </div>
       </div>
