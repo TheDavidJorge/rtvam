@@ -9,6 +9,7 @@ import PublicationTimeline from '@/components/news/PublicationTimeline';
 import NewsByCategory from '@/components/news/NewsByCategory';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import BreakingNewsTicker from '@/components/news/BreakingNewsTicker';
 
 // Format date to localized string
 const formatDate = (dateString: string) => {
@@ -30,12 +31,22 @@ const getAllNews = () => {
   ).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 };
 
+// Breaking news data
+const breakingNewsData = [
+  "Fortes chuvas causam inundações no norte de Moçambique. Autoridades emitem alerta para moradores.",
+  "Presidente anuncia novo pacote de investimentos para o setor de telecomunicações.",
+  "Costa do Sol vence o Ferroviário por 2-0 e mantém liderança no Moçambola.",
+  "Ministério da Saúde lança campanha de vacinação contra malária em cinco províncias.",
+  "Novo campus universitário será inaugurado em Nampula no próximo mês.",
+  "Assembleia da República aprova orçamento para desenvolvimento de infraestruturas."
+];
+
 const News = () => {
   const allNews = getAllNews();
   const featuredNews = allNews.slice(0, 5); // Get 5 news items for the carousel
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white pb-12">
       <Navbar />
       <div className="pt-16 page-container">
         <div className="container mx-auto px-4 py-8">
@@ -68,6 +79,7 @@ const News = () => {
         </div>
       </div>
       <Footer />
+      <BreakingNewsTicker news={breakingNewsData} />
     </div>
   );
 };
