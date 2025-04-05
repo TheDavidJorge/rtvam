@@ -10,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Radio = () => {
   const [activeTab, setActiveTab] = useState<string>("schedule");
-  const radioLogo = "https://drive.google.com/uc?export=view&id=1voNszLefw4tELXPWVqQsABt5A_XpIsmA";
+  const radioLogo = "/lovable-uploads/143b33e3-d9cb-4db6-8e79-8cdb091a0a1c.png";
 
   return (
     <div className="min-h-screen bg-white">

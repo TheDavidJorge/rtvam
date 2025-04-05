@@ -8,7 +8,7 @@ const NavbarLogo = () => {
   
   // Use the radio-specific logo only on radio pages
   const logoUrl = isRadioPage 
-    ? "https://drive.google.com/uc?export=view&id=1voNszLefw4tELXPWVqQsABt5A_XpIsmA" 
+    ? "/lovable-uploads/143b33e3-d9cb-4db6-8e79-8cdb091a0a1c.png" 
     : "/lovable-uploads/82edc24c-19ea-465b-8237-3da455dcf4e0.png";
 
   return (

@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 
 const FloatingRadioPlayer: React.FC = () => {
   const { isPlaying, togglePlayPause, stationName } = useRadioPlayer();
-  const radioLogo = "https://drive.google.com/uc?export=view&id=1voNszLefw4tELXPWVqQsABt5A_XpIsmA";
+  const radioLogo = "/lovable-uploads/143b33e3-d9cb-4db6-8e79-8cdb091a0a1c.png";
 
   if (!isPlaying && !isPlaying) return null;
 
