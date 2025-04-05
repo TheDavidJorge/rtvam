@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Radio = () => {
   const [activeTab, setActiveTab] = useState<string>("schedule");
+  const radioLogo = "https://drive.google.com/uc?export=view&id=1voNszLefw4tELXPWVqQsABt5A_XpIsmA";
 
   return (
     <div className="min-h-screen bg-white">
@@ -27,6 +28,7 @@ const Radio = () => {
                   <RadioPlayer 
                     streamUrl="https://stream.zeno.fm/f32qntg3srhvv" 
                     stationName="Rádio Académica de Moçambique"
+                    stationLogo={radioLogo}
                   />
                 </div>
                 <div className="prose max-w-none">

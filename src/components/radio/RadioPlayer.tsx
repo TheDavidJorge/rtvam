@@ -12,7 +12,7 @@ interface RadioPlayerProps {
 const RadioPlayer: React.FC<RadioPlayerProps> = ({
   streamUrl,
   stationName,
-  stationLogo,
+  stationLogo = "https://drive.google.com/uc?export=view&id=1voNszLefw4tELXPWVqQsABt5A_XpIsmA",
 }) => {
   const { 
     isPlaying, 

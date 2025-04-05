@@ -17,7 +17,7 @@ export const RadioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const [volume, setVolume] = useState(80);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [stationName, setStationName] = useState("Rádio Académica de Moçambique");
-  const [stationLogo, setStationLogo] = useState<string | undefined>(undefined);
+  const [stationLogo, setStationLogo] = useState<string | undefined>("https://drive.google.com/uc?export=view&id=1voNszLefw4tELXPWVqQsABt5A_XpIsmA");
 
   useEffect(() => {
     // Create audio element once on mount

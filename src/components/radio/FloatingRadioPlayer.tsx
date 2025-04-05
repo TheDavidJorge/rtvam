@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 
 const FloatingRadioPlayer: React.FC = () => {
   const { isPlaying, togglePlayPause, stationName } = useRadioPlayer();
+  const radioLogo = "https://drive.google.com/uc?export=view&id=1voNszLefw4tELXPWVqQsABt5A_XpIsmA";
 
   if (!isPlaying && !isPlaying) return null;
 
@@ -33,7 +34,7 @@ const FloatingRadioPlayer: React.FC = () => {
         </button>
         
         <div className="flex items-center">
-          <Radio className="w-4 h-4 text-rtam-blue mr-2" />
+          <img src={radioLogo} alt="Radio Logo" className="w-6 h-6 mr-2 rounded-full" />
           <Link to="/radio" className="text-sm font-medium text-gray-700 hover:text-rtam-blue transition-colors">
             {stationName}
           </Link>
