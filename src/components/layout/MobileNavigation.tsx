@@ -33,7 +33,7 @@ const MobileNavigation = ({
         isOpen ? "max-h-screen opacity-100 py-4" : "max-h-0 opacity-0"
       )}
     >
-      <div className="container mx-auto px-4 bg-white rounded-lg shadow-lg">
+      <div className="container mx-auto px-4 bg-white rounded-lg shadow-lg dark:bg-gray-800">
         <div className="flex flex-col space-y-1 py-2">
           {navigation.map((item) => (
             <MobileNavItem
