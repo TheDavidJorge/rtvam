@@ -14,15 +14,16 @@ interface NavItem {
 
 interface MobileNavItemProps {
   item: NavItem;
-  isOpen: boolean;
-  toggleSubmenu: () => void;
+  openMenus: Record<string, boolean>;
+  toggleSubmenu: (name: string) => void;
   isActive: (href: string) => boolean;
 }
 
-const MobileNavItem = ({ item, isOpen, toggleSubmenu, isActive }: MobileNavItemProps) => {
+const MobileNavItem = ({ item, openMenus, toggleSubmenu, isActive }: MobileNavItemProps) => {
   const { t } = useLanguage();
   const Icon = item.icon;
   const active = isActive(item.href);
+  const isOpen = openMenus[item.name] || false;
 
   if (!item.children) {
     return (
@@ -44,7 +45,7 @@ const MobileNavItem = ({ item, isOpen, toggleSubmenu, isActive }: MobileNavItemP
   return (
     <div>
       <button
-        onClick={toggleSubmenu}
+        onClick={() => toggleSubmenu(item.name)}
         className={cn(
           'w-full flex items-center justify-between py-3 px-4 border-l-4',
           active
