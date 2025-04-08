@@ -14,33 +14,39 @@ import NewsCategory from "./pages/NewsCategory";
 import Programming from "./pages/Programming";
 import Tva from "./pages/Tva";
 import { RadioPlayerProvider } from "./contexts/RadioPlayerContext";
+import { ThemeProvider } from "./contexts/ThemeContext";
+import { LanguageProvider } from "./contexts/LanguageContext";
 import FloatingRadioPlayer from "./components/radio/FloatingRadioPlayer";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <RadioPlayerProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/radio" element={<Radio />} />
-            <Route path="/tv" element={<TvDireto />} />
-            <Route path="/tva" element={<Tva />} />
-            <Route path="/noticias" element={<News />} />
-            <Route path="/noticias/:categoryId/:newsId" element={<NewsDetail />} />
-            <Route path="/noticias/:categoryId" element={<NewsCategory />} />
-            <Route path="/programacao" element={<Programming />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-          <FloatingRadioPlayer />
-        </BrowserRouter>
-      </RadioPlayerProvider>
-    </TooltipProvider>
+    <ThemeProvider>
+      <LanguageProvider>
+        <TooltipProvider>
+          <RadioPlayerProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/radio" element={<Radio />} />
+                <Route path="/tv" element={<TvDireto />} />
+                <Route path="/tva" element={<Tva />} />
+                <Route path="/noticias" element={<News />} />
+                <Route path="/noticias/:categoryId/:newsId" element={<NewsDetail />} />
+                <Route path="/noticias/:categoryId" element={<NewsCategory />} />
+                <Route path="/programacao" element={<Programming />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+              <FloatingRadioPlayer />
+            </BrowserRouter>
+          </RadioPlayerProvider>
+        </TooltipProvider>
+      </LanguageProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 

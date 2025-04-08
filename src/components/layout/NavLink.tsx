@@ -1,8 +1,9 @@
 
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { cn } from '@/lib/utils';
 import { LucideIcon } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { cn } from '@/lib/utils';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface NavLinkProps {
   href: string;
@@ -12,16 +13,16 @@ interface NavLinkProps {
 }
 
 const NavLink = ({ href, name, icon: Icon, isActive }: NavLinkProps) => {
+  const { t } = useLanguage();
+  const active = isActive(href);
+  
   return (
     <Link
       to={href}
-      className={cn(
-        "nav-link flex items-center",
-        isActive(href) && "active"
-      )}
+      className={cn('nav-link flex items-center space-x-1', active && 'active')}
     >
-      <Icon className="w-4 h-4 mr-2" />
-      {name}
+      <Icon className="h-4 w-4" />
+      <span>{t(name.toLowerCase())}</span>
     </Link>
   );
 };

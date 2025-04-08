@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -85,15 +86,15 @@
   }
   
   .nav-link.active {
-    @apply text-white bg-rtam-blue;
+    @apply text-white bg-rtam-blue dark:bg-rtam-blue-light;
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white transition-colors bg-rtam-blue rounded-md hover:bg-rtam-blue-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rtam-blue;
+    @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white transition-colors bg-rtam-blue rounded-md hover:bg-rtam-blue-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rtam-blue dark:bg-rtam-blue-light dark:hover:bg-rtam-blue;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium transition-colors bg-white border border-gray-300 rounded-md text-rtam-blue hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rtam-blue;
+    @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium transition-colors bg-white border border-gray-300 rounded-md text-rtam-blue hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rtam-blue dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700;
   }
 
   .btn-destructive {
@@ -101,7 +102,7 @@
   }
 
   .glass {
-    @apply bg-white bg-opacity-80 backdrop-blur-md border border-white border-opacity-20;
+    @apply bg-white bg-opacity-80 backdrop-blur-md border border-white border-opacity-20 dark:bg-gray-900 dark:bg-opacity-80 dark:border-gray-800 dark:border-opacity-20;
   }
   
   .glass-dark {
@@ -109,11 +110,11 @@
   }
 
   .news-card {
-    @apply overflow-hidden rounded-lg card-hover bg-white;
+    @apply overflow-hidden rounded-lg card-hover bg-white dark:bg-gray-800;
   }
 
   .section-title {
-    @apply text-2xl font-bold mb-6 pb-2 border-b-2 border-rtam-blue text-rtam-blue inline-block;
+    @apply text-2xl font-bold mb-6 pb-2 border-b-2 border-rtam-blue text-rtam-blue dark:border-rtam-blue-light dark:text-rtam-blue-light inline-block;
   }
 
   .page-container {
@@ -156,4 +157,9 @@ img {
 
 .animate-ticker {
   animation: ticker 30s linear infinite;
+}
+
+/* Dark mode transitions */
+.dark-transition {
+  @apply transition-colors duration-300;
 }
