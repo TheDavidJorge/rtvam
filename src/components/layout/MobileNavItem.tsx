@@ -30,10 +30,10 @@ const MobileNavItem = ({ item, openMenus, toggleSubmenu, isActive }: MobileNavIt
       <Link
         to={item.href}
         className={cn(
-          'flex items-center py-3 px-4 border-l-4',
+          'flex items-center py-3 px-4 border-l-4 transition-colors',
           active
             ? 'border-rtam-blue bg-rtam-blue/10 text-rtam-blue dark:border-rtam-blue-light dark:text-rtam-blue-light'
-            : 'border-transparent hover:bg-gray-50 dark:hover:bg-gray-800'
+            : 'border-transparent hover:bg-gray-50 dark:hover:bg-gray-700 dark:text-gray-200'
         )}
       >
         <Icon className="h-5 w-5 mr-3" />
@@ -47,10 +47,10 @@ const MobileNavItem = ({ item, openMenus, toggleSubmenu, isActive }: MobileNavIt
       <button
         onClick={() => toggleSubmenu(item.name)}
         className={cn(
-          'w-full flex items-center justify-between py-3 px-4 border-l-4',
+          'w-full flex items-center justify-between py-3 px-4 border-l-4 transition-colors',
           active
             ? 'border-rtam-blue bg-rtam-blue/10 text-rtam-blue dark:border-rtam-blue-light dark:text-rtam-blue-light'
-            : 'border-transparent hover:bg-gray-50 dark:hover:bg-gray-800'
+            : 'border-transparent hover:bg-gray-50 dark:hover:bg-gray-700 dark:text-gray-200'
         )}
       >
         <div className="flex items-center">
@@ -69,10 +69,10 @@ const MobileNavItem = ({ item, openMenus, toggleSubmenu, isActive }: MobileNavIt
               key={child.name}
               to={child.href}
               className={cn(
-                'block py-2 px-4 border-l-4',
+                'block py-2 px-4 border-l-4 transition-colors',
                 isActive(child.href)
                   ? 'border-rtam-blue text-rtam-blue dark:border-rtam-blue-light dark:text-rtam-blue-light'
-                  : 'border-transparent hover:text-rtam-blue'
+                  : 'border-transparent hover:text-rtam-blue dark:text-gray-300 dark:hover:text-rtam-blue-light'
               )}
             >
               {t(child.name.toLowerCase())}

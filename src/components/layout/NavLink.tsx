@@ -19,7 +19,10 @@ const NavLink = ({ href, name, icon: Icon, isActive }: NavLinkProps) => {
   return (
     <Link
       to={href}
-      className={cn('nav-link flex items-center space-x-1', active && 'active')}
+      className={cn(
+        'nav-link flex items-center space-x-1 dark:text-gray-200 dark:hover:bg-rtam-blue-dark/20',
+        active && 'active dark:bg-rtam-blue-dark dark:text-white'
+      )}
     >
       <Icon className="h-4 w-4" />
       <span>{t(name.toLowerCase())}</span>

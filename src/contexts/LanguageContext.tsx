@@ -11,7 +11,7 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-// This will be populated with translations
+// Enhanced translations with more text
 const translations: Record<Language, Record<string, string>> = {
   pt: {
     'home': 'Início',
@@ -22,6 +22,18 @@ const translations: Record<Language, Record<string, string>> = {
     'dark_mode': 'Modo Escuro',
     'light_mode': 'Modo Claro',
     'language': 'Idioma',
+    'settings': 'Configurações',
+    'sports': 'Esportes',
+    'live': 'Ao Vivo',
+    'schedule': 'Programação',
+    'about_us': 'Sobre Nós',
+    'contact': 'Contato',
+    'search': 'Pesquisar',
+    'latest_news': 'Últimas Notícias',
+    'popular': 'Popular',
+    'read_more': 'Leia Mais',
+    'today': 'Hoje',
+    'toggle_theme': 'Alternar Tema',
     // Add more translations as needed
   },
   en: {
@@ -33,6 +45,18 @@ const translations: Record<Language, Record<string, string>> = {
     'dark_mode': 'Dark Mode',
     'light_mode': 'Light Mode',
     'language': 'Language',
+    'settings': 'Settings',
+    'sports': 'Sports',
+    'live': 'Live',
+    'schedule': 'Schedule',
+    'about_us': 'About Us',
+    'contact': 'Contact',
+    'search': 'Search',
+    'latest_news': 'Latest News',
+    'popular': 'Popular',
+    'read_more': 'Read More',
+    'today': 'Today',
+    'toggle_theme': 'Toggle Theme',
     // Add more translations as needed
   }
 };

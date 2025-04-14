@@ -19,20 +19,20 @@ const SettingsMenu = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="p-2 rounded-full hover:bg-muted">
-          <Settings className="h-5 w-5" />
+        <button className="p-2 rounded-full hover:bg-muted dark:hover:bg-gray-700">
+          <Settings className="h-5 w-5 dark:text-gray-200" />
           <span className="sr-only">Settings</span>
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuLabel>{t('language')}</DropdownMenuLabel>
-        <DropdownMenuItem className="cursor-pointer">
+      <DropdownMenuContent align="end" className="dark:bg-gray-800 dark:border-gray-700">
+        <DropdownMenuLabel className="dark:text-gray-200">{t('language')}</DropdownMenuLabel>
+        <DropdownMenuItem className="cursor-pointer dark:hover:bg-gray-700">
           <LanguageToggle />
         </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuLabel>Theme</DropdownMenuLabel>
-        <DropdownMenuItem className="cursor-pointer flex justify-between items-center">
-          <span>{t('dark_mode')}</span>
+        <DropdownMenuSeparator className="dark:bg-gray-700" />
+        <DropdownMenuLabel className="dark:text-gray-200">{t('toggle_theme')}</DropdownMenuLabel>
+        <DropdownMenuItem className="cursor-pointer flex justify-between items-center dark:hover:bg-gray-700">
+          <span className="dark:text-gray-200">{t('dark_mode')}</span>
           <ThemeToggle />
         </DropdownMenuItem>
       </DropdownMenuContent>
