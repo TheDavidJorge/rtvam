@@ -11,6 +11,13 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
+// Terms that should not be translated
+const preservedTerms = [
+  'Rádio Académica de Moçambique',
+  'Televisão Académica de Moçambique',
+  'RTAM'
+];
+
 // Enhanced translations with more text
 const translations: Record<Language, Record<string, string>> = {
   pt: {
@@ -78,7 +85,13 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   };
 
   const t = (key: string): string => {
-    return translations[language][key] || key;
+    // Check if this is a preserved term that shouldn't be translated
+    if (preservedTerms.some(term => key.includes(term))) {
+      return key;
+    }
+    
+    // Return the translation or the key if not found
+    return translations[language][key.toLowerCase()] || key;
   };
 
   return (

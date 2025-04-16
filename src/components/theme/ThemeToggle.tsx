@@ -17,7 +17,9 @@ export const ThemeToggle = () => {
       aria-label={theme === 'dark' ? t('light_mode') : t('dark_mode')}
       className={cn(
         "p-2 h-9 w-9 rounded-full",
-        theme === 'dark' ? 'bg-gray-700 text-yellow-400 hover:text-yellow-500 hover:bg-gray-600' : 'text-sky-700 hover:text-sky-900 hover:bg-gray-100'
+        theme === 'dark' 
+          ? 'bg-gray-700 text-yellow-400 hover:text-yellow-500 hover:bg-gray-600' 
+          : 'bg-blue-100 text-primary hover:text-primary-foreground hover:bg-primary'
       )}
     >
       {theme === 'dark' ? (

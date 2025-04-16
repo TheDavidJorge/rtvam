@@ -14,11 +14,11 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [theme, setTheme] = useState<Theme>('light');
 
   useEffect(() => {
-    // Check for saved theme preference or system preference
+    // Check for saved theme preference but default to light
     const savedTheme = localStorage.getItem('theme') as Theme;
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     
-    const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+    // Always default to light if no preference is set
+    const initialTheme = savedTheme || 'light';
     setTheme(initialTheme);
     
     // Apply theme to document

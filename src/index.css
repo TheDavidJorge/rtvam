@@ -11,7 +11,7 @@
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-    --primary: 214 100% 36%;
+    --primary: 231 81% 55%;  /* Blue #2e49ed */
     --primary-foreground: 210 40% 98%;
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -28,24 +28,24 @@
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --background: 226 27% 19%;  /* #1f2540 */
+    --foreground: 0 0% 100%;    /* White */
+    --card: 226 27% 19%;        /* #1f2540 */
+    --card-foreground: 0 0% 100%;
+    --popover: 226 27% 19%;     /* #1f2540 */
+    --popover-foreground: 0 0% 100%;
+    --primary: 231 81% 55%;     /* Keep blue #2e49ed */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 226 27% 25%;   /* Slightly lighter than background */
+    --secondary-foreground: 0 0% 100%;
+    --muted: 226 27% 25%;
+    --muted-foreground: 0 0% 80%;
+    --accent: 226 27% 25%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 226 27% 30%;
+    --input: 226 27% 30%;
     --ring: 212.7 26.8% 83.9%;
   }
 }
@@ -82,19 +82,19 @@
   }
 
   .nav-link {
-    @apply px-3 py-2 text-sm font-medium rounded-md hover:bg-opacity-10 hover:bg-primary transition-colors;
+    @apply px-3 py-2 text-sm font-medium rounded-md hover:bg-opacity-10 transition-colors;
   }
   
   .nav-link.active {
-    @apply text-white bg-rtam-blue dark:bg-rtam-blue-light;
+    @apply text-white bg-primary dark:bg-primary dark:text-white;
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white transition-colors bg-rtam-blue rounded-md hover:bg-rtam-blue-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rtam-blue dark:bg-rtam-blue-light dark:hover:bg-rtam-blue;
+    @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white transition-colors bg-primary rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium transition-colors bg-white border border-gray-300 rounded-md text-rtam-blue hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rtam-blue dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700;
+    @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium transition-colors bg-white border border-gray-300 rounded-md text-primary hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700;
   }
 
   .btn-destructive {
@@ -114,7 +114,7 @@
   }
 
   .section-title {
-    @apply text-2xl font-bold mb-6 pb-2 border-b-2 border-rtam-blue text-rtam-blue dark:border-rtam-blue-light dark:text-rtam-blue-light inline-block;
+    @apply text-2xl font-bold mb-6 pb-2 border-b-2 border-primary text-primary dark:border-primary dark:text-white inline-block;
   }
 
   .page-container {
@@ -162,4 +162,9 @@ img {
 /* Dark mode transitions */
 .dark-transition {
   @apply transition-colors duration-300;
+}
+
+/* Dark mode hover styles */
+.dark .hover-dark:hover {
+  @apply text-gray-400;  /* Grey hover color for dark mode */
 }

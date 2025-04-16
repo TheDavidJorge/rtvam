@@ -10,24 +10,24 @@ export const LanguageToggle = () => {
   
   return (
     <div className="flex items-center">
-      <span className="text-sm font-medium mr-2 dark:text-gray-200">{t('language')}:</span>
+      <span className="text-sm font-medium mr-2 dark:text-white">{t('language')}:</span>
       <ToggleGroup 
         type="single" 
         value={language} 
         onValueChange={(value) => value && setLanguage(value as Language)}
-        className={theme === 'dark' ? 'bg-gray-700 rounded-md' : ''}
+        className={theme === 'dark' ? 'bg-gray-700 rounded-md' : 'bg-white/20 rounded-md'}
       >
         <ToggleGroupItem 
           value="pt" 
           aria-label="Português" 
-          className="text-xs px-2 py-1 dark:data-[state=on]:bg-rtam-blue-light dark:data-[state=on]:text-white dark:text-gray-200"
+          className="text-xs px-2 py-1 dark:data-[state=on]:bg-primary dark:data-[state=on]:text-white dark:text-white dark:hover:text-gray-400"
         >
           PT
         </ToggleGroupItem>
         <ToggleGroupItem 
           value="en" 
           aria-label="English" 
-          className="text-xs px-2 py-1 dark:data-[state=on]:bg-rtam-blue-light dark:data-[state=on]:text-white dark:text-gray-200"
+          className="text-xs px-2 py-1 dark:data-[state=on]:bg-primary dark:data-[state=on]:text-white dark:text-white dark:hover:text-gray-400"
         >
           EN
         </ToggleGroupItem>
