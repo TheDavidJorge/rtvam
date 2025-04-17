@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 export type Language = 'pt' | 'en';
@@ -64,7 +63,30 @@ const translations: Record<Language, Record<string, string>> = {
     'read_more': 'Read More',
     'today': 'Today',
     'toggle_theme': 'Toggle Theme',
-    // Add more translations as needed
+    'login_with_google': 'Login with Google',
+    'logout': 'Logout',
+    'login_required': 'Login Required',
+    'login_to_comment': 'Please login to leave a comment',
+    'comments': 'Comments',
+    'write_comment': 'Write your comment...',
+    'post_comment': 'Post Comment',
+    'comment_added': 'Comment Added',
+    'comment_success': 'Your comment has been posted',
+    'comment_error': 'Error posting your comment',
+    'like': 'Like',
+    'no_comments': 'No comments yet. Be the first to comment!',
+    'newsletter': 'Newsletter',
+    'newsletter_description': 'Subscribe to receive our latest news and updates',
+    'name': 'Name',
+    'your_name': 'Your name',
+    'email': 'Email',
+    'your_email': 'Your email address',
+    'subscribe': 'Subscribe',
+    'enter_email': 'Please enter your email address',
+    'newsletter_success': 'Thank you for subscribing to our newsletter!',
+    'newsletter_error': 'Error subscribing to newsletter',
+    'error': 'Error',
+    'success': 'Success',
   }
 };
 

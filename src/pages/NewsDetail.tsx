@@ -6,6 +6,8 @@ import Footer from '@/components/layout/Footer';
 import ArticleContent from '@/components/news/ArticleContent';
 import ArticleNavigation from '@/components/news/ArticleNavigation';
 import NewsSidebar from '@/components/news/NewsSidebar';
+import CommentSection from '@/components/common/CommentSection';
+import NewsletterSubscription from '@/components/common/NewsletterSubscription';
 import { categories } from '@/data/newsData';
 
 const NewsDetail = () => {
@@ -74,27 +76,41 @@ const NewsDetail = () => {
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Main content */}
-            <ArticleContent 
-              title={articleContent.title}
-              image={articleContent.image}
-              date={articleContent.date}
-              categoryTitle={articleContent.categoryTitle}
-              content={articleContent.content}
-              subTitle={articleContent.subTitle}
-              categoryId={categoryId || ''}
-              formatDate={formatDate}
-            />
+            <div className="lg:w-2/3">
+              <ArticleContent 
+                title={articleContent.title}
+                image={articleContent.image}
+                date={articleContent.date}
+                categoryTitle={articleContent.categoryTitle}
+                content={articleContent.content}
+                subTitle={articleContent.subTitle}
+                categoryId={categoryId || ''}
+                formatDate={formatDate}
+              />
+              
+              {/* Comment Section */}
+              <div className="mt-8 border-t pt-8">
+                <CommentSection postId={`${categoryId}-${newsId}`} />
+              </div>
+              
+              {/* Navigation between news */}
+              <div className="mt-8">
+                <ArticleNavigation prevNews={prevNews} nextNews={nextNews} />
+              </div>
+            </div>
             
             {/* Sidebar */}
-            <NewsSidebar 
-              relatedNews={relatedNews}
-              popularNews={popularNews}
-              formatDate={formatDate}
-            />
+            <div className="lg:w-1/3 space-y-8">
+              <NewsSidebar 
+                relatedNews={relatedNews}
+                popularNews={popularNews}
+                formatDate={formatDate}
+              />
+              
+              {/* Newsletter Subscription */}
+              <NewsletterSubscription />
+            </div>
           </div>
-          
-          {/* Navigation between news */}
-          <ArticleNavigation prevNews={prevNews} nextNews={nextNews} />
         </div>
       </main>
       <Footer />

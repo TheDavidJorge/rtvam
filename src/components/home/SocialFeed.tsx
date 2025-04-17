@@ -1,9 +1,10 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Facebook, Instagram, Youtube, Twitter, Globe } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
+import NewsletterSubscription from '@/components/common/NewsletterSubscription';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 // Sample Twitter feed data
 const twitterPosts = [
@@ -51,60 +52,30 @@ const facebookVideos = [
 
 const SocialFeed = () => {
   const { toast } = useToast();
+  const { t } = useLanguage();
 
   const handleFollow = (platform: string) => {
     toast({
-      title: `Seguir no ${platform}`,
-      description: `Você será redirecionado para a página do ${platform} da RTVAM.`,
+      title: `${t('follow_on')} ${platform}`,
+      description: `${t('redirect_to')} ${platform} ${t('of_rtvam')}`,
     });
   };
 
   const handleShare = () => {
     toast({
-      title: "Compartilhar",
-      description: "O link da RTVAM foi copiado para a área de transferência.",
-    });
-  };
-
-  const handleSubscribe = (email: string) => {
-    if (!email.trim() || !email.includes('@')) {
-      toast({
-        title: "Erro",
-        description: "Por favor, insira um email válido.",
-        variant: "destructive",
-      });
-      return;
-    }
-    
-    toast({
-      title: "Inscrição confirmada",
-      description: "Obrigado por se inscrever na nossa newsletter!",
+      title: t('share'),
+      description: t('link_copied'),
     });
   };
 
   return (
     <section className="py-12 bg-gray-50">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-rtam-blue text-center mb-10">Conecte-se Connosco</h2>
+        <h2 className="text-3xl font-bold text-rtam-blue text-center mb-10">{t('connect_with_us')}</h2>
         
-        {/* Newsletter Signup */}
-        <div className="max-w-2xl mx-auto mb-12 bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-xl font-bold mb-4">Inscreva-se na nossa Newsletter</h3>
-          <p className="text-gray-600 mb-4">Receba as últimas notícias, programação e conteúdos exclusivos diretamente no seu email.</p>
-          <div className="flex flex-col sm:flex-row gap-3">
-            <input 
-              type="email" 
-              id="email-newsletter"
-              placeholder="Seu endereço de email" 
-              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 flex-1"
-            />
-            <Button 
-              className="bg-rtam-blue hover:bg-rtam-blue-dark text-white"
-              onClick={() => handleSubscribe((document.getElementById('email-newsletter') as HTMLInputElement).value)}
-            >
-              Inscrever-se
-            </Button>
-          </div>
+        {/* Replace the old newsletter signup with the new component */}
+        <div className="max-w-2xl mx-auto mb-12">
+          <NewsletterSubscription />
         </div>
       
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
@@ -140,7 +111,7 @@ const SocialFeed = () => {
                   rel="noopener noreferrer"
                   className="btn-secondary"
                 >
-                  Ver Mais no Twitter
+                  {t('see_more_on')} Twitter
                 </a>
               </div>
             </div>
@@ -148,7 +119,7 @@ const SocialFeed = () => {
 
           {/* Facebook Videos */}
           <div className="animate-fade-in">
-            <h2 className="text-2xl font-bold text-rtam-blue mb-6">Vídeos em Destaque</h2>
+            <h2 className="text-2xl font-bold text-rtam-blue mb-6">{t('featured_videos')}</h2>
             <div className="bg-white rounded-lg shadow-md p-5">
               <div className="space-y-6">
                 {facebookVideos.map((video) => (
@@ -181,7 +152,7 @@ const SocialFeed = () => {
                   rel="noopener noreferrer"
                   className="btn-secondary"
                 >
-                  Ver Mais no Facebook
+                  {t('see_more_on')} Facebook
                 </a>
               </div>
             </div>
@@ -192,7 +163,7 @@ const SocialFeed = () => {
         <div className="mt-12">
           <Card className="overflow-hidden border-0 shadow-lg">
             <CardHeader className="bg-gradient-to-r from-rtam-blue to-blue-700 text-white">
-              <CardTitle className="text-center text-2xl">Siga-nos nas Redes Sociais</CardTitle>
+              <CardTitle className="text-center text-2xl">{t('follow_us')}</CardTitle>
             </CardHeader>
             <CardContent className="p-6">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -203,11 +174,11 @@ const SocialFeed = () => {
                   >
                     <Facebook size={24} />
                     <div className="flex flex-col items-start">
-                      <span className="text-xs opacity-80">Seguir no</span>
+                      <span className="text-xs opacity-80">{t('follow_on')}</span>
                       <span className="font-bold">Facebook</span>
                     </div>
                   </Button>
-                  <p className="mt-2 text-sm text-gray-500">24K seguidores</p>
+                  <p className="mt-2 text-sm text-gray-500">24K {t('followers')}</p>
                 </div>
                 
                 <div className="text-center">
@@ -217,11 +188,11 @@ const SocialFeed = () => {
                   >
                     <Instagram size={24} />
                     <div className="flex flex-col items-start">
-                      <span className="text-xs opacity-80">Seguir no</span>
+                      <span className="text-xs opacity-80">{t('follow_on')}</span>
                       <span className="font-bold">Instagram</span>
                     </div>
                   </Button>
-                  <p className="mt-2 text-sm text-gray-500">15.8K seguidores</p>
+                  <p className="mt-2 text-sm text-gray-500">15.8K {t('followers')}</p>
                 </div>
                 
                 <div className="text-center">
@@ -231,11 +202,11 @@ const SocialFeed = () => {
                   >
                     <Youtube size={24} />
                     <div className="flex flex-col items-start">
-                      <span className="text-xs opacity-80">Inscrever no</span>
+                      <span className="text-xs opacity-80">{t('subscribe_to')}</span>
                       <span className="font-bold">YouTube</span>
                     </div>
                   </Button>
-                  <p className="mt-2 text-sm text-gray-500">8.5K inscritos</p>
+                  <p className="mt-2 text-sm text-gray-500">8.5K {t('subscribers')}</p>
                 </div>
                 
                 <div className="text-center">
@@ -245,11 +216,11 @@ const SocialFeed = () => {
                   >
                     <Twitter size={24} />
                     <div className="flex flex-col items-start">
-                      <span className="text-xs opacity-80">Seguir no</span>
+                      <span className="text-xs opacity-80">{t('follow_on')}</span>
                       <span className="font-bold">Twitter</span>
                     </div>
                   </Button>
-                  <p className="mt-2 text-sm text-gray-500">12.3K seguidores</p>
+                  <p className="mt-2 text-sm text-gray-500">12.3K {t('followers')}</p>
                 </div>
               </div>
               
@@ -260,7 +231,7 @@ const SocialFeed = () => {
                   onClick={handleShare}
                 >
                   <Globe size={18} />
-                  Compartilhar Nosso Site
+                  {t('share_our_site')}
                 </Button>
               </div>
             </CardContent>
