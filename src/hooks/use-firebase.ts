@@ -145,7 +145,7 @@ export function useComments(postId: string) {
 }
 
 export function useAuth2() {
-  const { currentUser, loading } = useAuth();
+  const { currentUser, loading, signInWithEmail, signUpWithEmail } = useAuth();
   const [authError, setAuthError] = useState<Error | null>(null);
   const { toast } = useToast();
 
@@ -188,5 +188,37 @@ export function useAuth2() {
     }
   };
 
-  return { user: currentUser, loading, error: authError, login, logout };
+  const emailLogin = async (email: string, password: string) => {
+    try {
+      setAuthError(null);
+      const result = await signInWithEmail(email, password);
+      return result?.user || null;
+    } catch (err) {
+      const error = err instanceof Error ? err : new Error('Unknown error');
+      setAuthError(error);
+      return null;
+    }
+  };
+
+  const emailSignup = async (email: string, password: string) => {
+    try {
+      setAuthError(null);
+      const result = await signUpWithEmail(email, password);
+      return result?.user || null;
+    } catch (err) {
+      const error = err instanceof Error ? err : new Error('Unknown error');
+      setAuthError(error);
+      return null;
+    }
+  };
+
+  return { 
+    user: currentUser, 
+    loading, 
+    error: authError, 
+    login, 
+    logout,
+    emailLogin,
+    emailSignup
+  };
 }

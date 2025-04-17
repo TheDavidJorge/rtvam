@@ -12,7 +12,7 @@ import { useComments } from '@/hooks/use-firebase';
 import { addComment } from '@/services/postService';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
-import GoogleLogin from '@/components/auth/GoogleLogin';
+import AuthModal from '@/components/auth/AuthModal';
 
 interface CommentSectionProps {
   postId: string;
@@ -113,7 +113,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
         <Card>
           <CardContent className="p-4 text-center">
             <p className="mb-4">{t('login_to_comment')}</p>
-            <GoogleLogin />
+            <AuthModal />
           </CardContent>
         </Card>
       )}

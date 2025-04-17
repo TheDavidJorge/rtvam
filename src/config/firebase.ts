@@ -1,19 +1,27 @@
 
 // Firebase configuration
 import { initializeApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider, signInWithPopup, User } from 'firebase/auth';
+import { 
+  getAuth, 
+  GoogleAuthProvider, 
+  signInWithPopup, 
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  User,
+  UserCredential
+} from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
-import { toast } from "@/hooks/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 // Firebase configuration object
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || '',
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || '',
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || '',
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || '',
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || '',
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || '',
+  apiKey: "AIzaSyDz9X55y5LsLIDlEMGabHFBRGarmIsdWiw",
+  authDomain: "rtvamweb.firebaseapp.com",
+  projectId: "rtvamweb",
+  storageBucket: "rtvamweb.firebasestorage.app",
+  messagingSenderId: "892179817803",
+  appId: "1:892179817803:web:21c6200fe49cabce11b4ce"
 };
 
 // Initialize Firebase
@@ -35,7 +43,7 @@ export const signInWithGoogle = async (): Promise<User | null> => {
     return result.user;
   } catch (error) {
     console.error('Error signing in with Google:', error);
-    toast({
+    useToast.getState().toast({
       title: "Login Error",
       description: "Could not sign in with Google. Please try again.",
       variant: "destructive",
@@ -44,18 +52,38 @@ export const signInWithGoogle = async (): Promise<User | null> => {
   }
 };
 
+// Handle Email/Password sign-up
+export const signUpWithEmailPassword = async (email: string, password: string): Promise<UserCredential | null> => {
+  try {
+    return await createUserWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    console.error('Error signing up with email/password:', error);
+    throw error;
+  }
+};
+
+// Handle Email/Password sign-in
+export const signInWithEmailPassword = async (email: string, password: string): Promise<UserCredential | null> => {
+  try {
+    return await signInWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    console.error('Error signing in with email/password:', error);
+    throw error;
+  }
+};
+
 // Sign out user
 export const signOut = async (): Promise<boolean> => {
   try {
     await auth.signOut();
-    toast({
+    useToast.getState().toast({
       title: "Signed Out",
       description: "You have been successfully signed out.",
     });
     return true;
   } catch (error) {
     console.error('Error signing out:', error);
-    toast({
+    useToast.getState().toast({
       title: "Error",
       description: "Could not sign out. Please try again.",
       variant: "destructive",
