@@ -2,10 +2,10 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 // Define supported languages
-type Language = 'pt' | 'en';
+export type Language = 'pt' | 'en';
 
 // Define translation keys
-type TranslationKey = 
+export type TranslationKey = 
   | 'login'
   | 'logout'
   | 'register'
@@ -21,6 +21,7 @@ type TranslationKey =
   | 'login_with_google'
   | 'toggle_theme'
   | 'dark_mode'
+  | 'light_mode'
   | 'language'
   | 'error'
   | 'success'
@@ -41,7 +42,20 @@ type TranslationKey =
   | 'comment_success'
   | 'comment_error'
   | 'no_comments'
-  | 'like';
+  | 'like'
+  | 'follow_on'
+  | 'redirect_to'
+  | 'of_rtvam'
+  | 'share'
+  | 'link_copied'
+  | 'connect_with_us'
+  | 'see_more_on'
+  | 'featured_videos'
+  | 'follow_us'
+  | 'followers'
+  | 'subscribers'
+  | 'subscribe_to'
+  | 'share_our_site';
 
 // Translation dictionary type
 type TranslationDict = Record<TranslationKey, string>;
@@ -63,6 +77,7 @@ const ptTranslations: TranslationDict = {
   login_with_google: 'Entrar com Google',
   toggle_theme: 'Alternar Tema',
   dark_mode: 'Modo Escuro',
+  light_mode: 'Modo Claro',
   language: 'Idioma',
   error: 'Erro',
   success: 'Sucesso',
@@ -83,7 +98,20 @@ const ptTranslations: TranslationDict = {
   comment_success: 'Seu comentário foi publicado com sucesso!',
   comment_error: 'Erro ao adicionar comentário. Por favor, tente novamente.',
   no_comments: 'Ainda não há comentários. Seja o primeiro a comentar!',
-  like: 'Gostar'
+  like: 'Gostar',
+  follow_on: 'Seguir em',
+  redirect_to: 'Redirecionar para',
+  of_rtvam: 'da RTVAM',
+  share: 'Compartilhar',
+  link_copied: 'Link copiado!',
+  connect_with_us: 'Conecte-se conosco',
+  see_more_on: 'Ver mais em',
+  featured_videos: 'Vídeos em Destaque',
+  follow_us: 'Siga-nos',
+  followers: 'seguidores',
+  subscribers: 'inscritos',
+  subscribe_to: 'Inscrever-se em',
+  share_our_site: 'Compartilhe nosso site'
 };
 
 // English translations
@@ -103,6 +131,7 @@ const enTranslations: TranslationDict = {
   login_with_google: 'Login with Google',
   toggle_theme: 'Toggle Theme',
   dark_mode: 'Dark Mode',
+  light_mode: 'Light Mode',
   language: 'Language',
   error: 'Error',
   success: 'Success',
@@ -123,7 +152,20 @@ const enTranslations: TranslationDict = {
   comment_success: 'Your comment was successfully posted!',
   comment_error: 'Error adding comment. Please try again.',
   no_comments: 'No comments yet. Be the first to comment!',
-  like: 'Like'
+  like: 'Like',
+  follow_on: 'Follow on',
+  redirect_to: 'Redirect to',
+  of_rtvam: 'of RTVAM',
+  share: 'Share',
+  link_copied: 'Link copied!',
+  connect_with_us: 'Connect with us',
+  see_more_on: 'See more on',
+  featured_videos: 'Featured Videos',
+  follow_us: 'Follow us',
+  followers: 'followers',
+  subscribers: 'subscribers',
+  subscribe_to: 'Subscribe to',
+  share_our_site: 'Share our site'
 };
 
 // Create language context type

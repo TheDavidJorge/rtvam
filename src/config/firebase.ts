@@ -6,13 +6,13 @@ import {
   GoogleAuthProvider, 
   signInWithPopup, 
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
+  signInWithEmailAndPassword as firebaseSignInWithEmailPassword,
   User,
   UserCredential
 } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "@/hooks/use-toast";
 
 // Firebase configuration object
 const firebaseConfig = {
@@ -43,7 +43,6 @@ export const signInWithGoogle = async (): Promise<User | null> => {
     return result.user;
   } catch (error) {
     console.error('Error signing in with Google:', error);
-    const { toast } = useToast();
     toast({
       title: "Login Error",
       description: "Could not sign in with Google. Please try again.",
@@ -66,7 +65,7 @@ export const signUpWithEmailPassword = async (email: string, password: string): 
 // Handle Email/Password sign-in
 export const signInWithEmailPassword = async (email: string, password: string): Promise<UserCredential | null> => {
   try {
-    return await signInWithEmailAndPassword(auth, email, password);
+    return await firebaseSignInWithEmailPassword(auth, email, password);
   } catch (error) {
     console.error('Error signing in with email/password:', error);
     throw error;
@@ -77,7 +76,6 @@ export const signInWithEmailPassword = async (email: string, password: string): 
 export const signOut = async (): Promise<boolean> => {
   try {
     await auth.signOut();
-    const { toast } = useToast();
     toast({
       title: "Signed Out",
       description: "You have been successfully signed out.",
@@ -85,7 +83,6 @@ export const signOut = async (): Promise<boolean> => {
     return true;
   } catch (error) {
     console.error('Error signing out:', error);
-    const { toast } = useToast();
     toast({
       title: "Error",
       description: "Could not sign out. Please try again.",
