@@ -43,7 +43,8 @@ export const signInWithGoogle = async (): Promise<User | null> => {
     return result.user;
   } catch (error) {
     console.error('Error signing in with Google:', error);
-    useToast.getState().toast({
+    const { toast } = useToast();
+    toast({
       title: "Login Error",
       description: "Could not sign in with Google. Please try again.",
       variant: "destructive",
@@ -76,14 +77,16 @@ export const signInWithEmailPassword = async (email: string, password: string): 
 export const signOut = async (): Promise<boolean> => {
   try {
     await auth.signOut();
-    useToast.getState().toast({
+    const { toast } = useToast();
+    toast({
       title: "Signed Out",
       description: "You have been successfully signed out.",
     });
     return true;
   } catch (error) {
     console.error('Error signing out:', error);
-    useToast.getState().toast({
+    const { toast } = useToast();
+    toast({
       title: "Error",
       description: "Could not sign out. Please try again.",
       variant: "destructive",
