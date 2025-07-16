@@ -10,41 +10,11 @@ import {
   orderBy, 
   serverTimestamp, 
   updateDoc,
-  deleteDoc,
-  Timestamp
+  deleteDoc
 } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
-import { db, storage } from '@/config/firebase';
-import { User } from 'firebase/auth';
-
-export interface Post {
-  id?: string;
-  title: string;
-  content: string;
-  category: string;
-  imageUrl?: string;
-  createdAt: Timestamp | null;
-  updatedAt: Timestamp | null;
-  author: {
-    uid: string;
-    displayName: string;
-    photoURL: string;
-  };
-  likes: number;
-  comments: number;
-}
-
-export interface Comment {
-  id?: string;
-  postId: string;
-  content: string;
-  createdAt: Timestamp | null;
-  author: {
-    uid: string;
-    displayName: string;
-    photoURL: string;
-  };
-}
+import { db } from '@/config/firebase';
+import { Post } from './types';
+import { uploadImage } from './storageService';
 
 // Create a new post
 export const createPost = async (post: Omit<Post, 'createdAt' | 'updatedAt' | 'id' | 'likes' | 'comments'>, image?: File): Promise<string> => {
@@ -53,9 +23,7 @@ export const createPost = async (post: Omit<Post, 'createdAt' | 'updatedAt' | 'i
     
     // Upload image if provided
     if (image) {
-      const storageRef = ref(storage, `posts/${Date.now()}_${image.name}`);
-      await uploadBytes(storageRef, image);
-      imageUrl = await getDownloadURL(storageRef);
+      imageUrl = await uploadImage(image, 'posts');
     }
     
     const postData = {
@@ -128,74 +96,44 @@ export const getPostById = async (id: string): Promise<Post | null> => {
   }
 };
 
-// Add a comment to a post
-export const addComment = async (comment: Omit<Comment, 'createdAt' | 'id'>, user: User): Promise<string> => {
+// Update a post
+export const updatePost = async (id: string, updates: Partial<Post>): Promise<void> => {
   try {
-    // Add the comment
-    const commentData = {
-      ...comment,
-      createdAt: serverTimestamp(),
-      author: {
-        uid: user.uid,
-        displayName: user.displayName || 'Anonymous',
-        photoURL: user.photoURL || '',
-      }
-    };
-    
-    const docRef = await addDoc(collection(db, 'comments'), commentData);
-    
-    // Update comment count on the post
-    const postRef = doc(db, 'posts', comment.postId);
+    const postRef = doc(db, 'posts', id);
+    await updateDoc(postRef, {
+      ...updates,
+      updatedAt: serverTimestamp()
+    });
+  } catch (error) {
+    console.error('Error updating post:', error);
+    throw error;
+  }
+};
+
+// Delete a post
+export const deletePost = async (id: string): Promise<void> => {
+  try {
+    await deleteDoc(doc(db, 'posts', id));
+  } catch (error) {
+    console.error('Error deleting post:', error);
+    throw error;
+  }
+};
+
+// Like a post
+export const likePost = async (postId: string): Promise<void> => {
+  try {
+    const postRef = doc(db, 'posts', postId);
     const postSnap = await getDoc(postRef);
     
     if (postSnap.exists()) {
       const postData = postSnap.data() as Post;
       await updateDoc(postRef, {
-        comments: (postData.comments || 0) + 1
+        likes: (postData.likes || 0) + 1
       });
     }
-    
-    return docRef.id;
   } catch (error) {
-    console.error('Error adding comment:', error);
-    throw error;
-  }
-};
-
-// Get comments for a post
-export const getCommentsByPostId = async (postId: string): Promise<Comment[]> => {
-  try {
-    const q = query(
-      collection(db, 'comments'), 
-      where('postId', '==', postId),
-      orderBy('createdAt', 'desc')
-    );
-    const querySnapshot = await getDocs(q);
-    
-    return querySnapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data()
-    } as Comment));
-  } catch (error) {
-    console.error('Error getting comments:', error);
-    throw error;
-  }
-};
-
-// Subscribe to newsletter
-export const subscribeToNewsletter = async (email: string, name?: string): Promise<string> => {
-  try {
-    const subscriberData = {
-      email,
-      name: name || '',
-      createdAt: serverTimestamp(),
-      active: true
-    };
-    
-    const docRef = await addDoc(collection(db, 'newsletter_subscribers'), subscriberData);
-    return docRef.id;
-  } catch (error) {
-    console.error('Error subscribing to newsletter:', error);
+    console.error('Error liking post:', error);
     throw error;
   }
 };

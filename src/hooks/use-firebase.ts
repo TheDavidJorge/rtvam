@@ -4,12 +4,13 @@ import {
   getPosts, 
   getPostsByCategory, 
   getPostById, 
-  createPost, 
-  addComment, 
-  getCommentsByPostId,
-  Post,
-  Comment
+  createPost
 } from '@/services/postService';
+import { 
+  addComment, 
+  getCommentsByPostId
+} from '@/services/commentService';
+import { Post, Comment } from '@/services/types';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { signInWithGoogle, signOut } from '@/config/firebase';

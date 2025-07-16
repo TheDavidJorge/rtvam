@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Loader2, Mail } from 'lucide-react';
-import { subscribeToNewsletter } from '@/services/postService';
+import { subscribeToNewsletter } from '@/services/newsletterService';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth2 } from '@/hooks/use-firebase';

@@ -9,7 +9,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { pt, enUS } from 'date-fns/locale';
 import { useAuth2 } from '@/hooks/use-firebase';
 import { useComments } from '@/hooks/use-firebase';
-import { addComment } from '@/services/postService';
+import { addComment } from '@/services/commentService';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
 import AuthModal from '@/components/auth/AuthModal';
