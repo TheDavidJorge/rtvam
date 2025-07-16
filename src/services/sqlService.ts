@@ -1,14 +1,19 @@
 
-import { db } from '@/config/sql-database';
-import { Post, Comment, NewsletterSubscription } from '@/services/types';
+import db from '@/config/sql-database';
+import { Post, Comment, NewsletterSubscriber } from '@/services/types';
 import { User } from 'firebase/auth';
 import { Timestamp } from 'firebase/firestore';
 
 export const syncUserToSQL = async (user: User) => {
   try {
-    await db.execute(
-      `INSERT OR REPLACE INTO users (id, email, display_name, photo_url, created_at, updated_at) 
-       VALUES (?, ?, ?, ?, ?, ?)`,
+    await db.query(
+      `INSERT INTO users (firebase_id, email, display_name, photo_url, created_at, updated_at) 
+       VALUES ($1, $2, $3, $4, $5, $6)
+       ON CONFLICT (firebase_id) DO UPDATE SET
+       email = EXCLUDED.email,
+       display_name = EXCLUDED.display_name,
+       photo_url = EXCLUDED.photo_url,
+       updated_at = EXCLUDED.updated_at`,
       [
         user.uid,
         user.email,
@@ -25,14 +30,19 @@ export const syncUserToSQL = async (user: User) => {
 
 export const syncPostToSQL = async (post: Post) => {
   try {
-    await db.execute(
-      `INSERT OR REPLACE INTO posts (id, title, content, author, category, created_at, updated_at) 
-       VALUES (?, ?, ?, ?, ?, ?, ?)`,
+    await db.query(
+      `INSERT INTO posts (firebase_id, title, content, author_uid, category, created_at, updated_at) 
+       VALUES ($1, $2, $3, $4, $5, $6, $7)
+       ON CONFLICT (firebase_id) DO UPDATE SET
+       title = EXCLUDED.title,
+       content = EXCLUDED.content,
+       category = EXCLUDED.category,
+       updated_at = EXCLUDED.updated_at`,
       [
         post.id,
         post.title,
         post.content,
-        post.author,
+        post.author.uid,
         post.category,
         post.createdAt instanceof Timestamp ? post.createdAt.toDate().toISOString() : new Date().toISOString(),
         new Date().toISOString()
@@ -45,13 +55,16 @@ export const syncPostToSQL = async (post: Post) => {
 
 export const syncCommentToSQL = async (comment: Comment) => {
   try {
-    await db.execute(
-      `INSERT OR REPLACE INTO comments (id, post_id, author, content, created_at, updated_at) 
-       VALUES (?, ?, ?, ?, ?, ?)`,
+    await db.query(
+      `INSERT INTO comments (firebase_id, post_id, author_uid, content, created_at, updated_at) 
+       VALUES ($1, $2, $3, $4, $5, $6)
+       ON CONFLICT (firebase_id) DO UPDATE SET
+       content = EXCLUDED.content,
+       updated_at = EXCLUDED.updated_at`,
       [
         comment.id,
         comment.postId,
-        comment.author,
+        comment.author.uid,
         comment.content,
         comment.createdAt instanceof Timestamp ? comment.createdAt.toDate().toISOString() : new Date().toISOString(),
         new Date().toISOString()
@@ -62,14 +75,19 @@ export const syncCommentToSQL = async (comment: Comment) => {
   }
 };
 
-export const syncNewsletterToSQL = async (subscription: NewsletterSubscription) => {
+export const syncNewsletterToSQL = async (subscription: NewsletterSubscriber) => {
   try {
-    await db.execute(
-      `INSERT OR REPLACE INTO newsletter_subscriptions (id, email, created_at, updated_at) 
-       VALUES (?, ?, ?, ?)`,
+    await db.query(
+      `INSERT INTO newsletter_subscribers (firebase_id, email, name, created_at, updated_at) 
+       VALUES ($1, $2, $3, $4, $5)
+       ON CONFLICT (firebase_id) DO UPDATE SET
+       email = EXCLUDED.email,
+       name = EXCLUDED.name,
+       updated_at = EXCLUDED.updated_at`,
       [
         subscription.id,
         subscription.email,
+        subscription.name,
         subscription.createdAt instanceof Timestamp ? subscription.createdAt.toDate().toISOString() : new Date().toISOString(),
         new Date().toISOString()
       ]
@@ -81,8 +99,8 @@ export const syncNewsletterToSQL = async (subscription: NewsletterSubscription) 
 
 export const getUserPostsFromSQL = async (userId: string) => {
   try {
-    const result = await db.execute(
-      'SELECT * FROM posts WHERE author = ? ORDER BY created_at DESC',
+    const result = await db.query(
+      'SELECT * FROM posts WHERE author_uid = $1 ORDER BY created_at DESC',
       [userId]
     );
     return result.rows;
@@ -94,8 +112,8 @@ export const getUserPostsFromSQL = async (userId: string) => {
 
 export const getPostCommentsFromSQL = async (postId: string) => {
   try {
-    const result = await db.execute(
-      'SELECT * FROM comments WHERE post_id = ? ORDER BY created_at ASC',
+    const result = await db.query(
+      'SELECT * FROM comments WHERE post_id = $1 ORDER BY created_at ASC',
       [postId]
     );
     return result.rows;
