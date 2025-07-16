@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Facebook, Instagram, Youtube, Twitter, Globe } from 'lucide-react';
@@ -13,25 +12,37 @@ const twitterPosts = [
     id: 1,
     username: 'RTVAM Oficial',
     handle: '@RtvamOficial',
-    content: '🔴 AO VIVO: Acompanhe o Jornal da Noite com as principais notícias do dia. Sintonize na nossa frequência e mantenha-se informado! #JornalDaNoite #RTVAM #Moçambique',
-    date: '15 Jan, 2025',
+    content: 'ANAMALALA e CHEGA firmam acordo de cooperação\n\nO ex-candidato presidencial Venâncio Mondlane, anunciou, nesta terça-feira, um acordo com o partido português CHEGA. Segundo Mondlane, as formações políticas manifestaram abertura para cooperação em diversos níveis.',
+    date: '15 Jul, 2025',
     avatar: 'https://pbs.twimg.com/profile_images/1234567890/rtvam_400x400.jpg',
+    url: 'https://twitter.com/RtvamOficial/status/1945119157449523601',
   },
   {
     id: 2,
     username: 'RTVAM Oficial',
     handle: '@RtvamOficial',
-    content: '📺 Não perca hoje às 19h30 o programa "Olhar Político" onde discutiremos os temas mais relevantes da política nacional. Participação especial de convidados especialistas. #OlharPolitico #RTVAM',
-    date: '14 Jan, 2025',
+    content: 'Presidente Lula assinou decreto que regulamenta a Lei da Reciprocidade, permitindo contramedidas a tarifas de 50% anunciadas por Trump sobre produtos brasileiros a partir de 01/08. A medida responde a barreiras comerciais e protege exportações, negando excedente alegado por Trump',
+    date: '15 Jul, 2025',
     avatar: 'https://pbs.twimg.com/profile_images/1234567890/rtvam_400x400.jpg',
+    url: 'https://twitter.com/RtvamOficial/status/1945112362564116834',
   },
   {
     id: 3,
     username: 'RTVAM Oficial',
     handle: '@RtvamOficial',
-    content: '🎓 Cobertura especial da Cerimónia de Graduação do ISCTAC Maputo. Parabéns a todos os formandos! O futuro de Moçambique está em boas mãos. #Graduacao #ISCTAC #Educacao',
-    date: '13 Jan, 2025',
+    content: 'O Governo anunciou hoje, na Beira, a suspensão definitiva, por ora, do subsídio a estudantes de medicina do 6º ano de universidades públicas. O executivo lamentou a medida, pediu compreensão aos médicos estagiários e destacou que o subsídio era discriminatório.',
+    date: '15 Jul, 2025',
     avatar: 'https://pbs.twimg.com/profile_images/1234567890/rtvam_400x400.jpg',
+    url: 'https://twitter.com/RtvamOficial/status/1945107416707645794',
+  },
+  {
+    id: 4,
+    username: 'RTVAM Oficial',
+    handle: '@RtvamOficial',
+    content: 'O Governo de Moçambique considerou um "momento histórico e de orgulho nacional" a inscrição do Parque Nacional de Maputo na lista do Património Mundial da UNESCO, decisão tornada pública este sábado, durante a 47.ª sessão da organização, em Paris',
+    date: '13 Jul, 2025',
+    avatar: 'https://pbs.twimg.com/profile_images/1234567890/rtvam_400x400.jpg',
+    url: 'https://twitter.com/RtvamOficial/status/1944425596324385107',
   },
 ];
 
@@ -120,8 +131,18 @@ const SocialFeed = () => {
                           <h4 className="font-bold text-gray-900">{post.username}</h4>
                           <span className="ml-2 text-gray-500 text-sm">{post.handle}</span>
                         </div>
-                        <p className="mt-1 text-gray-700">{post.content}</p>
-                        <div className="mt-2 text-gray-500 text-sm">{post.date}</div>
+                        <p className="mt-1 text-gray-700 whitespace-pre-line">{post.content}</p>
+                        <div className="mt-2 flex items-center justify-between">
+                          <span className="text-gray-500 text-sm">{post.date}</span>
+                          <a 
+                            href={post.url} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="text-rtam-blue hover:text-rtam-blue-dark text-sm font-medium"
+                          >
+                            Ver no Twitter
+                          </a>
+                        </div>
                       </div>
                     </div>
                   </div>

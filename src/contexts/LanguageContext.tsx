@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 // Define supported languages
@@ -50,6 +51,7 @@ export type TranslationKey =
   | 'connect_with_us'
   | 'see_more_on'
   | 'featured_videos'
+  | 'featured_programs'
   | 'follow_us'
   | 'followers'
   | 'subscribers'
@@ -119,6 +121,7 @@ const ptTranslations: TranslationDict = {
   connect_with_us: 'Conecte-se conosco',
   see_more_on: 'Ver mais em',
   featured_videos: 'Vídeos em Destaque',
+  featured_programs: 'Programas em Destaque',
   follow_us: 'Siga-nos',
   followers: 'seguidores',
   subscribers: 'inscritos',
@@ -186,6 +189,7 @@ const enTranslations: TranslationDict = {
   connect_with_us: 'Connect with us',
   see_more_on: 'See more on',
   featured_videos: 'Featured Videos',
+  featured_programs: 'Featured Programs',
   follow_us: 'Follow us',
   followers: 'followers',
   subscribers: 'subscribers',
