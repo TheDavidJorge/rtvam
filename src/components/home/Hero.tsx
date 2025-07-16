@@ -2,25 +2,37 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-// Updated carousel data
+// Updated carousel data with new images
 const carouselItems = [
   {
     id: 1,
-    title: 'Diário Informativo',
-    description: 'O seu principal programa noticioso, com todas as novidades da academia.',
-    image: 'https://rtvam.co.mz/wp-content/uploads/2025/03/noticiasaomeiodiafff-768x432.jpg',
+    title: 'Notícias ao Meio Dia',
+    description: 'O seu programa noticioso diário com todas as novidades nacionais e internacionais.',
+    image: 'https://rtvam.co.mz/wp-content/uploads/2025/07/NOTICIAS-AO-MEIO-DIA-1-3.jpg',
   },
   {
     id: 2,
     title: 'Olhar Político',
     description: 'Análises profundas e debates sobre os principais temas políticos da atualidade.',
-    image: 'https://rtvam.co.mz/wp-content/uploads/2025/03/olharpolitico1-scaled.jpg',
+    image: 'https://rtvam.co.mz/wp-content/uploads/2025/07/olharpolitico1-scaled.jpg',
   },
   {
     id: 3,
     title: 'Impacto Semanal',
     description: 'Resumo semanal dos acontecimentos mais importantes em Moçambique e no mundo.',
-    image: 'https://rtvam.co.mz/wp-content/uploads/2024/11/impacosemanalcover2-1.png',
+    image: 'https://rtvam.co.mz/wp-content/uploads/2025/07/impacosemanalcover2-scaled.png',
+  },
+  {
+    id: 4,
+    title: 'Bom Dia Beira',
+    description: 'O melhor programa matinal da rádio para começar o seu dia com energia.',
+    image: 'https://rtvam.co.mz/wp-content/uploads/2025/07/BOM-DIA-BEIRA.png',
+  },
+  {
+    id: 5,
+    title: 'Toca o Som',
+    description: 'Música e entretenimento para todos os gostos e idades.',
+    image: 'https://rtvam.co.mz/wp-content/uploads/2025/07/TOCA-O-SEU-SOM1.png',
   },
 ];
 

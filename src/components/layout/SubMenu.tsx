@@ -23,8 +23,8 @@ const SubMenu = ({ item, openMenus, toggleSubmenu, isActive }: SubMenuProps) => 
     <div className="relative group">
       <button
         className={cn(
-          "flex items-center px-3 py-2 text-gray-700 hover:text-rtam-blue hover:bg-gray-100 rounded-md transition-colors",
-          openMenus[item.name] && "bg-gray-100 text-rtam-blue"
+          "flex items-center px-3 py-2 text-white hover:text-white hover:bg-white/10 rounded-md transition-colors",
+          openMenus[item.name] && "bg-white/10 text-white"
         )}
         onClick={() => toggleSubmenu(item.name)}
       >
@@ -40,7 +40,7 @@ const SubMenu = ({ item, openMenus, toggleSubmenu, isActive }: SubMenuProps) => 
                 <Link
                   to={child.href}
                   className={cn(
-                    "block px-4 py-2 text-sm hover:bg-gray-100 transition-colors",
+                    "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors",
                     isActive(child.href) && "bg-gray-50 text-rtam-blue font-medium"
                   )}
                 >
@@ -48,7 +48,7 @@ const SubMenu = ({ item, openMenus, toggleSubmenu, isActive }: SubMenuProps) => 
                 </Link>
               ) : (
                 <>
-                  <div className="flex justify-between items-center px-4 py-2 text-sm hover:bg-gray-100">
+                  <div className="flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                     <span>{child.name}</span>
                     <ChevronRight className="w-4 h-4" />
                   </div>
@@ -59,7 +59,7 @@ const SubMenu = ({ item, openMenus, toggleSubmenu, isActive }: SubMenuProps) => 
                           key={subChild.name}
                           to={subChild.href}
                           className={cn(
-                            "block px-4 py-2 text-sm hover:bg-gray-100 transition-colors",
+                            "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors",
                             isActive(subChild.href) && "bg-gray-50 text-rtam-blue font-medium"
                           )}
                         >

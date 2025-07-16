@@ -3,7 +3,6 @@ import React from 'react';
 import { LucideIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 interface NavLinkProps {
   href: string;
@@ -13,7 +12,6 @@ interface NavLinkProps {
 }
 
 const NavLink = ({ href, name, icon: Icon, isActive }: NavLinkProps) => {
-  const { t } = useLanguage();
   const active = isActive(href);
   
   return (
@@ -25,7 +23,7 @@ const NavLink = ({ href, name, icon: Icon, isActive }: NavLinkProps) => {
       )}
     >
       <Icon className="h-4 w-4" />
-      <span>{t(name.toLowerCase())}</span>
+      <span>{name}</span>
     </Link>
   );
 };

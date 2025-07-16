@@ -3,7 +3,6 @@ import React from 'react';
 import { LucideIcon, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 interface NavItem {
   name: string;
@@ -20,7 +19,6 @@ interface MobileNavItemProps {
 }
 
 const MobileNavItem = ({ item, openMenus, toggleSubmenu, isActive }: MobileNavItemProps) => {
-  const { t } = useLanguage();
   const Icon = item.icon;
   const active = isActive(item.href);
   const isOpen = openMenus[item.name] || false;
@@ -37,7 +35,7 @@ const MobileNavItem = ({ item, openMenus, toggleSubmenu, isActive }: MobileNavIt
         )}
       >
         <Icon className="h-5 w-5 mr-3" />
-        <span>{t(item.name.toLowerCase())}</span>
+        <span>{item.name}</span>
       </Link>
     );
   }
@@ -55,7 +53,7 @@ const MobileNavItem = ({ item, openMenus, toggleSubmenu, isActive }: MobileNavIt
       >
         <div className="flex items-center">
           <Icon className="h-5 w-5 mr-3" />
-          <span>{t(item.name.toLowerCase())}</span>
+          <span>{item.name}</span>
         </div>
         <ChevronDown
           className={cn('h-4 w-4 transition-transform', isOpen && 'rotate-180')}
@@ -75,7 +73,7 @@ const MobileNavItem = ({ item, openMenus, toggleSubmenu, isActive }: MobileNavIt
                   : 'border-transparent hover:text-rtam-blue dark:text-gray-300 dark:hover:text-rtam-blue-light'
               )}
             >
-              {t(child.name.toLowerCase())}
+              {child.name}
             </Link>
           ))}
         </div>

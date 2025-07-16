@@ -6,6 +6,7 @@ export interface NewsItem {
   image: string;
   url: string;
   category: string;
+  source?: string;
 }
 
 export interface Category {

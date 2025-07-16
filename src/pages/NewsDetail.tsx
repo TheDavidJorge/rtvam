@@ -45,29 +45,30 @@ const NewsDetail = () => {
     return new Date(dateString).toLocaleDateString('pt-PT', options);
   };
   
-  // Generate fictional content for any news item, even if not found
-  const generateFictionalContent = () => {
-    // If we have the actual news item, use its information
+  // Generate content for any news item
+  const generateContent = () => {
     const title = newsItem?.title || "Notícia de exemplo";
     const image = newsItem?.image || "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3";
     const date = newsItem?.date || new Date().toISOString().split('T')[0];
     const categoryTitle = category?.title || "Categoria";
+    const source = newsItem?.source || "Fonte não disponível";
     
     return {
       title,
       image,
       date,
       categoryTitle,
+      source,
       content: [
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor.",
-        "Suspendisse potenti. Nulla facilisi. Sed feugiat varius nisi, at euismod nunc tincidunt at. Maecenas fermentum, metus in auctor dignissim, quam tellus sollicitudin nunc, at dapibus eros tellus at neque. Etiam eu scelerisque ante, vel commodo magna.",
-        "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam ullamcorper, ipsum vel condimentum rhoncus, nulla augue ultrices augue, vel commodo magna nulla non enim. Donec rutrum condimentum nunc, vel commodo magna."
+        "Esta é uma notícia de exemplo com conteúdo informativo relevante para os leitores. O conteúdo real seria fornecido através de uma API ou sistema de gestão de conteúdo.",
+        "Aqui continuaria o desenvolvimento da notícia com mais detalhes, citações e informações contextuais importantes para uma compreensão completa do assunto.",
+        "O artigo terminaria com uma conclusão ou resumo dos pontos principais abordados, fornecendo ao leitor uma visão clara e completa do tema tratado."
       ],
-      subTitle: "Subtítulo da notícia"
+      subTitle: "Subtítulo informativo da notícia"
     };
   };
   
-  const articleContent = generateFictionalContent();
+  const articleContent = generateContent();
   
   return (
     <div className="min-h-screen bg-white">
@@ -86,6 +87,7 @@ const NewsDetail = () => {
                 subTitle={articleContent.subTitle}
                 categoryId={categoryId || ''}
                 formatDate={formatDate}
+                source={articleContent.source}
               />
               
               {/* Comment Section */}

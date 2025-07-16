@@ -3,43 +3,52 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Play } from 'lucide-react';
 
-// Sample featured programs data
+// Updated featured programs data
 const featuredPrograms = [
   {
     id: 1,
-    title: 'Manhã Académica',
-    description: 'O melhor programa para começar o seu dia com música e informação.',
-    image: 'https://images.unsplash.com/photo-1584905066893-7d5c142ba4e1?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3',
-    time: '06:00 - 09:00',
-    days: 'Segunda a Sexta',
-    link: '/programacao/entretenimento/manha-academica',
-  },
-  {
-    id: 2,
-    title: 'Jornal Académico',
-    description: 'Todas as notícias relevantes para a comunidade académica.',
+    title: 'Diário Informativo',
+    description: 'O seu programa noticioso diário com todas as informações relevantes.',
     image: 'https://images.unsplash.com/photo-1503428593586-e225b39bddfe?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3',
     time: '13:00 - 14:00',
     days: 'Segunda a Sexta',
-    link: '/programacao/noticias/jornal-academico',
+    link: '/programacao/noticias/diario-informativo',
+  },
+  {
+    id: 2,
+    title: 'Estilo e Moda',
+    description: 'Tudo sobre tendências, moda e estilo de vida.',
+    image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3',
+    time: '15:00 - 16:00',
+    days: 'Terças e Quintas',
+    link: '/programacao/entretenimento/estilo-moda',
   },
   {
     id: 3,
-    title: 'Debate Académico',
-    description: 'Discussões aprofundadas sobre temas relevantes para a academia.',
+    title: 'A Voz do Povo',
+    description: 'Programa de debate e participação dos ouvintes.',
     image: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3',
-    time: '19:00 - 20:30',
-    days: 'Terças e Quintas',
-    link: '/programacao/entretenimento/debate-academico',
+    time: '18:00 - 19:00',
+    days: 'Segunda a Sexta',
+    link: '/programacao/entretenimento/voz-povo',
   },
   {
     id: 4,
-    title: 'Noite Académica',
-    description: 'Música e entretenimento para relaxar depois de um dia de estudo.',
+    title: 'Super Tardes',
+    description: 'Música e entretenimento para as suas tardes.',
     image: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3',
-    time: '20:30 - 22:00',
+    time: '14:00 - 17:00',
     days: 'Segunda a Sexta',
-    link: '/programacao/entretenimento/noite-academica',
+    link: '/programacao/entretenimento/super-tardes',
+  },
+  {
+    id: 5,
+    title: 'Jornal TVA',
+    description: 'O principal telejornal da TVA com as notícias do dia.',
+    image: 'https://images.unsplash.com/photo-1584905066893-7d5c142ba4e1?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3',
+    time: '20:00 - 21:00',
+    days: 'Segunda a Domingo',
+    link: '/programacao/noticias/jornal-tva',
   },
 ];
 
@@ -54,7 +63,7 @@ const FeaturedPrograms = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
           {featuredPrograms.map((program) => (
             <div 
               key={program.id} 
