@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 // Define supported languages
@@ -55,7 +54,20 @@ export type TranslationKey =
   | 'followers'
   | 'subscribers'
   | 'subscribe_to'
-  | 'share_our_site';
+  | 'share_our_site'
+  | 'home'
+  | 'programação'
+  | 'notícias'
+  | 'rádio'
+  | 'sobre'
+  | 'programas'
+  | 'entretenimento'
+  | 'manhã'
+  | 'tarde'
+  | 'noite'
+  | 'jornal'
+  | 'síntese'
+  | 'revista';
 
 // Translation dictionary type
 type TranslationDict = Record<TranslationKey, string>;
@@ -111,7 +123,20 @@ const ptTranslations: TranslationDict = {
   followers: 'seguidores',
   subscribers: 'inscritos',
   subscribe_to: 'Inscrever-se em',
-  share_our_site: 'Compartilhe nosso site'
+  share_our_site: 'Compartilhe nosso site',
+  home: 'Início',
+  'programação': 'Programação',
+  'notícias': 'Notícias',
+  'rádio': 'Rádio',
+  'sobre': 'Sobre Nós',
+  'programas': 'Programas',
+  'entretenimento': 'Entretenimento',
+  'manhã': 'Manhã',
+  'tarde': 'Tarde',
+  'noite': 'Noite',
+  'jornal': 'Jornal',
+  'síntese': 'Síntese',
+  'revista': 'Revista'
 };
 
 // English translations
@@ -165,7 +190,20 @@ const enTranslations: TranslationDict = {
   followers: 'followers',
   subscribers: 'subscribers',
   subscribe_to: 'Subscribe to',
-  share_our_site: 'Share our site'
+  share_our_site: 'Share our site',
+  home: 'Home',
+  'programação': 'Programming',
+  'notícias': 'News',
+  'rádio': 'Radio',
+  'sobre': 'About Us',
+  'programas': 'Programs',
+  'entretenimento': 'Entertainment',
+  'manhã': 'Morning',
+  'tarde': 'Afternoon',
+  'noite': 'Night',
+  'jornal': 'Journal',
+  'síntese': 'Summary',
+  'revista': 'Review'
 };
 
 // Create language context type
