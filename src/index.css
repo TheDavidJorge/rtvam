@@ -149,7 +149,7 @@
 
   /* Typography */
   .section-title {
-    @apply text-3xl font-bold mb-8 pb-3 bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent border-b-2 border-gradient-to-r from-primary to-transparent inline-block relative;
+    @apply text-3xl font-bold mb-8 pb-3 bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent border-b-2 border-primary/30 inline-block relative;
   }
   
   .section-title::after {
