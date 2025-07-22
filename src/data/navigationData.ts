@@ -12,5 +12,5 @@ export const navigation = [
   { name: 'Rádio', href: '/radio', icon: Radio },
   { name: 'TV Directo', href: '/tv', icon: Tv },
   { name: 'TVA 2', href: '/tva', icon: Tv },
-  { name: 'Sobre Nós', href: '/sobre', icon: Info },
+  { name: 'Dashboard', href: '/dashboard', icon: Info },
 ];

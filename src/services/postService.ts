@@ -17,7 +17,7 @@ import { Post } from './types';
 import { uploadImage } from './storageService';
 
 // Create a new post
-export const createPost = async (post: Omit<Post, 'createdAt' | 'updatedAt' | 'id' | 'likes' | 'comments'>, image?: File): Promise<string> => {
+export const createPost = async (post: Omit<Post, 'createdAt' | 'updatedAt' | 'id' | 'likes' | 'comments' | 'status'> & { status?: 'published' | 'draft' }, image?: File): Promise<string> => {
   try {
     let imageUrl = post.imageUrl || '';
     
@@ -32,7 +32,8 @@ export const createPost = async (post: Omit<Post, 'createdAt' | 'updatedAt' | 'i
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
       likes: 0,
-      comments: 0
+      comments: 0,
+      status: post.status || 'published'
     };
     
     const docRef = await addDoc(collection(db, 'posts'), postData);

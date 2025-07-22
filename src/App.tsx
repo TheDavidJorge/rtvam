@@ -13,6 +13,7 @@ import NewsDetail from "./pages/NewsDetail";
 import NewsCategory from "./pages/NewsCategory";
 import Programming from "./pages/Programming";
 import Tva from "./pages/Tva";
+import Dashboard from "./pages/Dashboard";
 import { RadioPlayerProvider } from "./contexts/RadioPlayerContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
@@ -40,6 +41,7 @@ const App = () => (
                   <Route path="/noticias/:categoryId/:newsId" element={<NewsDetail />} />
                   <Route path="/noticias/:categoryId" element={<NewsCategory />} />
                   <Route path="/programacao" element={<Programming />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>

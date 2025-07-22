@@ -11,14 +11,14 @@ import CurrencyExchange from '@/components/home/CurrencyExchange';
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-accent/20">
       <Navbar />
       <main className="pt-16">
         <Hero />
-        <div className="py-6 bg-gray-50">
+        <div className="py-12 bg-gradient-to-br from-accent/10 to-background">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <div className="lg:col-span-2">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <div className="lg:col-span-2 space-y-12">
                 <FeaturedPrograms />
                 <LatestNews />
               </div>

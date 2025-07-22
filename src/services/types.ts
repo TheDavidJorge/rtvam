@@ -9,13 +9,14 @@ export interface Post {
   imageUrl?: string;
   createdAt: Timestamp | null;
   updatedAt: Timestamp | null;
-  author: {
+  author: string | {
     uid: string;
     displayName: string;
     photoURL: string;
   };
   likes: number;
   comments: number;
+  status?: 'published' | 'draft';
 }
 
 export interface Comment {

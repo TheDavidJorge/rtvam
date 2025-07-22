@@ -6,16 +6,20 @@ import { useToast } from '@/hooks/use-toast';
 
 interface AuthContextType {
   currentUser: User | null;
+  user: User | null;
   loading: boolean;
   signInWithEmail: (email: string, password: string) => Promise<UserCredential | null>;
   signUpWithEmail: (email: string, password: string) => Promise<UserCredential | null>;
+  signOut: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType>({ 
   currentUser: null, 
+  user: null,
   loading: true,
   signInWithEmail: async () => null,
-  signUpWithEmail: async () => null
+  signUpWithEmail: async () => null,
+  signOut: async () => {}
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -65,6 +69,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  // Sign out
+  const signOut = async (): Promise<void> => {
+    try {
+      await auth.signOut();
+      toast({
+        title: "Logged Out",
+        description: "You have been successfully logged out.",
+      });
+    } catch (error: any) {
+      console.error('Logout error:', error);
+      toast({
+        title: "Logout Error",
+        description: "There was a problem logging out.",
+        variant: "destructive",
+      });
+    }
+  };
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
@@ -90,9 +112,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const value = {
     currentUser,
+    user: currentUser,
     loading,
     signInWithEmail,
-    signUpWithEmail
+    signUpWithEmail,
+    signOut
   };
 
   return (

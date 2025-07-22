@@ -16,6 +16,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import AuthModal from '@/components/auth/AuthModal';
+import AdminMenu from '@/components/admin/AdminMenu';
 
 const SettingsMenu = () => {
   const { t } = useLanguage();
@@ -50,6 +51,14 @@ const SettingsMenu = () => {
         <DropdownMenuItem className="cursor-pointer dark:hover:bg-gray-700">
           {currentUser ? <GoogleLogin /> : <AuthModal />}
         </DropdownMenuItem>
+        {currentUser && (
+          <>
+            <DropdownMenuSeparator className="dark:bg-gray-700" />
+            <DropdownMenuItem className="cursor-pointer dark:hover:bg-gray-700">
+              <AdminMenu />
+            </DropdownMenuItem>
+          </>
+        )}
         <DropdownMenuSeparator className="dark:bg-gray-700" />
         <DropdownMenuLabel className="dark:text-gray-200">{t('language')}</DropdownMenuLabel>
         <DropdownMenuItem className="cursor-pointer dark:hover:bg-gray-700">

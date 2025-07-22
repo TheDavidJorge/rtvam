@@ -42,7 +42,7 @@ export const syncPostToSQL = async (post: Post) => {
         post.id,
         post.title,
         post.content,
-        post.author.uid,
+        typeof post.author === 'string' ? 'anonymous' : post.author.uid,
         post.category,
         post.createdAt instanceof Timestamp ? post.createdAt.toDate().toISOString() : new Date().toISOString(),
         new Date().toISOString()

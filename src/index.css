@@ -11,42 +11,59 @@
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-    --primary: 231 81% 55%;  /* Blue #2e49ed */
-    --primary-foreground: 210 40% 98%;
+    --primary: 214 84% 56%;  /* RTVAM Blue #2563eb */
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 214 84% 70%;
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 214 84% 92%;
+    --accent-foreground: 214 84% 20%;
     --destructive: 346 87% 53%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-    --radius: 0.5rem;
+    --ring: 214 84% 56%;
+    --radius: 0.75rem;
+    
+    /* Media brand colors */
+    --media-blue: 214 84% 56%;
+    --media-red: 0 84% 60%;
+    --media-gold: 43 96% 56%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--primary) / 0.95), hsl(var(--media-blue) / 0.85));
+    --gradient-card: linear-gradient(135deg, hsl(var(--background)), hsl(var(--accent) / 0.5));
+    
+    /* Shadows */
+    --shadow-elegant: 0 10px 30px -10px hsl(var(--primary) / 0.3);
+    --shadow-card: 0 4px 20px -4px hsl(var(--primary) / 0.15);
+    --shadow-glow: 0 0 40px hsl(var(--primary-glow) / 0.4);
   }
 
   .dark {
-    --background: 226 27% 19%;  /* #1f2540 */
-    --foreground: 0 0% 100%;    /* White */
-    --card: 226 27% 19%;        /* #1f2540 */
-    --card-foreground: 0 0% 100%;
-    --popover: 226 27% 19%;     /* #1f2540 */
-    --popover-foreground: 0 0% 100%;
-    --primary: 231 81% 55%;     /* Keep blue #2e49ed */
+    --background: 220 27% 8%;   /* Darker professional */
+    --foreground: 0 0% 98%;
+    --card: 220 27% 12%;
+    --card-foreground: 0 0% 98%;
+    --popover: 220 27% 12%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 214 84% 56%;     /* Same RTVAM Blue */
     --primary-foreground: 0 0% 100%;
-    --secondary: 226 27% 25%;   /* Slightly lighter than background */
-    --secondary-foreground: 0 0% 100%;
-    --muted: 226 27% 25%;
-    --muted-foreground: 0 0% 80%;
-    --accent: 226 27% 25%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 62.8% 30.6%;
+    --primary-glow: 214 84% 70%;
+    --secondary: 220 27% 18%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 220 27% 16%;
+    --muted-foreground: 0 0% 70%;
+    --accent: 220 27% 18%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 50%;
     --destructive-foreground: 0 0% 100%;
-    --border: 226 27% 30%;
-    --input: 226 27% 30%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: 220 27% 20%;
+    --input: 220 27% 20%;
+    --ring: 214 84% 56%;
   }
 }
 
@@ -77,48 +94,80 @@
 }
 
 @layer components {
+  /* Enhanced Card Components */
   .card-hover {
-    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+    @apply transition-all duration-300 hover:shadow-[var(--shadow-card)] hover:-translate-y-1 hover:scale-[1.02];
+  }
+  
+  .card-modern {
+    @apply bg-gradient-to-br from-card to-accent/20 border border-border/50 rounded-[var(--radius)] shadow-[var(--shadow-card)] backdrop-blur-sm;
+  }
+  
+  .card-media {
+    @apply relative overflow-hidden rounded-[var(--radius)] bg-gradient-to-br from-white to-accent/30 dark:from-card dark:to-accent/10 shadow-[var(--shadow-card)] border border-border/30;
   }
 
+  /* Navigation */
   .nav-link {
-    @apply px-3 py-2 text-sm font-medium rounded-md hover:bg-opacity-10 transition-colors;
+    @apply px-4 py-2.5 text-sm font-medium rounded-[var(--radius)] transition-all duration-200 hover:bg-accent/70 hover:text-accent-foreground;
   }
   
   .nav-link.active {
-    @apply text-white bg-primary dark:bg-primary dark:text-white;
+    @apply bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-[var(--shadow-elegant)] font-semibold;
   }
 
+  /* Modern Buttons */
   .btn-primary {
-    @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white transition-colors bg-primary rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary;
+    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-primary-foreground bg-gradient-to-r from-primary to-primary/90 rounded-[var(--radius)] shadow-[var(--shadow-elegant)] hover:shadow-[var(--shadow-glow)] transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium transition-colors bg-white border border-gray-300 rounded-md text-primary hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700;
+    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-semibold transition-all duration-200 bg-gradient-to-r from-accent to-accent/80 text-accent-foreground border border-border/50 rounded-[var(--radius)] hover:shadow-[var(--shadow-card)] hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary;
   }
 
-  .btn-destructive {
-    @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white transition-colors bg-rtam-red rounded-md hover:bg-rtam-red-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rtam-red;
+  .btn-ghost {
+    @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium transition-all duration-200 text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-[var(--radius)];
   }
 
+  /* Glass Effects */
   .glass {
-    @apply bg-white bg-opacity-80 backdrop-blur-md border border-white border-opacity-20 dark:bg-gray-900 dark:bg-opacity-80 dark:border-gray-800 dark:border-opacity-20;
+    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-[var(--shadow-card)] dark:bg-card/80 dark:border-border/20;
   }
   
-  .glass-dark {
-    @apply bg-gray-900 bg-opacity-80 backdrop-blur-md border border-gray-800 border-opacity-20;
+  .glass-hero {
+    @apply bg-gradient-to-br from-white/90 to-white/70 backdrop-blur-lg border border-white/30 shadow-[var(--shadow-elegant)];
   }
 
+  /* Media Components */
   .news-card {
-    @apply overflow-hidden rounded-lg card-hover bg-white dark:bg-gray-800;
+    @apply card-media card-hover transition-all duration-300;
+  }
+  
+  .hero-card {
+    @apply relative overflow-hidden rounded-[var(--radius)] bg-gradient-to-br from-primary/10 to-accent/20 backdrop-blur-sm border border-border/30;
   }
 
+  /* Typography */
   .section-title {
-    @apply text-2xl font-bold mb-6 pb-2 border-b-2 border-primary text-primary dark:border-primary dark:text-white inline-block;
+    @apply text-3xl font-bold mb-8 pb-3 bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent border-b-2 border-gradient-to-r from-primary to-transparent inline-block relative;
+  }
+  
+  .section-title::after {
+    @apply content-[''] absolute bottom-0 left-0 w-1/2 h-0.5 bg-gradient-to-r from-primary to-primary/40;
   }
 
+  /* Layouts */
   .page-container {
-    @apply container mx-auto px-4 py-8 md:py-12 animate-fade-in;
+    @apply container mx-auto px-4 py-12 animate-fade-in;
+  }
+  
+  .dashboard-container {
+    @apply min-h-screen bg-gradient-to-br from-background to-accent/30;
+  }
+  
+  /* Interactive Elements */
+  .interactive-hover {
+    @apply transition-all duration-200 hover:scale-105 hover:shadow-[var(--shadow-card)] cursor-pointer;
   }
 }
 

@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 // Updated carousel data with new images
 const carouselItems = [
@@ -62,8 +63,8 @@ const Hero = () => {
   };
 
   return (
-    <div className="flex justify-center py-8 bg-gray-50">
-      <div className="relative w-full max-w-5xl h-[500px] rounded-lg overflow-hidden shadow-xl">
+    <div className="flex justify-center py-12 bg-gradient-to-br from-accent/20 to-background">
+      <div className="relative w-full max-w-6xl h-[600px] rounded-[var(--radius)] overflow-hidden shadow-[var(--shadow-elegant)]">
         {/* Slides */}
         <div className="relative h-full">
           {carouselItems.map((item, index) => (
@@ -80,15 +81,23 @@ const Hero = () => {
               >
               </div>
 
-              {/* Content - positioned at the bottom instead of overlay */}
-              <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-6">
-                <div className="max-w-3xl">
-                  <h1 className="text-2xl sm:text-3xl font-bold text-rtam-blue mb-2">
+              {/* Content - modern glass overlay */}
+              <div className="absolute bottom-0 left-0 right-0 glass-hero backdrop-blur-lg p-8">
+                <div className="max-w-4xl">
+                  <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent mb-3">
                     {item.title}
                   </h1>
-                  <p className="text-base sm:text-lg text-gray-700">
+                  <p className="text-lg sm:text-xl text-foreground/80 leading-relaxed">
                     {item.description}
                   </p>
+                  <div className="mt-4 flex items-center space-x-4">
+                    <Badge variant="secondary" className="bg-primary/10 text-primary">
+                      Em Destaque
+                    </Badge>
+                    <span className="text-sm text-muted-foreground">
+                      RTVAM • Rádio e Televisão Académica
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -98,27 +107,29 @@ const Hero = () => {
         {/* Navigation buttons */}
         <button
           onClick={prevSlide}
-          className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-white text-rtam-blue hover:bg-rtam-blue hover:text-white transition-colors shadow-md"
+          className="absolute left-6 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full glass-hero text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 shadow-[var(--shadow-card)] hover:scale-110"
           aria-label="Previous slide"
         >
           <ChevronLeft size={24} />
         </button>
         <button
           onClick={nextSlide}
-          className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-white text-rtam-blue hover:bg-rtam-blue hover:text-white transition-colors shadow-md"
+          className="absolute right-6 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full glass-hero text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 shadow-[var(--shadow-card)] hover:scale-110"
           aria-label="Next slide"
         >
           <ChevronRight size={24} />
         </button>
 
         {/* Indicators */}
-        <div className="absolute bottom-28 left-1/2 -translate-x-1/2 z-20 flex space-x-2">
+        <div className="absolute bottom-32 left-1/2 -translate-x-1/2 z-20 flex space-x-3">
           {carouselItems.map((_, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`w-3 h-3 rounded-full transition-colors ${
-                index === currentSlide ? 'bg-rtam-blue' : 'bg-gray-300 hover:bg-rtam-blue/70'
+              className={`w-4 h-4 rounded-full transition-all duration-300 ${
+                index === currentSlide 
+                  ? 'bg-primary scale-110 shadow-[var(--shadow-glow)]' 
+                  : 'bg-white/60 hover:bg-primary/70 hover:scale-105'
               }`}
               aria-label={`Go to slide ${index + 1}`}
             ></button>
