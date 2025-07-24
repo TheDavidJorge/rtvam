@@ -15,6 +15,9 @@ import {
   Save,
   X
 } from 'lucide-react';
+import SlideManager from '@/components/dashboard/SlideManager';
+import AnalyticsDashboard from '@/components/dashboard/AnalyticsDashboard';
+import SiteSettings from '@/components/dashboard/SiteSettings';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -384,46 +387,15 @@ const Dashboard = () => {
           </TabsContent>
 
           <TabsContent value="slides">
-            <Card className="card-modern">
-              <CardHeader>
-                <CardTitle>Gestão de Slides do Hero</CardTitle>
-                <p className="text-muted-foreground">Gerencie as imagens do carrossel principal</p>
-              </CardHeader>
-              <CardContent className="text-center py-12">
-                <ImageIcon className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-                <p className="text-muted-foreground mb-4">Funcionalidade de gestão de slides em desenvolvimento</p>
-                <Button className="btn-primary">
-                  <Upload className="h-4 w-4 mr-2" />
-                  Upload de Slide
-                </Button>
-              </CardContent>
-            </Card>
+            <SlideManager />
           </TabsContent>
 
           <TabsContent value="analytics">
-            <Card className="card-modern">
-              <CardHeader>
-                <CardTitle>Analytics</CardTitle>
-                <p className="text-muted-foreground">Estatísticas de visualizações e engajamento</p>
-              </CardHeader>
-              <CardContent className="text-center py-12">
-                <BarChart3 className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-                <p className="text-muted-foreground">Analytics em desenvolvimento</p>
-              </CardContent>
-            </Card>
+            <AnalyticsDashboard />
           </TabsContent>
 
           <TabsContent value="settings">
-            <Card className="card-modern">
-              <CardHeader>
-                <CardTitle>Configurações</CardTitle>
-                <p className="text-muted-foreground">Configurações gerais do sistema</p>
-              </CardHeader>
-              <CardContent className="text-center py-12">
-                <Settings className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-                <p className="text-muted-foreground">Configurações em desenvolvimento</p>
-              </CardContent>
-            </Card>
+            <SiteSettings />
           </TabsContent>
         </Tabs>
       </div>
