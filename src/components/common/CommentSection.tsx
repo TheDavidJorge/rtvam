@@ -1,18 +1,14 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
-import { Send, ThumbsUp } from 'lucide-react';
+import { Send, MessageCircle } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
-import { pt, enUS } from 'date-fns/locale';
-import { useAuth2 } from '@/hooks/use-firebase';
-import { useComments } from '@/hooks/use-firebase';
-import { addComment } from '@/services/commentService';
+import { pt } from 'date-fns/locale';
+import { commentsService, type Comment } from '@/services/supabaseService';
 import { useToast } from '@/hooks/use-toast';
-import { useLanguage } from '@/contexts/LanguageContext';
-import AuthModal from '@/components/auth/AuthModal';
 
 interface CommentSectionProps {
   postId: string;
@@ -21,44 +17,59 @@ interface CommentSectionProps {
 const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
   const [newComment, setNewComment] = useState('');
   const [submitting, setSubmitting] = useState(false);
-  const { comments, loading } = useComments(postId);
-  const { user } = useAuth2();
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [authorName, setAuthorName] = useState('');
   const { toast } = useToast();
-  const { language, t } = useLanguage();
+
+  useEffect(() => {
+    loadComments();
+  }, [postId]);
+
+  const loadComments = async () => {
+    try {
+      setLoading(true);
+      const fetchedComments = await commentsService.getByPostId(postId);
+      setComments(fetchedComments);
+    } catch (error) {
+      console.error('Error loading comments:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
   
   const handleSubmitComment = async () => {
-    if (!user) {
+    if (newComment.trim() === '' || authorName.trim() === '') {
       toast({
-        title: t('login_required'),
-        description: t('login_to_comment'),
+        title: "Erro",
+        description: "Preencha seu nome e comentário",
+        variant: "destructive",
       });
       return;
     }
     
-    if (newComment.trim() === '') return;
-    
     try {
       setSubmitting(true);
-      await addComment({
-        postId,
+      await commentsService.create({
+        post_id: postId,
         content: newComment,
-        author: {
-          uid: user.uid,
-          displayName: user.displayName || 'Anonymous',
-          photoURL: user.photoURL || '',
-        }
-      }, user);
+        author_name: authorName,
+      });
       
       setNewComment('');
+      setAuthorName('');
       toast({
-        title: t('comment_added'),
-        description: t('comment_success'),
+        title: "Sucesso",
+        description: "Comentário adicionado com sucesso",
       });
+      
+      // Reload comments
+      loadComments();
     } catch (error) {
       console.error('Error adding comment:', error);
       toast({
-        title: t('error'),
-        description: t('comment_error'),
+        title: "Erro",
+        description: "Falha ao adicionar comentário",
         variant: "destructive",
       });
     } finally {
@@ -66,57 +77,61 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
     }
   };
   
-  const formatDate = (timestamp: any) => {
-    if (!timestamp) return '';
-    const date = timestamp.toDate();
+  const formatDate = (dateString: string) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
     return formatDistanceToNow(date, { 
       addSuffix: true,
-      locale: language === 'pt' ? pt : enUS
+      locale: pt
     });
   };
   
   return (
     <div className="space-y-6">
-      <h3 className="text-xl font-bold">{t('comments')} ({comments.length})</h3>
+      <h3 className="text-xl font-bold flex items-center gap-2">
+        <MessageCircle className="h-5 w-5" />
+        Comentários ({comments.length})
+      </h3>
       
-      {user ? (
-        <div className="flex gap-4">
-          <Avatar className="w-10 h-10">
-            <AvatarImage src={user.photoURL || ''} alt={user.displayName || 'User'} />
-            <AvatarFallback>{user.displayName?.[0] || 'U'}</AvatarFallback>
-          </Avatar>
-          <div className="flex-1 space-y-2">
+      {/* Comment Form */}
+      <Card>
+        <CardContent className="p-4 space-y-4">
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Seu nome</label>
+            <input
+              type="text"
+              value={authorName}
+              onChange={(e) => setAuthorName(e.target.value)}
+              placeholder="Digite seu nome"
+              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rtam-blue"
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Comentário</label>
             <Textarea
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
-              placeholder={t('write_comment')}
+              placeholder="Escreva seu comentário..."
               className="w-full resize-none"
               rows={3}
             />
-            <div className="flex justify-end">
-              <Button 
-                onClick={handleSubmitComment}
-                disabled={submitting || newComment.trim() === ''}
-                className="flex items-center gap-2"
-              >
-                {submitting ? (
-                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                ) : (
-                  <Send className="h-4 w-4" />
-                )}
-                {t('post_comment')}
-              </Button>
-            </div>
           </div>
-        </div>
-      ) : (
-        <Card>
-          <CardContent className="p-4 text-center">
-            <p className="mb-4">{t('login_to_comment')}</p>
-            <AuthModal />
-          </CardContent>
-        </Card>
-      )}
+          <div className="flex justify-end">
+            <Button 
+              onClick={handleSubmitComment}
+              disabled={submitting || newComment.trim() === '' || authorName.trim() === ''}
+              className="flex items-center gap-2"
+            >
+              {submitting ? (
+                <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+              ) : (
+                <Send className="h-4 w-4" />
+              )}
+              Publicar comentário
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
       
       {loading ? (
         <div className="flex justify-center py-8">
@@ -127,22 +142,15 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
           {comments.map((comment) => (
             <div key={comment.id} className="flex gap-4">
               <Avatar className="w-10 h-10">
-                <AvatarImage src={comment.author.photoURL} alt={comment.author.displayName} />
-                <AvatarFallback>{comment.author.displayName[0]}</AvatarFallback>
+                <AvatarFallback>{comment.author_name[0]?.toUpperCase()}</AvatarFallback>
               </Avatar>
               <div className="flex-1">
                 <div className="bg-muted p-3 rounded-lg">
                   <div className="flex justify-between items-start">
-                    <div className="font-medium">{comment.author.displayName}</div>
-                    <div className="text-xs text-muted-foreground">{formatDate(comment.createdAt)}</div>
+                    <div className="font-medium">{comment.author_name}</div>
+                    <div className="text-xs text-muted-foreground">{formatDate(comment.created_at!)}</div>
                   </div>
                   <p className="mt-1 text-sm">{comment.content}</p>
-                </div>
-                <div className="flex items-center mt-1 ml-2">
-                  <Button variant="ghost" size="sm" className="h-7 px-2 text-xs">
-                    <ThumbsUp className="h-3 w-3 mr-1" />
-                    {t('like')}
-                  </Button>
                 </div>
               </div>
             </div>
@@ -150,7 +158,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
         </div>
       ) : (
         <div className="py-6 text-center text-muted-foreground">
-          {t('no_comments')}
+          Nenhum comentário ainda. Seja o primeiro a comentar!
         </div>
       )}
     </div>

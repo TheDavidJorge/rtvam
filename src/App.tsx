@@ -38,8 +38,7 @@ const App = () => (
                   <Route path="/tv" element={<TvDireto />} />
                   <Route path="/tva" element={<Tva />} />
                   <Route path="/noticias" element={<News />} />
-                  <Route path="/noticias/:categoryId/:newsId" element={<NewsDetail />} />
-                  <Route path="/noticias/:categoryId" element={<NewsCategory />} />
+                  <Route path="/noticias/:id" element={<NewsDetail />} />
                   <Route path="/programacao" element={<Programming />} />
                   <Route path="/dashboard" element={<Dashboard />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
