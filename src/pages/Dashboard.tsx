@@ -27,13 +27,9 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
-import { createPost, getPosts, deletePost, updatePost } from '@/services/postService';
-import { uploadImage } from '@/services/storageService';
-import { useAuth } from '@/contexts/AuthContext';
-import { Post } from '@/services/types';
+import { postsService, storageService, type Post } from '@/services/supabaseService';
 
 const Dashboard = () => {
-  const { user, signOut } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
   
@@ -45,24 +41,20 @@ const Dashboard = () => {
     title: '',
     content: '',
     category: '',
-    imageUrl: '',
+    image_url: '',
     status: 'published' as 'published' | 'draft'
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string>('');
 
   useEffect(() => {
-    if (!user) {
-      navigate('/');
-      return;
-    }
     loadPosts();
-  }, [user, navigate]);
+  }, []);
 
   const loadPosts = async () => {
     try {
       setLoading(true);
-      const fetchedPosts = await getPosts();
+      const fetchedPosts = await postsService.getAll();
       setPosts(fetchedPosts);
     } catch (error) {
       toast({
@@ -87,13 +79,20 @@ const Dashboard = () => {
 
     try {
       setLoading(true);
-      await createPost({
+      let imageUrl = formData.image_url;
+      
+      if (imageFile) {
+        imageUrl = await storageService.uploadImage(imageFile, 'posts');
+      }
+
+      await postsService.create({
         title: formData.title,
         content: formData.content,
         category: formData.category,
-        imageUrl: formData.imageUrl,
-        author: user?.email || 'Admin'
-      }, imageFile || undefined);
+        image_url: imageUrl,
+        author_name: 'Admin',
+        status: formData.status
+      });
 
       toast({
         title: "Sucesso",
@@ -118,7 +117,7 @@ const Dashboard = () => {
     if (!window.confirm('Tem certeza que deseja apagar este post?')) return;
 
     try {
-      await deletePost(postId);
+      await postsService.delete(postId);
       toast({
         title: "Sucesso",
         description: "Post apagado com sucesso",
@@ -148,19 +147,16 @@ const Dashboard = () => {
       title: '',
       content: '',
       category: '',
-      imageUrl: '',
+      image_url: '',
       status: 'published'
     });
     setImageFile(null);
     setPreviewImage('');
   };
 
-  const handleLogout = async () => {
-    await signOut();
+  const handleLogout = () => {
     navigate('/');
   };
-
-  if (!user) return null;
 
   return (
     <div className="dashboard-container">
@@ -313,6 +309,11 @@ const Dashboard = () => {
                         accept="image/*"
                         onChange={handleImageChange}
                       />
+                      <Input
+                        placeholder="Ou URL da imagem"
+                        value={formData.image_url}
+                        onChange={(e) => setFormData(prev => ({ ...prev, image_url: e.target.value }))}
+                      />
                       {previewImage && (
                         <div className="mt-2">
                           <img src={previewImage} alt="Preview" className="max-w-full h-40 object-cover rounded-[var(--radius)]" />
@@ -349,8 +350,8 @@ const Dashboard = () => {
                     {posts.map((post) => (
                       <div key={post.id} className="flex items-center justify-between p-4 border border-border/30 rounded-[var(--radius)] card-hover">
                         <div className="flex items-center space-x-4">
-                          {post.imageUrl && (
-                            <img src={post.imageUrl} alt={post.title} className="w-16 h-16 object-cover rounded-[var(--radius)]" />
+                          {post.image_url && (
+                            <img src={post.image_url} alt={post.title} className="w-16 h-16 object-cover rounded-[var(--radius)]" />
                           )}
                           <div>
                             <h3 className="font-semibold text-foreground">{post.title}</h3>
@@ -360,7 +361,7 @@ const Dashboard = () => {
                                 {post.status === 'published' ? 'Publicado' : 'Rascunho'}
                               </Badge>
                               <span className="text-xs text-muted-foreground">
-                                {post.likes} likes • {post.comments} comentários
+                                {post.likes} likes • {post.comments_count} comentários
                               </span>
                             </div>
                           </div>
@@ -372,7 +373,7 @@ const Dashboard = () => {
                           <Button 
                             variant="outline" 
                             size="sm" 
-                            onClick={() => handleDeletePost(post.id)}
+                            onClick={() => handleDeletePost(post.id!)}
                             className="text-destructive hover:text-destructive-foreground hover:bg-destructive"
                           >
                             <Trash2 className="h-4 w-4" />

@@ -17,56 +17,42 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { useToast } from '@/hooks/use-toast';
-import { uploadImage } from '@/services/storageService';
-
-interface SlideData {
-  id: string;
-  title: string;
-  description: string;
-  image: string;
-  order: number;
-  active: boolean;
-}
+import { slidesService, storageService, type SlideData } from '@/services/supabaseService';
 
 const SlideManager = () => {
   const { toast } = useToast();
-  const [slides, setSlides] = useState<SlideData[]>([
-    {
-      id: '1',
-      title: 'Notícias ao Meio Dia',
-      description: 'O seu programa noticioso diário com todas as novidades nacionais e internacionais.',
-      image: 'https://rtvam.co.mz/wp-content/uploads/2025/07/NOTICIAS-AO-MEIO-DIA-1-3.jpg',
-      order: 1,
-      active: true
-    },
-    {
-      id: '2',
-      title: 'Olhar Político',
-      description: 'Análises profundas e debates sobre os principais temas políticos da atualidade.',
-      image: 'https://rtvam.co.mz/wp-content/uploads/2025/07/olharpolitico1-scaled.jpg',
-      order: 2,
-      active: true
-    },
-    {
-      id: '3',
-      title: 'Impacto Semanal',
-      description: 'Resumo semanal dos acontecimentos mais importantes em Moçambique e no mundo.',
-      image: 'https://rtvam.co.mz/wp-content/uploads/2025/07/impacosemanalcover2-scaled.png',
-      order: 3,
-      active: true
-    }
-  ]);
-  
+  const [slides, setSlides] = useState<SlideData[]>([]);
+  const [loading, setLoading] = useState(true);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [editingSlide, setEditingSlide] = useState<SlideData | null>(null);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    image: ''
+    image_url: ''
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string>('');
-  const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    loadSlides();
+  }, []);
+
+  const loadSlides = async () => {
+    try {
+      setLoading(true);
+      const data = await slidesService.getAll();
+      setSlides(data);
+    } catch (error) {
+      toast({
+        title: "Erro",
+        description: "Falha ao carregar slides",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleCreateSlide = async () => {
     if (!formData.title || !formData.description) {
@@ -79,23 +65,23 @@ const SlideManager = () => {
     }
 
     try {
-      setLoading(true);
-      let imageUrl = formData.image;
+      setSubmitting(true);
+      let imageUrl = formData.image_url;
       
       if (imageFile) {
-        imageUrl = await uploadImage(imageFile, 'slides');
+        imageUrl = await storageService.uploadImage(imageFile, 'slides');
       }
 
-      const newSlide: SlideData = {
-        id: Date.now().toString(),
+      const newSlide = {
         title: formData.title,
         description: formData.description,
-        image: imageUrl,
-        order: slides.length + 1,
-        active: true
+        image_url: imageUrl,
+        order_index: slides.length,
+        is_active: true
       };
 
-      setSlides(prev => [...prev, newSlide]);
+      await slidesService.create(newSlide);
+      await loadSlides();
       
       toast({
         title: "Sucesso",
@@ -111,7 +97,7 @@ const SlideManager = () => {
         variant: "destructive",
       });
     } finally {
-      setLoading(false);
+      setSubmitting(false);
     }
   };
 
@@ -119,18 +105,20 @@ const SlideManager = () => {
     if (!editingSlide || !formData.title || !formData.description) return;
 
     try {
-      setLoading(true);
-      let imageUrl = formData.image;
+      setSubmitting(true);
+      let imageUrl = formData.image_url;
       
       if (imageFile) {
-        imageUrl = await uploadImage(imageFile, 'slides');
+        imageUrl = await storageService.uploadImage(imageFile, 'slides');
       }
 
-      setSlides(prev => prev.map(slide => 
-        slide.id === editingSlide.id 
-          ? { ...slide, title: formData.title, description: formData.description, image: imageUrl }
-          : slide
-      ));
+      await slidesService.update(editingSlide.id!, {
+        title: formData.title,
+        description: formData.description,
+        image_url: imageUrl
+      });
+
+      await loadSlides();
 
       toast({
         title: "Sucesso",
@@ -146,40 +134,68 @@ const SlideManager = () => {
         variant: "destructive",
       });
     } finally {
-      setLoading(false);
+      setSubmitting(false);
     }
   };
 
-  const handleDeleteSlide = (slideId: string) => {
+  const handleDeleteSlide = async (slideId: string) => {
     if (!window.confirm('Tem certeza que deseja apagar este slide?')) return;
     
-    setSlides(prev => prev.filter(slide => slide.id !== slideId));
-    toast({
-      title: "Sucesso",
-      description: "Slide apagado com sucesso",
-    });
+    try {
+      await slidesService.delete(slideId);
+      await loadSlides();
+      
+      toast({
+        title: "Sucesso",
+        description: "Slide apagado com sucesso",
+      });
+    } catch (error) {
+      toast({
+        title: "Erro",
+        description: "Falha ao apagar slide",
+        variant: "destructive",
+      });
+    }
   };
 
-  const moveSlide = (slideId: string, direction: 'up' | 'down') => {
-    setSlides(prev => {
-      const slideIndex = prev.findIndex(s => s.id === slideId);
-      if (slideIndex === -1) return prev;
+  const moveSlide = async (slideId: string, direction: 'up' | 'down') => {
+    const slideIndex = slides.findIndex(s => s.id === slideId);
+    if (slideIndex === -1) return;
+    
+    const targetIndex = direction === 'up' ? slideIndex - 1 : slideIndex + 1;
+    if (targetIndex < 0 || targetIndex >= slides.length) return;
+
+    try {
+      const slide = slides[slideIndex];
+      const targetSlide = slides[targetIndex];
       
-      const newSlides = [...prev];
-      const targetIndex = direction === 'up' ? slideIndex - 1 : slideIndex + 1;
+      await slidesService.update(slide.id!, { order_index: targetSlide.order_index });
+      await slidesService.update(targetSlide.id!, { order_index: slide.order_index });
       
-      if (targetIndex < 0 || targetIndex >= newSlides.length) return prev;
-      
-      [newSlides[slideIndex], newSlides[targetIndex]] = [newSlides[targetIndex], newSlides[slideIndex]];
-      
-      return newSlides.map((slide, index) => ({ ...slide, order: index + 1 }));
-    });
+      await loadSlides();
+    } catch (error) {
+      toast({
+        title: "Erro",
+        description: "Falha ao reordenar slide",
+        variant: "destructive",
+      });
+    }
   };
 
-  const toggleSlideActive = (slideId: string) => {
-    setSlides(prev => prev.map(slide => 
-      slide.id === slideId ? { ...slide, active: !slide.active } : slide
-    ));
+  const toggleSlideActive = async (slideId: string) => {
+    const slide = slides.find(s => s.id === slideId);
+    if (!slide) return;
+
+    try {
+      await slidesService.update(slideId, { is_active: !slide.is_active });
+      await loadSlides();
+    } catch (error) {
+      toast({
+        title: "Erro",
+        description: "Falha ao alterar status do slide",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -193,7 +209,7 @@ const SlideManager = () => {
   };
 
   const resetForm = () => {
-    setFormData({ title: '', description: '', image: '' });
+    setFormData({ title: '', description: '', image_url: '' });
     setImageFile(null);
     setPreviewImage('');
   };
@@ -202,11 +218,15 @@ const SlideManager = () => {
     setEditingSlide(slide);
     setFormData({
       title: slide.title,
-      description: slide.description,
-      image: slide.image
+      description: slide.description || '',
+      image_url: slide.image_url
     });
-    setPreviewImage(slide.image);
+    setPreviewImage(slide.image_url);
   };
+
+  if (loading) {
+    return <div className="p-8 text-center">Carregando slides...</div>;
+  }
 
   return (
     <div className="space-y-6">
@@ -249,8 +269,8 @@ const SlideManager = () => {
                 />
                 <Input
                   placeholder="Ou URL da imagem"
-                  value={formData.image}
-                  onChange={(e) => setFormData(prev => ({ ...prev, image: e.target.value }))}
+                  value={formData.image_url}
+                  onChange={(e) => setFormData(prev => ({ ...prev, image_url: e.target.value }))}
                 />
                 {previewImage && (
                   <div className="mt-2">
@@ -263,8 +283,8 @@ const SlideManager = () => {
               <Button variant="outline" onClick={() => setIsCreateModalOpen(false)}>
                 Cancelar
               </Button>
-              <Button onClick={handleCreateSlide} disabled={loading} className="btn-primary">
-                {loading ? 'Criando...' : 'Criar Slide'}
+              <Button onClick={handleCreateSlide} disabled={submitting} className="btn-primary">
+                {submitting ? 'Criando...' : 'Criar Slide'}
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -274,11 +294,11 @@ const SlideManager = () => {
       {/* Slides grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {slides.map((slide, index) => (
-          <Card key={slide.id} className={`card-modern ${!slide.active ? 'opacity-60' : ''}`}>
+          <Card key={slide.id} className={`card-modern ${!slide.is_active ? 'opacity-60' : ''}`}>
             <CardHeader className="p-0">
               <div className="relative h-48 rounded-t-[var(--radius)] overflow-hidden">
                 <img 
-                  src={slide.image} 
+                  src={slide.image_url} 
                   alt={slide.title} 
                   className="w-full h-full object-cover"
                 />
@@ -286,7 +306,7 @@ const SlideManager = () => {
                   <Button
                     size="sm"
                     variant="outline"
-                    onClick={() => moveSlide(slide.id, 'up')}
+                    onClick={() => moveSlide(slide.id!, 'up')}
                     disabled={index === 0}
                     className="p-1 h-auto bg-black/20 border-white/20 text-white hover:bg-black/40"
                   >
@@ -295,7 +315,7 @@ const SlideManager = () => {
                   <Button
                     size="sm"
                     variant="outline"
-                    onClick={() => moveSlide(slide.id, 'down')}
+                    onClick={() => moveSlide(slide.id!, 'down')}
                     disabled={index === slides.length - 1}
                     className="p-1 h-auto bg-black/20 border-white/20 text-white hover:bg-black/40"
                   >
@@ -305,8 +325,8 @@ const SlideManager = () => {
                 <div className="absolute top-2 right-2">
                   <Button
                     size="sm"
-                    variant={slide.active ? "default" : "outline"}
-                    onClick={() => toggleSlideActive(slide.id)}
+                    variant={slide.is_active ? "default" : "outline"}
+                    onClick={() => toggleSlideActive(slide.id!)}
                     className="p-1 h-auto bg-black/20 border-white/20 text-white hover:bg-black/40"
                   >
                     <Eye className="h-3 w-3" />
@@ -318,7 +338,7 @@ const SlideManager = () => {
               <h3 className="font-semibold text-lg mb-2">{slide.title}</h3>
               <p className="text-sm text-muted-foreground mb-4 line-clamp-3">{slide.description}</p>
               <div className="flex justify-between items-center">
-                <span className="text-xs text-muted-foreground">Ordem: {slide.order}</span>
+                <span className="text-xs text-muted-foreground">Ordem: {slide.order_index}</span>
                 <div className="flex gap-2">
                   <Button 
                     size="sm" 
@@ -331,7 +351,7 @@ const SlideManager = () => {
                   <Button 
                     size="sm" 
                     variant="outline" 
-                    onClick={() => handleDeleteSlide(slide.id)}
+                    onClick={() => handleDeleteSlide(slide.id!)}
                     className="text-destructive hover:text-destructive-foreground hover:bg-destructive"
                   >
                     <Trash2 className="h-3 w-3" />
@@ -371,8 +391,8 @@ const SlideManager = () => {
               />
               <Input
                 placeholder="Ou URL da imagem"
-                value={formData.image}
-                onChange={(e) => setFormData(prev => ({ ...prev, image: e.target.value }))}
+                value={formData.image_url}
+                onChange={(e) => setFormData(prev => ({ ...prev, image_url: e.target.value }))}
               />
               {previewImage && (
                 <div className="mt-2">
@@ -385,8 +405,8 @@ const SlideManager = () => {
             <Button variant="outline" onClick={() => setEditingSlide(null)}>
               Cancelar
             </Button>
-            <Button onClick={handleUpdateSlide} disabled={loading} className="btn-primary">
-              {loading ? 'Atualizando...' : 'Atualizar Slide'}
+            <Button onClick={handleUpdateSlide} disabled={submitting} className="btn-primary">
+              {submitting ? 'Atualizando...' : 'Atualizar Slide'}
             </Button>
           </DialogFooter>
         </DialogContent>
