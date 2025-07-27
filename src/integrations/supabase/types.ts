@@ -52,6 +52,75 @@ export type Database = {
           },
         ]
       }
+      featured_programs: {
+        Row: {
+          category: string | null
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          is_active: boolean
+          order_index: number
+          time_schedule: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          order_index?: number
+          time_schedule?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          order_index?: number
+          time_schedule?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      newsletter_subscribers: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          is_active: boolean
+          name: string | null
+          subscribed_at: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          is_active?: boolean
+          name?: string | null
+          subscribed_at?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          is_active?: boolean
+          name?: string | null
+          subscribed_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       posts: {
         Row: {
           author_id: string | null
@@ -100,6 +169,42 @@ export type Database = {
         }
         Relationships: []
       }
+      radio_presenters: {
+        Row: {
+          bio: string | null
+          created_at: string
+          id: string
+          is_active: boolean
+          name: string
+          order_index: number
+          photo_url: string | null
+          program: string | null
+          updated_at: string
+        }
+        Insert: {
+          bio?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name: string
+          order_index?: number
+          photo_url?: string | null
+          program?: string | null
+          updated_at?: string
+        }
+        Update: {
+          bio?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          order_index?: number
+          photo_url?: string | null
+          program?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       radio_tv_settings: {
         Row: {
           created_at: string
@@ -139,6 +244,48 @@ export type Database = {
         }
         Relationships: []
       }
+      schedule_programs: {
+        Row: {
+          created_at: string
+          day_of_week: string
+          description: string | null
+          end_time: string
+          id: string
+          is_active: boolean
+          presenter: string | null
+          program_name: string
+          start_time: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          day_of_week: string
+          description?: string | null
+          end_time: string
+          id?: string
+          is_active?: boolean
+          presenter?: string | null
+          program_name: string
+          start_time: string
+          type?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          day_of_week?: string
+          description?: string | null
+          end_time?: string
+          id?: string
+          is_active?: boolean
+          presenter?: string | null
+          program_name?: string
+          start_time?: string
+          type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       slides: {
         Row: {
           created_at: string
@@ -169,6 +316,75 @@ export type Database = {
           order_index?: number
           title?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      social_feeds: {
+        Row: {
+          created_at: string
+          embed_code: string | null
+          id: string
+          is_active: boolean
+          order_index: number
+          title: string
+          type: string
+          updated_at: string
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          embed_code?: string | null
+          id?: string
+          is_active?: boolean
+          order_index?: number
+          title: string
+          type: string
+          updated_at?: string
+          url: string
+        }
+        Update: {
+          created_at?: string
+          embed_code?: string | null
+          id?: string
+          is_active?: boolean
+          order_index?: number
+          title?: string
+          type?: string
+          updated_at?: string
+          url?: string
+        }
+        Relationships: []
+      }
+      social_links: {
+        Row: {
+          created_at: string
+          icon_name: string | null
+          id: string
+          is_active: boolean
+          order_index: number
+          platform: string
+          updated_at: string
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          icon_name?: string | null
+          id?: string
+          is_active?: boolean
+          order_index?: number
+          platform: string
+          updated_at?: string
+          url: string
+        }
+        Update: {
+          created_at?: string
+          icon_name?: string | null
+          id?: string
+          is_active?: boolean
+          order_index?: number
+          platform?: string
+          updated_at?: string
+          url?: string
         }
         Relationships: []
       }

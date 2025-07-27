@@ -50,6 +50,84 @@ export interface SlideData {
   updated_at?: string;
 }
 
+// Featured Programs interface
+export interface FeaturedProgram {
+  id?: string;
+  title: string;
+  description?: string;
+  time_schedule?: string;
+  image_url?: string;
+  category?: string;
+  is_active: boolean;
+  order_index: number;
+  created_at?: string;
+  updated_at?: string;
+}
+
+// Social Feeds interface
+export interface SocialFeed {
+  id?: string;
+  type: 'twitter' | 'video';
+  title: string;
+  url: string;
+  embed_code?: string;
+  is_active: boolean;
+  order_index: number;
+  created_at?: string;
+  updated_at?: string;
+}
+
+// Social Links interface
+export interface SocialLink {
+  id?: string;
+  platform: string;
+  url: string;
+  icon_name?: string;
+  is_active: boolean;
+  order_index: number;
+  created_at?: string;
+  updated_at?: string;
+}
+
+// Schedule Programs interface
+export interface ScheduleProgram {
+  id?: string;
+  day_of_week: string;
+  start_time: string;
+  end_time: string;
+  program_name: string;
+  presenter?: string;
+  description?: string;
+  type: 'radio' | 'tv';
+  is_active: boolean;
+  created_at?: string;
+  updated_at?: string;
+}
+
+// Radio Presenters interface
+export interface RadioPresenter {
+  id?: string;
+  name: string;
+  bio?: string;
+  photo_url?: string;
+  program?: string;
+  is_active: boolean;
+  order_index: number;
+  created_at?: string;
+  updated_at?: string;
+}
+
+// Newsletter Subscriber interface
+export interface NewsletterSubscriber {
+  id?: string;
+  email: string;
+  name?: string;
+  is_active: boolean;
+  subscribed_at?: string;
+  created_at?: string;
+  updated_at?: string;
+}
+
 // Posts Service
 export const postsService = {
   async getAll(): Promise<Post[]> {
@@ -260,6 +338,331 @@ export const slidesService = {
   async delete(id: string): Promise<void> {
     const { error } = await supabase
       .from('slides')
+      .delete()
+      .eq('id', id);
+    
+    if (error) throw error;
+  }
+};
+
+// Featured Programs Service
+export const featuredProgramsService = {
+  async getAll(): Promise<FeaturedProgram[]> {
+    const { data, error } = await supabase
+      .from('featured_programs')
+      .select('*')
+      .order('order_index', { ascending: true });
+    
+    if (error) throw error;
+    return data || [];
+  },
+
+  async getActive(): Promise<FeaturedProgram[]> {
+    const { data, error } = await supabase
+      .from('featured_programs')
+      .select('*')
+      .eq('is_active', true)
+      .order('order_index', { ascending: true });
+    
+    if (error) throw error;
+    return data || [];
+  },
+
+  async create(program: Omit<FeaturedProgram, 'id' | 'created_at' | 'updated_at'>): Promise<string> {
+    const { data, error } = await supabase
+      .from('featured_programs')
+      .insert(program)
+      .select('id')
+      .single();
+    
+    if (error) throw error;
+    return data.id;
+  },
+
+  async update(id: string, updates: Partial<FeaturedProgram>): Promise<void> {
+    const { error } = await supabase
+      .from('featured_programs')
+      .update(updates)
+      .eq('id', id);
+    
+    if (error) throw error;
+  },
+
+  async delete(id: string): Promise<void> {
+    const { error } = await supabase
+      .from('featured_programs')
+      .delete()
+      .eq('id', id);
+    
+    if (error) throw error;
+  }
+};
+
+// Social Feeds Service
+export const socialFeedsService = {
+  async getAll(): Promise<SocialFeed[]> {
+    const { data, error } = await supabase
+      .from('social_feeds')
+      .select('*')
+      .order('order_index', { ascending: true });
+    
+    if (error) throw error;
+    return (data || []) as SocialFeed[];
+  },
+
+  async getActive(): Promise<SocialFeed[]> {
+    const { data, error } = await supabase
+      .from('social_feeds')
+      .select('*')
+      .eq('is_active', true)
+      .order('order_index', { ascending: true });
+    
+    if (error) throw error;
+    return (data || []) as SocialFeed[];
+  },
+
+  async create(feed: Omit<SocialFeed, 'id' | 'created_at' | 'updated_at'>): Promise<string> {
+    const { data, error } = await supabase
+      .from('social_feeds')
+      .insert(feed)
+      .select('id')
+      .single();
+    
+    if (error) throw error;
+    return data.id;
+  },
+
+  async update(id: string, updates: Partial<SocialFeed>): Promise<void> {
+    const { error } = await supabase
+      .from('social_feeds')
+      .update(updates)
+      .eq('id', id);
+    
+    if (error) throw error;
+  },
+
+  async delete(id: string): Promise<void> {
+    const { error } = await supabase
+      .from('social_feeds')
+      .delete()
+      .eq('id', id);
+    
+    if (error) throw error;
+  }
+};
+
+// Social Links Service
+export const socialLinksService = {
+  async getAll(): Promise<SocialLink[]> {
+    const { data, error } = await supabase
+      .from('social_links')
+      .select('*')
+      .order('order_index', { ascending: true });
+    
+    if (error) throw error;
+    return data || [];
+  },
+
+  async getActive(): Promise<SocialLink[]> {
+    const { data, error } = await supabase
+      .from('social_links')
+      .select('*')
+      .eq('is_active', true)
+      .order('order_index', { ascending: true });
+    
+    if (error) throw error;
+    return data || [];
+  },
+
+  async create(link: Omit<SocialLink, 'id' | 'created_at' | 'updated_at'>): Promise<string> {
+    const { data, error } = await supabase
+      .from('social_links')
+      .insert(link)
+      .select('id')
+      .single();
+    
+    if (error) throw error;
+    return data.id;
+  },
+
+  async update(id: string, updates: Partial<SocialLink>): Promise<void> {
+    const { error } = await supabase
+      .from('social_links')
+      .update(updates)
+      .eq('id', id);
+    
+    if (error) throw error;
+  },
+
+  async delete(id: string): Promise<void> {
+    const { error } = await supabase
+      .from('social_links')
+      .delete()
+      .eq('id', id);
+    
+    if (error) throw error;
+  }
+};
+
+// Schedule Programs Service
+export const scheduleProgramsService = {
+  async getAll(): Promise<ScheduleProgram[]> {
+    const { data, error } = await supabase
+      .from('schedule_programs')
+      .select('*')
+      .order('day_of_week', { ascending: true });
+    
+    if (error) throw error;
+    return (data || []) as ScheduleProgram[];
+  },
+
+  async getByType(type: 'radio' | 'tv'): Promise<ScheduleProgram[]> {
+    const { data, error } = await supabase
+      .from('schedule_programs')
+      .select('*')
+      .eq('type', type)
+      .eq('is_active', true)
+      .order('start_time', { ascending: true });
+    
+    if (error) throw error;
+    return (data || []) as ScheduleProgram[];
+  },
+
+  async getByDayAndType(dayOfWeek: string, type: 'radio' | 'tv'): Promise<ScheduleProgram[]> {
+    const { data, error } = await supabase
+      .from('schedule_programs')
+      .select('*')
+      .eq('day_of_week', dayOfWeek)
+      .eq('type', type)
+      .eq('is_active', true)
+      .order('start_time', { ascending: true });
+    
+    if (error) throw error;
+    return (data || []) as ScheduleProgram[];
+  },
+
+  async create(program: Omit<ScheduleProgram, 'id' | 'created_at' | 'updated_at'>): Promise<string> {
+    const { data, error } = await supabase
+      .from('schedule_programs')
+      .insert(program)
+      .select('id')
+      .single();
+    
+    if (error) throw error;
+    return data.id;
+  },
+
+  async update(id: string, updates: Partial<ScheduleProgram>): Promise<void> {
+    const { error } = await supabase
+      .from('schedule_programs')
+      .update(updates)
+      .eq('id', id);
+    
+    if (error) throw error;
+  },
+
+  async delete(id: string): Promise<void> {
+    const { error } = await supabase
+      .from('schedule_programs')
+      .delete()
+      .eq('id', id);
+    
+    if (error) throw error;
+  }
+};
+
+// Radio Presenters Service
+export const radioPresentersService = {
+  async getAll(): Promise<RadioPresenter[]> {
+    const { data, error } = await supabase
+      .from('radio_presenters')
+      .select('*')
+      .order('order_index', { ascending: true });
+    
+    if (error) throw error;
+    return data || [];
+  },
+
+  async getActive(): Promise<RadioPresenter[]> {
+    const { data, error } = await supabase
+      .from('radio_presenters')
+      .select('*')
+      .eq('is_active', true)
+      .order('order_index', { ascending: true });
+    
+    if (error) throw error;
+    return data || [];
+  },
+
+  async create(presenter: Omit<RadioPresenter, 'id' | 'created_at' | 'updated_at'>): Promise<string> {
+    const { data, error } = await supabase
+      .from('radio_presenters')
+      .insert(presenter)
+      .select('id')
+      .single();
+    
+    if (error) throw error;
+    return data.id;
+  },
+
+  async update(id: string, updates: Partial<RadioPresenter>): Promise<void> {
+    const { error } = await supabase
+      .from('radio_presenters')
+      .update(updates)
+      .eq('id', id);
+    
+    if (error) throw error;
+  },
+
+  async delete(id: string): Promise<void> {
+    const { error } = await supabase
+      .from('radio_presenters')
+      .delete()
+      .eq('id', id);
+    
+    if (error) throw error;
+  }
+};
+
+// Newsletter Service
+export const newsletterService = {
+  async getAll(): Promise<NewsletterSubscriber[]> {
+    const { data, error } = await supabase
+      .from('newsletter_subscribers')
+      .select('*')
+      .order('subscribed_at', { ascending: false });
+    
+    if (error) throw error;
+    return data || [];
+  },
+
+  async subscribe(email: string, name?: string): Promise<string> {
+    const { data, error } = await supabase
+      .from('newsletter_subscribers')
+      .insert({
+        email,
+        name: name || '',
+        is_active: true
+      })
+      .select('id')
+      .single();
+    
+    if (error) throw error;
+    return data.id;
+  },
+
+  async unsubscribe(email: string): Promise<void> {
+    const { error } = await supabase
+      .from('newsletter_subscribers')
+      .update({ is_active: false })
+      .eq('email', email);
+    
+    if (error) throw error;
+  },
+
+  async delete(id: string): Promise<void> {
+    const { error } = await supabase
+      .from('newsletter_subscribers')
       .delete()
       .eq('id', id);
     

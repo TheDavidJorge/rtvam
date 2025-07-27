@@ -1,19 +1,10 @@
 
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { db } from '@/config/firebase';
+import { newsletterService } from './supabaseService';
 
 // Subscribe to newsletter
 export const subscribeToNewsletter = async (email: string, name?: string): Promise<string> => {
   try {
-    const subscriberData = {
-      email,
-      name: name || '',
-      createdAt: serverTimestamp(),
-      active: true
-    };
-    
-    const docRef = await addDoc(collection(db, 'newsletter_subscribers'), subscriberData);
-    return docRef.id;
+    return await newsletterService.subscribe(email, name);
   } catch (error) {
     console.error('Error subscribing to newsletter:', error);
     throw error;
